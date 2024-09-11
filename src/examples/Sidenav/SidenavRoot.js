@@ -48,6 +48,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
     [breakpoints.up("xl")]: {
       boxShadow: transparentSidenav ? "none" : xxl,
       marginBottom: transparentSidenav ? 0 : "inherit",
+      margin: 0,
       left: "0",
       width: sidebarWidth,
       transform: "translateX(0)",
@@ -70,6 +71,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
     [breakpoints.up("xl")]: {
       boxShadow: transparentSidenav ? "none" : xxl,
       marginBottom: transparentSidenav ? 0 : "inherit",
+      margin: 0,
       left: "0",
       width: pxToRem(96),
       overflowX: "hidden",
@@ -85,6 +87,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
     "& .MuiDrawer-paper": {
       boxShadow: xxl,
       border: "none",
+      borderRadius: "0",
 
       ...(miniSidenav ? drawerCloseStyles() : drawerOpenStyles()),
     },

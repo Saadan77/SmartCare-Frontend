@@ -94,9 +94,17 @@ function PatientRegistration() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Container maxWidth="md">
+      <Container
+        sx={{
+          maxWidth: "100% !important",
+          paddingLeft: "0 !important",
+          paddingRight: "0 !important",
+          marginLeft: "0 !important",
+          marginRight: "0 !important",
+        }}
+      >
         <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             Add Patient
           </Typography>
 
@@ -107,7 +115,12 @@ function PatientRegistration() {
               marginTop: 2,
             }}
           >
-            <Typography variant="h5" style={{ color: "white" }} gutterBottom>
+            <Typography
+              variant="h6"
+              sx={{ marginBottom: 0 }}
+              style={{ color: "white" }}
+              gutterBottom
+            >
               Personal Information
             </Typography>
           </Box>
@@ -116,7 +129,7 @@ function PatientRegistration() {
             <Grid container sx={{ marginTop: 1 }} spacing={2}>
               <Grid item xs={6} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Patient ID:
                   </p>
                   <TextField
@@ -134,7 +147,7 @@ function PatientRegistration() {
 
               <Grid item xs={6} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Full Name:
                   </p>
                   <TextField
@@ -156,7 +169,7 @@ function PatientRegistration() {
                   {/* Label */}
                   <p
                     htmlFor="gender"
-                    className="text-base font-semibold text-end"
+                    className="text-xs font-semibold text-end"
                     style={{ width: "200px" }}
                   >
                     Gender:
@@ -180,7 +193,7 @@ function PatientRegistration() {
                 {/* Date of Birth */}
                 <Grid item xs={6} sm={4}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "130px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "130px" }}>
                       Date of Birth:
                     </p>
                     <DatePicker
@@ -201,7 +214,7 @@ function PatientRegistration() {
                 {/* Age */}
                 <Grid item xs={6} sm={4}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                       Age:
                     </p>
                     <TextField
@@ -226,7 +239,7 @@ function PatientRegistration() {
                   {/* Label */}
                   <p
                     htmlFor="maritial-status"
-                    className="text-base font-semibold text-end"
+                    className="text-xs font-semibold text-end"
                     style={{ width: "200px" }}
                   >
                     Maritial Status:
@@ -249,7 +262,7 @@ function PatientRegistration() {
 
               <Grid item xs={6} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Nationality:
                   </p>
                   <TextField
@@ -273,7 +286,12 @@ function PatientRegistration() {
                 marginTop: 2,
               }}
             >
-              <Typography variant="h5" style={{ color: "white" }} gutterBottom>
+              <Typography
+                variant="h6"
+                sx={{ marginBottom: 0 }}
+                style={{ color: "white" }}
+                gutterBottom
+              >
                 Contact Information
               </Typography>
             </Box>
@@ -281,7 +299,7 @@ function PatientRegistration() {
             <Grid container sx={{ marginTop: 1 }} spacing={2}>
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "240px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "240px" }}>
                     Address:
                   </p>
                   <TextField
@@ -299,7 +317,7 @@ function PatientRegistration() {
 
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                     City:
                   </p>
                   <TextField
@@ -317,7 +335,7 @@ function PatientRegistration() {
 
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Area:
                   </p>
                   <TextField
@@ -336,7 +354,7 @@ function PatientRegistration() {
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <p
-                    className="flex flex-row items-center text-base font-semibold text-end"
+                    className="flex flex-row items-center text-xs font-semibold text-end"
                     style={{ width: "250px" }}
                   >
                     Phone number:<span className="text-red-600 text-lg mx-2">*</span>
@@ -356,7 +374,7 @@ function PatientRegistration() {
 
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                     Alternate phone number:
                   </p>
                   <TextField
@@ -374,7 +392,7 @@ function PatientRegistration() {
 
               <Grid item xs={12} sm={4}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Email Address:
                   </p>
                   <TextField
@@ -398,7 +416,12 @@ function PatientRegistration() {
                 marginTop: 2,
               }}
             >
-              <Typography variant="h5" style={{ color: "white" }} gutterBottom>
+              <Typography
+                variant="h6"
+                sx={{ marginBottom: 0 }}
+                style={{ color: "white" }}
+                gutterBottom
+              >
                 Emergency Contact Information
               </Typography>
             </Box>
@@ -407,7 +430,7 @@ function PatientRegistration() {
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <p
-                    className="flex flex-row items-center text-base font-semibold text-end"
+                    className="flex flex-row items-center text-xs font-semibold text-end"
                     style={{ width: "500px" }}
                   >
                     Emergency Contact Name:<span className="text-red-600 text-lg mx-2">*</span>
@@ -431,7 +454,7 @@ function PatientRegistration() {
                   {/* Label */}
                   <p
                     htmlFor="relationship"
-                    className="text-base font-semibold text-end"
+                    className="text-xs font-semibold text-end"
                     style={{ width: "500px" }}
                   >
                     Relationship to Patient:
@@ -454,7 +477,7 @@ function PatientRegistration() {
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <p
-                    className="flex flex-row items-center text-base font-semibold text-end mr-2"
+                    className="flex flex-row items-center text-xs font-semibold text-end mr-2"
                     style={{ width: "500px" }}
                   >
                     Emergency Contact Phone Number:
@@ -475,7 +498,7 @@ function PatientRegistration() {
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <p
-                    className="flex flex-row items-center text-base font-semibold text-end mr-2"
+                    className="flex flex-row items-center text-xs font-semibold text-end mr-2"
                     style={{ width: "500px" }}
                   >
                     Alternate Emergency Contact Phone Number:
@@ -502,7 +525,12 @@ function PatientRegistration() {
                 marginTop: 2,
               }}
             >
-              <Typography variant="h5" style={{ color: "white" }} gutterBottom>
+              <Typography
+                variant="h6"
+                sx={{ marginBottom: 0 }}
+                style={{ color: "white" }}
+                gutterBottom
+              >
                 Insurance Information
               </Typography>
             </Box>
@@ -512,10 +540,9 @@ function PatientRegistration() {
               <Typography
                 className="flex flex-row items-center"
                 sx={{ marginRight: "0.75rem" }}
-                variant="h6"
                 gutterBottom
               >
-                Do you have insurance?
+                <p className="text-xs font-semibold text-end mr-2">Do you have insurance?</p>
               </Typography>
               <RadioGroup
                 row
@@ -534,7 +561,7 @@ function PatientRegistration() {
                 {/* Insurance Provider */}
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "300px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
                       Insurance Provider:
                     </p>
                     <TextField
@@ -553,7 +580,7 @@ function PatientRegistration() {
                 {/* Insurance Policy Number */}
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                       Insurance Policy Number:
                     </p>
                     <TextField
@@ -572,7 +599,7 @@ function PatientRegistration() {
                 {/* Insurance Group Number */}
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "300px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
                       Insurance Group Number:
                     </p>
                     <TextField
@@ -591,7 +618,7 @@ function PatientRegistration() {
                 {/* Policyholder Name */}
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                       Policyholder Name:
                     </p>
                     <TextField
@@ -610,7 +637,7 @@ function PatientRegistration() {
                 {/* Policyholder Relationship */}
                 <Grid item xs={12} sm={6}>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "300px" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
                       Policyholder Relationship:
                     </p>
                     <TextField
@@ -636,7 +663,12 @@ function PatientRegistration() {
                 marginTop: 2,
               }}
             >
-              <Typography variant="h5" style={{ color: "white" }} gutterBottom>
+              <Typography
+                variant="h6"
+                sx={{ marginBottom: 0 }}
+                style={{ color: "white" }}
+                gutterBottom
+              >
                 Identification Information
               </Typography>
             </Box>
@@ -646,7 +678,7 @@ function PatientRegistration() {
               {/* National ID Number/SSN */}
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "300px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
                     National ID Number/SSN:
                   </p>
                   <TextField
@@ -665,7 +697,7 @@ function PatientRegistration() {
               {/* Passport Number */}
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                     Passport Number:
                   </p>
                   <TextField
@@ -684,7 +716,7 @@ function PatientRegistration() {
               {/* Driver’s License Number */}
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "300px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
                     Driver’s License Number:
                   </p>
                   <TextField
@@ -703,7 +735,7 @@ function PatientRegistration() {
               {/* Photo ID Upload */}
               <Grid item xs={12} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "400px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
                     Photo ID:
                   </p>
                   <TextField
@@ -723,17 +755,17 @@ function PatientRegistration() {
             <Grid container sx={{ marginTop: 1, justifyContent: "center" }} spacing={2}>
               <Grid item sx={{ marginRight: 1 }}>
                 <MDButton variant="gradient" color="info">
-                  Save
+                  <p className="text-xs">Save</p>
                 </MDButton>
               </Grid>
               <Grid item sx={{ marginRight: 1 }}>
                 <MDButton variant="gradient" color="info">
-                  Save and Print Card
+                  <p className="text-xs">Save and Print Card</p>
                 </MDButton>
               </Grid>
               <Grid item>
                 <MDButton variant="gradient" color="light">
-                  Clear
+                  <p className="text-xs">Clear</p>
                 </MDButton>
               </Grid>
             </Grid>
