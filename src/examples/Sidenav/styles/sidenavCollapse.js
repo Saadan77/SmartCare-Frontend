@@ -118,7 +118,7 @@ function collapseText(theme, ownerState) {
 
     "& span": {
       fontWeight: active ? fontWeightRegular : fontWeightLight,
-      fontSize: size.sm,
+      fontSize: "0.75rem",
       lineHeight: 0,
     },
   };

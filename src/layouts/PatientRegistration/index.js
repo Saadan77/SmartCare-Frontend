@@ -127,9 +127,9 @@ function PatientRegistration() {
 
           <form onSubmit={handleSubmit}>
             <Grid container sx={{ marginTop: 1 }} spacing={2}>
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={3}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "150px" }}>
                     Patient ID:
                   </p>
                   <TextField
@@ -145,9 +145,9 @@ function PatientRegistration() {
                 </Box>
               </Grid>
 
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={3}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "100px" }}>
                     Full Name:
                   </p>
                   <TextField
@@ -164,7 +164,7 @@ function PatientRegistration() {
               </Grid>
 
               {/* Gender */}
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={3}>
                 <div className="flex items-center space-x-4">
                   {/* Label */}
                   <p
@@ -189,52 +189,8 @@ function PatientRegistration() {
                 </div>
               </Grid>
 
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                {/* Date of Birth */}
-                <Grid item xs={6} sm={4}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "130px" }}>
-                      Date of Birth:
-                    </p>
-                    <DatePicker
-                      value={dob}
-                      onChange={(newDate) => handleDateChange(newDate)}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          fullWidth
-                          variant="outlined"
-                          sx={{ backgroundColor: "#e0e0e0" }}
-                        />
-                      )}
-                    />
-                  </Box>
-                </Grid>
-
-                {/* Age */}
-                <Grid item xs={6} sm={4}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
-                      Age:
-                    </p>
-                    <TextField
-                      variant="outlined"
-                      readOnly
-                      fullWidth
-                      value={age}
-                      sx={{
-                        backgroundColor: "#e0e0e0",
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              </LocalizationProvider>
-
               {/* Martial Status */}
-              <Grid item xs={6} sm={4}>
+              <Grid item xs={6} sm={3}>
                 <div className="flex items-center space-x-4">
                   {/* Label */}
                   <p
@@ -260,7 +216,51 @@ function PatientRegistration() {
                 </div>
               </Grid>
 
-              <Grid item xs={6} sm={4}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* Date of Birth */}
+                <Grid item xs={6} sm={3}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "150px" }}>
+                      Date of Birth:
+                    </p>
+                    <DatePicker
+                      value={dob}
+                      onChange={(newDate) => handleDateChange(newDate)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          fullWidth
+                          variant="outlined"
+                          sx={{ backgroundColor: "#e0e0e0" }}
+                        />
+                      )}
+                    />
+                  </Box>
+                </Grid>
+
+                {/* Age */}
+                <Grid item xs={6} sm={3}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <p className="text-xs font-semibold text-end mr-2" style={{ width: "100px" }}>
+                      Age:
+                    </p>
+                    <TextField
+                      variant="outlined"
+                      readOnly
+                      fullWidth
+                      value={age}
+                      sx={{
+                        backgroundColor: "#e0e0e0",
+                        "& .MuiOutlinedInput-root": {
+                          borderRadius: 1,
+                        },
+                      }}
+                    />
+                  </Box>
+                </Grid>
+              </LocalizationProvider>
+
+              <Grid item xs={6} sm={3}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
                     Nationality:

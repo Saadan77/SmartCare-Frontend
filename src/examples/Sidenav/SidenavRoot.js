@@ -51,6 +51,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       margin: 0,
       left: "0",
       width: sidebarWidth,
+      height: "100vh",
       transform: "translateX(0)",
       transition: transitions.create(["width", "background-color"], {
         easing: transitions.easing.sharp,
@@ -74,6 +75,7 @@ export default styled(Drawer)(({ theme, ownerState }) => {
       margin: 0,
       left: "0",
       width: pxToRem(96),
+      height: "100vh",
       overflowX: "hidden",
       transform: "translateX(0)",
       transition: transitions.create(["width", "background-color"], {
