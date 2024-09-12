@@ -103,25 +103,15 @@ function PatientRegistration() {
           marginRight: "0 !important",
         }}
       >
-        <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-          <Typography variant="h6" gutterBottom>
-            Add Patient
-          </Typography>
-
+        <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }}>
           <Box
             sx={{
               backgroundColor: "#49a3f1",
-              padding: 1,
-              marginTop: 2,
+              paddingLeft: 1,
             }}
           >
-            <Typography
-              variant="h6"
-              sx={{ marginBottom: 0 }}
-              style={{ color: "white" }}
-              gutterBottom
-            >
-              Personal Information
+            <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
+              <p className="text-base font-semibold mr-2">Personal Information</p>
             </Typography>
           </Box>
 
@@ -140,6 +130,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -157,6 +150,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -179,7 +175,7 @@ function PatientRegistration() {
                   <select
                     id="gender"
                     name="gender"
-                    className="block w-full h-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full h-7 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {/* Fetch options from the lab system */}
                     <option value="Male">Male</option>
@@ -205,7 +201,7 @@ function PatientRegistration() {
                   <select
                     id="maritial-status"
                     name="maritial-status"
-                    className="block w-44 h-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-44 h-7 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {/* Fetch options from the lab system */}
                     <option value="Single">Single</option>
@@ -227,12 +223,7 @@ function PatientRegistration() {
                       value={dob}
                       onChange={(newDate) => handleDateChange(newDate)}
                       renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          fullWidth
-                          variant="outlined"
-                          sx={{ backgroundColor: "#e0e0e0" }}
-                        />
+                        <TextField {...params} fullWidth variant="outlined" />
                       )}
                     />
                   </Box>
@@ -254,15 +245,18 @@ function PatientRegistration() {
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
                         },
+                        "& .MuiOutlinedInput-input": {
+                          height: "0.5rem",
+                        },
                       }}
                     />
                   </Box>
                 </Grid>
               </LocalizationProvider>
 
-              <Grid item xs={6} sm={3}>
+              <Grid item xs={6} sm={6}>
                 <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "200px" }}>
+                  <p className="text-xs font-semibold text-end mr-2" style={{ width: "120px" }}>
                     Nationality:
                   </p>
                   <TextField
@@ -273,6 +267,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -282,17 +279,12 @@ function PatientRegistration() {
             <Box
               sx={{
                 backgroundColor: "#49a3f1",
-                padding: 1,
+                paddingLeft: 1,
                 marginTop: 2,
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{ marginBottom: 0 }}
-                style={{ color: "white" }}
-                gutterBottom
-              >
-                Contact Information
+              <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
+                <p className="text-base font-semibold mr-2">Contact Information</p>
               </Typography>
             </Box>
 
@@ -309,6 +301,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -328,6 +323,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -345,6 +343,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -367,6 +368,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -384,6 +388,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -403,6 +410,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -412,17 +422,12 @@ function PatientRegistration() {
             <Box
               sx={{
                 backgroundColor: "#49a3f1",
-                padding: 1,
+                paddingLeft: 1,
                 marginTop: 2,
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{ marginBottom: 0 }}
-                style={{ color: "white" }}
-                gutterBottom
-              >
-                Emergency Contact Information
+              <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
+                <p className="text-base font-semibold mr-2">Emergency Contact Information</p>
               </Typography>
             </Box>
 
@@ -442,6 +447,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -490,6 +498,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -511,6 +522,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -521,17 +535,12 @@ function PatientRegistration() {
             <Box
               sx={{
                 backgroundColor: "#49a3f1",
-                padding: 1,
+                paddingLeft: 1,
                 marginTop: 2,
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{ marginBottom: 0 }}
-                style={{ color: "white" }}
-                gutterBottom
-              >
-                Insurance Information
+              <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
+                <p className="text-base font-semibold mr-2">Insurance Information</p>
               </Typography>
             </Box>
 
@@ -659,17 +668,12 @@ function PatientRegistration() {
             <Box
               sx={{
                 backgroundColor: "#49a3f1",
-                padding: 1,
+                paddingLeft: 1,
                 marginTop: 2,
               }}
             >
-              <Typography
-                variant="h6"
-                sx={{ marginBottom: 0 }}
-                style={{ color: "white" }}
-                gutterBottom
-              >
-                Identification Information
+              <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
+                <p className="text-base font-semibold mr-2">Identification Information</p>
               </Typography>
             </Box>
 
@@ -688,6 +692,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -708,6 +715,9 @@ function PatientRegistration() {
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
                       },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
+                      },
                     }}
                   />
                 </Box>
@@ -726,6 +736,9 @@ function PatientRegistration() {
                       backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
