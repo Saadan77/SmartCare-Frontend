@@ -50,25 +50,19 @@ function EmergencyCase() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }}>
-        <Typography variant="h4" gutterBottom>
-          Emergency Case Form
-        </Typography>
-
+      <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }} className="h-full">
         {/* Visit Category */}
         <Box
           sx={{
-            backgroundColor: "#49a3f1",
-            padding: 1,
-            marginTop: 2,
+            paddingLeft: 1,
           }}
         >
-          <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-            Visit Category
+          <Typography style={{ fontWeight: "bold" }} gutterBottom>
+            <p className="text-base text-[#1694c4] font-semibold mb-1">Visit Category</p>
           </Typography>
         </Box>
 
-        <Grid container spacing={2} sx={{ marginTop: 1 }}>
+        <Grid container spacing={2}>
           <Grid item xs={12} sm={12}>
             <RadioGroup
               row
@@ -82,37 +76,44 @@ function EmergencyCase() {
           </Grid>
         </Grid>
 
-        <Box
-          sx={{
-            backgroundColor: "#49a3f1",
-            padding: 1,
-            marginTop: 2,
-          }}
-        >
-          <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-            Personal Information
-          </Typography>
-        </Box>
-
         <form>
+          <Box
+            sx={{
+              paddingLeft: 1,
+            }}
+          >
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#1694c4] font-semibold mr-2">Personal Information</p>
+            </Typography>
+          </Box>
+
           {showPatientInfo === "resus" ? (
             <Grid container sx={{ marginTop: 1 }} spacing={2}>
-              <Grid item xs={6} sm={4}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
-                    Patient ID:<span className="text-red-600 text-lg mx-2">*</span>
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center">
+                    Patient ID:<span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <TextField
                     variant="outlined"
                     fullWidth
-                    value="000001-08-09-2024" // Set the value here
+                    value="000001-08-09-2024"
                     InputProps={{
-                      readOnly: true, // Make the field read-only
+                      readOnly: true,
                     }}
                     sx={{
-                      backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -121,10 +122,17 @@ function EmergencyCase() {
             </Grid>
           ) : (
             <Grid container sx={{ marginTop: 1 }} spacing={2}>
-              <Grid item xs={6} sm={4}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "250px" }}>
-                    Patient ID:<span className="text-red-600 text-lg mx-2">*</span>
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center">
+                    Patient ID:<span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <TextField
                     variant="outlined"
@@ -134,27 +142,38 @@ function EmergencyCase() {
                       readOnly: true, // Make the field read-only
                     }}
                     sx={{
-                      backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
                 </Box>
               </Grid>
 
-              <Grid item xs={6} sm={4}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
-                    Full Name:<span className="text-red-600 text-lg mx-2">*</span>
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center">
+                    Full Name:<span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <TextField
                     variant="outlined"
                     fullWidth
                     sx={{
-                      backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -162,38 +181,76 @@ function EmergencyCase() {
               </Grid>
 
               {/* Gender */}
-              <Grid item xs={6} sm={4}>
-                <div className="flex items-center space-x-4">
-                  {/* Label */}
-                  <p
-                    htmlFor="gender"
-                    className="text-base font-semibold text-end"
-                    style={{ width: "250px" }}
-                  >
-                    Gender:<span className="text-red-600 text-lg mx-2">*</span>
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <div>
+                  <p className="flex flex-row text-xs items-center">
+                    Gender:<span className="text-red-600 text-base mx-2">*</span>
                   </p>
 
                   {/* Select Menu */}
                   <select
                     id="gender"
                     name="gender"
-                    className="block w-full h-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   >
                     {/* Fetch options from the lab system */}
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
-                    <option value="Transgender">Transgender</option>
                     <option value="Other">Other</option>
+                  </select>
+                </div>
+              </Grid>
+
+              {/* Martial Status */}
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <div>
+                  {/* Label */}
+                  <p className="flex flex-row text-xs items-center">
+                    Maritial Status:<span className="text-red-600 text-base mx-2">*</span>
+                  </p>
+
+                  {/* Select Menu */}
+                  <select
+                    id="maritalStatus"
+                    name="maritalStatus"
+                    className="block w-3/4 h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  >
+                    {/* Fetch options from the lab system */}
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                    <option value="Widowed">Widowed</option>
                   </select>
                 </div>
               </Grid>
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 {/* Date of Birth */}
-                <Grid item xs={6} sm={4}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                      Date of Birth:<span className="text-red-600 text-lg mx-2">*</span>
+                <Grid
+                  item
+                  xs={6}
+                  sm={3}
+                  sx={{
+                    paddingTop: "5px !important",
+                  }}
+                >
+                  <Box>
+                    <p className="flex flex-row text-xs items-center">
+                      Date of Birth:<span className="text-red-600 text-base mx-2">*</span>
                     </p>
                     <DatePicker
                       value={dob}
@@ -211,10 +268,17 @@ function EmergencyCase() {
                 </Grid>
 
                 {/* Age */}
-                <Grid item xs={6} sm={4}>
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
-                      Age:<span className="text-red-600 text-lg mx-2">*</span>
+                <Grid
+                  item
+                  xs={6}
+                  sm={3}
+                  sx={{
+                    paddingTop: "5px !important",
+                  }}
+                >
+                  <Box>
+                    <p className="flex flex-row text-xs items-center">
+                      Age:<span className="text-red-600 text-base mx-2">*</span>
                     </p>
                     <TextField
                       variant="outlined"
@@ -222,9 +286,11 @@ function EmergencyCase() {
                       fullWidth
                       value={age}
                       sx={{
-                        backgroundColor: "#e0e0e0",
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
+                        },
+                        "& .MuiOutlinedInput-input": {
+                          height: "0.5rem",
                         },
                       }}
                     />
@@ -232,48 +298,29 @@ function EmergencyCase() {
                 </Grid>
               </LocalizationProvider>
 
-              {/* Martial Status */}
-              <Grid item xs={6} sm={4}>
-                <div className="flex items-center space-x-4">
-                  {/* Label */}
-                  <p
-                    htmlFor="maritial-status"
-                    className="text-base font-semibold text-end"
-                    style={{ width: "150px" }}
-                  >
-                    Maritial Status:<span className="text-red-600 text-lg mx-2">*</span>
-                  </p>
-
-                  {/* Select Menu */}
-                  <select
-                    id="maritial-status"
-                    name="maritial-status"
-                    className="block w-44 h-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  >
-                    {/* Fetch options from the lab system */}
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
-                    <option value="Widowed">Widowed</option>
-                  </select>
-                </div>
-              </Grid>
-
-              <Grid item xs={12} sm={4}>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <p
-                    className="flex flex-row items-center text-base font-semibold text-end"
-                    style={{ width: "250px" }}
-                  >
-                    Phone number:<span className="text-red-600 text-lg mx-2">*</span>
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center">
+                    Phone Number:<span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <TextField
                     variant="outlined"
+                    readOnly
                     fullWidth
+                    value={age}
                     sx={{
-                      backgroundColor: "#e0e0e0",
                       "& .MuiOutlinedInput-root": {
                         borderRadius: 1,
+                      },
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.5rem",
                       },
                     }}
                   />
@@ -285,29 +332,37 @@ function EmergencyCase() {
           {/* Add Vitals Section */}
           <Box
             sx={{
-              backgroundColor: "#49a3f1",
-              padding: 1,
-              marginTop: 2,
+              paddingLeft: 1,
             }}
           >
-            <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-              Add Vitals
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#1694c4] font-semibold mb-2">Add Vitals</p>
             </Typography>
           </Box>
 
           <Grid container spacing={2} sx={{ marginTop: 1 }}>
             {/* Pulse */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Pulse/Heart:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Pulse/Heart:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -316,17 +371,27 @@ function EmergencyCase() {
             </Grid>
 
             {/* Blood Pressure */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Blood Pressure:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Blood Pressure:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -335,17 +400,27 @@ function EmergencyCase() {
             </Grid>
 
             {/* Respiratory Rate */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Respiratory Rate:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Respiratory Rate:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -354,17 +429,27 @@ function EmergencyCase() {
             </Grid>
 
             {/* Oxygen Saturation */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Oxygen Saturation:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Oxygen Saturation:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -372,17 +457,27 @@ function EmergencyCase() {
             </Grid>
 
             {/* Temperature */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Temperature:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Temperature:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -391,66 +486,106 @@ function EmergencyCase() {
             </Grid>
 
             {/* Pain Level */}
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Pain Level:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Pain Level:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Level of Consciousness:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Level of Consciousness:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Capillary Refill Time:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Capillary Refill Time:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
                 <p className="text-sm font-semibold ml-2">sec</p>
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Blood Glucose Level:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Blood Glucose Level:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -462,26 +597,27 @@ function EmergencyCase() {
           {/* Vital Details Section */}
           <Box
             sx={{
-              backgroundColor: "#49a3f1",
-              padding: 1,
-              marginTop: 2,
+              paddingLeft: 1,
             }}
           >
-            <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-              Vital Details
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#1694c4] font-semibold mb-2">Vital Details</p>
             </Typography>
           </Box>
 
           <Grid container spacing={2} sx={{ marginTop: 1 }}>
             {/* Severity Level */}
-            <Grid item xs={6} sm={4}>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
               <div className="flex items-center space-x-4">
                 {/* Label */}
-                <p
-                  htmlFor="severity-level"
-                  className="text-base font-semibold text-end"
-                  style={{ width: "150px" }}
-                >
+                <p htmlFor="severity-level" className="text-xs">
                   Severity Level:
                 </p>
 
@@ -498,14 +634,17 @@ function EmergencyCase() {
                 </select>
               </div>
             </Grid>
-            <Grid item xs={6} sm={4}>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
               <div className="flex items-center space-x-4">
                 {/* Label */}
-                <p
-                  htmlFor="medication"
-                  className="text-base font-semibold text-end"
-                  style={{ width: "150px" }}
-                >
+                <p htmlFor="medication" className="text-xs">
                   Medication:
                 </p>
 
@@ -520,14 +659,17 @@ function EmergencyCase() {
                 </select>
               </div>
             </Grid>
-            <Grid item xs={6} sm={4}>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
               <div className="flex items-center">
                 {/* Label */}
-                <p
-                  htmlFor="tests"
-                  className="text-base font-semibold text-end mr-2"
-                  style={{ width: "150px" }}
-                >
+                <p htmlFor="tests" className="text-xs mb-2">
                   Lab Tests Ordered:
                 </p>
 
@@ -543,55 +685,79 @@ function EmergencyCase() {
                 </select>
               </div>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Treatment Given:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Treatment Given:</p>
                 <TextField
                   variant="outlined"
-                  multiline
-                  rows={3}
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Diagnosis:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Diagnosis:</p>
                 <TextField
                   variant="outlined"
-                  multiline
-                  rows={3}
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Follow Up Instructions:
-                </p>
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Follow Up Instructions:</p>
                 <TextField
                   variant="outlined"
-                  multiline
-                  rows={3}
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -601,13 +767,13 @@ function EmergencyCase() {
 
           <Box
             sx={{
-              backgroundColor: "#49a3f1",
-              padding: 1,
-              marginTop: 2,
+              paddingLeft: 1,
             }}
           >
-            <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-              Interdepartmental Referrals
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#1694c4] font-semibold mb-2">
+                Interdepartmental Referrals
+              </p>
             </Typography>
           </Box>
 
@@ -615,11 +781,7 @@ function EmergencyCase() {
             <Grid item xs={6} sm={6}>
               <div className="flex items-center space-x-4">
                 {/* Label */}
-                <p
-                  htmlFor="referTo"
-                  className="text-base font-semibold text-end"
-                  style={{ width: "150px" }}
-                >
+                <p htmlFor="referTo" className="text-xs">
                   Refer to:
                 </p>
 
@@ -637,14 +799,11 @@ function EmergencyCase() {
               </div>
             </Grid>
             <Grid item xs={6} sm={6}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
-                  Reason for refferal:
-                </p>
+              <Box>
+                <p className="text-xs mb-2">Reason for refferal:</p>
                 <TextField
                   variant="outlined"
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
                     },
@@ -660,94 +819,108 @@ function EmergencyCase() {
 
           <Box
             sx={{
-              backgroundColor: "#49a3f1",
-              padding: 1,
+              paddingLeft: 1,
               marginTop: 2,
             }}
           >
-            <Typography variant="h5" style={{ color: "white" }} gutterBottom>
-              Operation Theater and Post-Op Care
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#1694c4] font-semibold mr-2">
+                Operation Theater and Post-Op Care
+              </p>
             </Typography>
           </Box>
 
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Surgery Type
-                </p>
+            <Grid item xs={6} sm={3}>
+              <Box>
+                <p className="text-xs mb-2">Surgery Type:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Recovery Status:
-                </p>
+            <Grid item xs={6} sm={3}>
+              <Box>
+                <p className="text-xs mb-2">Recovery Status:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={6} sm={4}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Room Assignment:
-                </p>
+            <Grid item xs={6} sm={3}>
+              <Box>
+                <p className="text-xs mb-2">Room Assignment:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
+                    },
+                  }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6} sm={3}>
+              <Box>
+                <p className="text-xs mb-2">Pre-op Notes:</p>
+                <TextField
+                  variant="outlined"
+                  readOnly
+                  fullWidth
+                  value={age}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 1,
+                    },
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
               </Box>
             </Grid>
             <Grid item xs={6} sm={6}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "200px" }}>
-                  Pre-op Notes:
-                </p>
+              <Box>
+                <p className="text-xs mb-2">Post-op Notes:</p>
                 <TextField
                   variant="outlined"
+                  readOnly
                   fullWidth
+                  value={age}
                   sx={{
-                    backgroundColor: "#e0e0e0",
                     "& .MuiOutlinedInput-root": {
                       borderRadius: 1,
                     },
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <p className="text-base font-semibold text-end mr-2" style={{ width: "150px" }}>
-                  Post-op Notes:
-                </p>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  sx={{
-                    backgroundColor: "#e0e0e0",
-                    "& .MuiOutlinedInput-root": {
-                      borderRadius: 1,
+                    "& .MuiOutlinedInput-input": {
+                      height: "0.5rem",
                     },
                   }}
                 />
@@ -755,20 +928,17 @@ function EmergencyCase() {
             </Grid>
           </Grid>
 
-          <Grid container sx={{ marginTop: 1, justifyContent: "center" }} spacing={2}>
+          <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
             <Grid item sx={{ marginRight: 1 }}>
-              <MDButton variant="gradient" color="info">
-                Save
-              </MDButton>
-            </Grid>
-            <Grid item sx={{ marginRight: 1 }}>
-              <MDButton variant="gradient" color="info">
-                Save and Print Form
+              <MDButton style={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="info">
+                <button type="submit" className="text-xs">
+                  SAVE
+                </button>
               </MDButton>
             </Grid>
             <Grid item>
-              <MDButton variant="gradient" color="light">
-                Clear
+              <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+                <span className="text-xs">Cancel</span>
               </MDButton>
             </Grid>
           </Grid>
