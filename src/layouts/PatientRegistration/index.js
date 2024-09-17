@@ -253,47 +253,73 @@ function PatientRegistration() {
           marginRight: "0 !important",
         }}
       >
-        <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }}>
+        <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }} className="h-screen">
           <section id="nav">
             <nav className="w-full mb-3">
               <div>
                 <div className="flex items-center">
                   <Grid container>
                     {/* Navigation Links */}
-                    <Grid item sm={4}>
-                      <div className="border border-gray-300 group h-10 flex items-center">
+                    <Grid
+                      item
+                      sm={4}
+                      onClick={() => handleSectionClick("patientDetails")}
+                      className={`cursor-pointer ${
+                        activeSection === "patientDetails" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 flex items-center relative">
                         <RiCheckboxCircleFill className="h-5 w-5 mx-2" aria-hidden="true" />
-                        <a
-                          href="#patientDetails"
-                          className={`text-heading font-heading font-semibold text-xs relative`}
-                          onClick={() => handleSectionClick("patientDetails")}
-                        >
+                        <a href="#patientDetails" className={`font-semibold text-xs relative`}>
                           Patient Details
                         </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeSection === "patientDetails" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
-                    <Grid item sm={4}>
-                      <div className="border border-gray-300 group h-10 flex items-center">
+
+                    <Grid
+                      item
+                      sm={4}
+                      onClick={() => handleSectionClick("emergencyInfo")}
+                      className={`cursor-pointer ${
+                        activeSection === "emergencyInfo" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 flex items-center relative">
                         <MdEmergency className="h-5 w-5 mx-2" aria-hidden="true" />
-                        <a
-                          href="#emergencyInfo"
-                          className={`text-heading font-heading font-semibold text-xs relative`}
-                          onClick={() => handleSectionClick("emergencyInfo")}
-                        >
+                        <a href="#emergencyInfo" className={`font-semibold text-xs relative`}>
                           Emergency Information
                         </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeSection === "emergencyInfo" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
-                    <Grid item sm={4}>
-                      <div className="border border-gray-300 group h-10 flex items-center">
+
+                    <Grid
+                      item
+                      sm={4}
+                      onClick={() => handleSectionClick("insuranceDetails")}
+                      className={`cursor-pointer ${
+                        activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 flex items-center relative">
                         <MdHealthAndSafety className="h-5 w-5 mx-2" aria-hidden="true" />
-                        <a
-                          href="#insuranceDetails"
-                          className={`text-heading font-heading font-semibold text-xs relative`}
-                          onClick={() => handleSectionClick("insuranceDetails")}
-                        >
+                        <a href="#insuranceDetails" className={`font-semibold text-xs relative`}>
                           Insurance Details
                         </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
                   </Grid>
@@ -307,12 +333,13 @@ function PatientRegistration() {
               <>
                 <Box
                   sx={{
-                    backgroundColor: "#49a3f1",
                     paddingLeft: 1,
                   }}
                 >
-                  <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base font-semibold mr-2">Personal Information</p>
+                  <Typography style={{ fontWeight: "bold" }} gutterBottom>
+                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                      Personal Information
+                    </p>
                   </Typography>
                 </Box>
 
@@ -326,12 +353,11 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Patient ID:</p>
+                      <p className="text-xs mb-2">Patient ID:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -352,7 +378,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Full Name:</p>
+                      <p className="text-xs mb-2">Full Name:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -360,7 +386,6 @@ function PatientRegistration() {
                         value={patient.fullName}
                         onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -383,7 +408,7 @@ function PatientRegistration() {
                   >
                     <div>
                       {/* Label */}
-                      <p htmlFor="gender" className="text-xs font-semibold mb-2">
+                      <p htmlFor="gender" className="text-xs mb-2">
                         Gender:
                       </p>
 
@@ -393,7 +418,7 @@ function PatientRegistration() {
                         name="gender"
                         value={patient.gender}
                         onChange={handleInputChange}
-                        className="block w-3/4 h-7 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         {/* Fetch options from the lab system */}
                         <option value="Male">Male</option>
@@ -414,7 +439,7 @@ function PatientRegistration() {
                   >
                     <div>
                       {/* Label */}
-                      <p htmlFor="maritalStatus" className="text-xs font-semibold mb-2">
+                      <p htmlFor="maritalStatus" className="text-xs mb-2">
                         Maritial Status:
                       </p>
 
@@ -424,7 +449,7 @@ function PatientRegistration() {
                         name="maritalStatus"
                         value={patient.maritalStatus}
                         onChange={handleInputChange}
-                        className="block w-3/4 h-7 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="block w-3/4 h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         {/* Fetch options from the lab system */}
                         <option value="Single">Single</option>
@@ -446,7 +471,7 @@ function PatientRegistration() {
                       }}
                     >
                       <Box>
-                        <p className="text-xs font-semibold mb-2">Date of Birth:</p>
+                        <p className="text-xs mb-2">Date of Birth:</p>
                         <DatePicker
                           value={dob}
                           onChange={(newDate) => handleDateChange(newDate)}
@@ -473,7 +498,7 @@ function PatientRegistration() {
                       }}
                     >
                       <Box>
-                        <p className="text-xs font-semibold mb-2">Age:</p>
+                        <p className="text-xs mb-2">Age:</p>
                         <TextField
                           variant="outlined"
                           readOnly
@@ -482,7 +507,6 @@ function PatientRegistration() {
                           onChange={handleInputChange}
                           value={patient.age}
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
                             },
@@ -504,7 +528,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Nationality:</p>
+                      <p className="text-xs mb-2">Nationality:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -512,7 +536,6 @@ function PatientRegistration() {
                         value={patient.nationality}
                         onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -527,13 +550,14 @@ function PatientRegistration() {
 
                 <Box
                   sx={{
-                    backgroundColor: "#49a3f1",
                     paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
-                  <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base font-semibold mr-2">Contact Information</p>
+                  <Typography style={{ fontWeight: "bold" }} gutterBottom>
+                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                      Contact Information
+                    </p>
                   </Typography>
                 </Box>
 
@@ -547,7 +571,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Address:</p>
+                      <p className="text-xs mb-2">Address:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -555,7 +579,6 @@ function PatientRegistration() {
                         value={patient.address}
                         onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -576,7 +599,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">City:</p>
+                      <p className="text-xs mb-2">City:</p>
                       <TextField
                         variant="outlined"
                         name="city"
@@ -584,7 +607,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -605,7 +627,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Area:</p>
+                      <p className="text-xs mb-2">Area:</p>
                       <TextField
                         variant="outlined"
                         name="area"
@@ -613,7 +635,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -634,8 +655,8 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="flex flex-row text-xs font-semibold mb-2">
-                        Phone number:<span className="text-red-600 text-xs mx-2">*</span>
+                      <p className="flex flex-row text-xs items-center">
+                        Phone number:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
                       <TextField
                         variant="outlined"
@@ -644,7 +665,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -665,7 +685,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Alternate phone number:</p>
+                      <p className="text-xs mb-2">Alternate phone number:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -673,7 +693,6 @@ function PatientRegistration() {
                         value={patient.alternatePhoneNumber}
                         onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -694,7 +713,7 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs font-semibold mb-2">Email Address:</p>
+                      <p className="text-xs mb-2">Email Address:</p>
                       <TextField
                         variant="outlined"
                         name="email"
@@ -702,7 +721,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -718,32 +736,34 @@ function PatientRegistration() {
                 {/* Identification Information Heading */}
                 <Box
                   sx={{
-                    backgroundColor: "#49a3f1",
                     paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
-                  <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base font-semibold mr-2">Identification Information</p>
+                  <Typography style={{ fontWeight: "bold" }} gutterBottom>
+                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                      Identification Information
+                    </p>
                   </Typography>
                 </Box>
 
                 {/* Identification Form Fields */}
                 <Grid container sx={{ marginTop: 1 }} spacing={2}>
                   {/* National ID Number/SSN */}
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
-                        National ID Number/SSN:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">National ID Number/SSN:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
-                        name="nationalIdNo"
-                        value={patient.nationalIdNo}
-                        onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -756,19 +776,20 @@ function PatientRegistration() {
                   </Grid>
 
                   {/* Passport Number */}
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
-                        Passport Number:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Passport Number:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
-                        name="passportNo"
-                        value={patient.passportNo}
-                        onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -781,19 +802,20 @@ function PatientRegistration() {
                   </Grid>
 
                   {/* Driver’s License Number */}
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p className="text-xs font-semibold text-end mr-2" style={{ width: "300px" }}>
-                        Driver’s License Number:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Driver’s License Number:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
-                        name="driverLicenseNo"
-                        value={patient.driverLicenseNo}
-                        onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -806,21 +828,25 @@ function PatientRegistration() {
                   </Grid>
 
                   {/* Photo ID Upload */}
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p className="text-xs font-semibold text-end mr-2" style={{ width: "400px" }}>
-                        Photo ID:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Photo ID:</p>
                       <TextField
-                        type="file"
+                        variant="outlined"
                         fullWidth
-                        name="photoId"
-                        value={patient.photoId}
-                        onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
+                          },
+                          "& .MuiOutlinedInput-input": {
+                            height: "0.5rem",
                           },
                         }}
                       />
@@ -834,33 +860,38 @@ function PatientRegistration() {
               <>
                 <Box
                   sx={{
-                    backgroundColor: "#49a3f1",
                     paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
-                  <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base font-semibold mr-2">Emergency Contact Information</p>
+                  <Typography style={{ fontWeight: "bold" }} gutterBottom>
+                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                      Emergency Contact Information
+                    </p>
                   </Typography>
                 </Box>
 
                 <Grid container sx={{ marginTop: 1 }} spacing={2}>
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p
-                        className="flex flex-row items-center text-xs font-semibold text-end"
-                        style={{ width: "500px" }}
-                      >
-                        Emergency Contact Name:<span className="text-red-600 text-lg mx-2">*</span>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="flex flex-row text-xs items-center">
+                        Emergency Contact Name:
+                        <span className="text-red-600 text-base mx-2">*</span>
                       </p>
                       <TextField
                         variant="outlined"
-                        fullWidth
                         name="emergencyContactName"
                         value={patient.emergencyContactName}
                         onChange={handleInputChange}
+                        fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -873,16 +904,18 @@ function PatientRegistration() {
                   </Grid>
 
                   {/* Relationship to Patient */}
-                  <Grid item xs={6} sm={6}>
-                    <div className="flex items-center space-x-4">
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <div>
                       {/* Label */}
-                      <p
-                        htmlFor="relationship"
-                        onChange={handleInputChange}
-                        className="text-xs font-semibold text-end"
-                        style={{ width: "500px" }}
-                      >
-                        Relationship to Patient:
+                      <p htmlFor="relationship" className="text-xs mb-2">
+                        Relationship:
                       </p>
 
                       {/* Select Menu */}
@@ -891,7 +924,7 @@ function PatientRegistration() {
                         name="relationship"
                         value={patient.relationship}
                         onChange={handleInputChange}
-                        className="block w-full h-7 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         <option value="Parent">Parent</option>
                         <option value="Sibling">Sibling</option>
@@ -901,14 +934,16 @@ function PatientRegistration() {
                     </div>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p
-                        className="flex flex-row items-center text-xs font-semibold text-end mr-2"
-                        style={{ width: "500px" }}
-                      >
-                        Emergency Contact Phone Number:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Emergency Contact Phone Number:</p>
                       <TextField
                         variant="outlined"
                         fullWidth
@@ -916,7 +951,6 @@ function PatientRegistration() {
                         value={patient.emergencyContactNo}
                         onChange={handleInputChange}
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -928,14 +962,16 @@ function PatientRegistration() {
                     </Box>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <p
-                        className="flex flex-row items-center text-xs font-semibold text-end mr-2"
-                        style={{ width: "500px" }}
-                      >
-                        Alternate Emergency Contact Phone Number:
-                      </p>
+                  <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Alternate Emergency Contact Phone Number:</p>
                       <TextField
                         variant="outlined"
                         name="alternateEmergencyContactNo"
@@ -943,7 +979,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         fullWidth
                         sx={{
-                          backgroundColor: "#e0e0e0",
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
                           },
@@ -963,13 +998,14 @@ function PatientRegistration() {
                 {/* Insurance Information Heading */}
                 <Box
                   sx={{
-                    backgroundColor: "#49a3f1",
                     paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
-                  <Typography style={{ color: "white", fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base font-semibold mr-2">Insurance Information</p>
+                  <Typography style={{ fontWeight: "bold" }} gutterBottom>
+                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                      Insurance Information
+                    </p>
                   </Typography>
                 </Box>
 
@@ -997,14 +1033,16 @@ function PatientRegistration() {
                 {showInsuranceForm && (
                   <Grid container sx={{ marginTop: 1 }} spacing={2}>
                     {/* Insurance Provider */}
-                    <Grid item xs={12} sm={6}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <p
-                          className="text-xs font-semibold text-end mr-2"
-                          style={{ width: "300px" }}
-                        >
-                          Insurance Provider:
-                        </p>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={3}
+                      sx={{
+                        paddingTop: "5px !important",
+                      }}
+                    >
+                      <Box>
+                        <p className="text-xs mb-2">Insurance Provider:</p>
                         <TextField
                           variant="outlined"
                           fullWidth
@@ -1012,9 +1050,11 @@ function PatientRegistration() {
                           value={patient.insuranceProvider}
                           onChange={handleInputChange}
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
+                            },
+                            "& .MuiOutlinedInput-input": {
+                              height: "0.5rem",
                             },
                           }}
                         />
@@ -1022,24 +1062,28 @@ function PatientRegistration() {
                     </Grid>
 
                     {/* Insurance Policy Number */}
-                    <Grid item xs={12} sm={6}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <p
-                          className="text-xs font-semibold text-end mr-2"
-                          style={{ width: "400px" }}
-                        >
-                          Insurance Policy Number:
-                        </p>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={3}
+                      sx={{
+                        paddingTop: "5px !important",
+                      }}
+                    >
+                      <Box>
+                        <p className="text-xs mb-2">Insurance Policy Number:</p>
                         <TextField
                           variant="outlined"
                           name="insurancePolicyNo"
-                          value={patient.insurancePolicyNo}
+                          value={patient.insurancePolicyNumber}
                           onChange={handleInputChange}
                           fullWidth
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
+                            },
+                            "& .MuiOutlinedInput-input": {
+                              height: "0.5rem",
                             },
                           }}
                         />
@@ -1047,14 +1091,16 @@ function PatientRegistration() {
                     </Grid>
 
                     {/* Insurance Group Number */}
-                    <Grid item xs={12} sm={6}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <p
-                          className="text-xs font-semibold text-end mr-2"
-                          style={{ width: "300px" }}
-                        >
-                          Insurance Group Number:
-                        </p>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={3}
+                      sx={{
+                        paddingTop: "5px !important",
+                      }}
+                    >
+                      <Box>
+                        <p className="text-xs mb-2">Insurance Group Number:</p>
                         <TextField
                           variant="outlined"
                           fullWidth
@@ -1062,9 +1108,11 @@ function PatientRegistration() {
                           value={patient.insuranceGroupNo}
                           onChange={handleInputChange}
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
+                            },
+                            "& .MuiOutlinedInput-input": {
+                              height: "0.5rem",
                             },
                           }}
                         />
@@ -1072,14 +1120,16 @@ function PatientRegistration() {
                     </Grid>
 
                     {/* Policyholder Name */}
-                    <Grid item xs={12} sm={6}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <p
-                          className="text-xs font-semibold text-end mr-2"
-                          style={{ width: "400px" }}
-                        >
-                          Policyholder Name:
-                        </p>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={3}
+                      sx={{
+                        paddingTop: "5px !important",
+                      }}
+                    >
+                      <Box>
+                        <p className="text-xs mb-2">Policyholder Name:</p>
                         <TextField
                           variant="outlined"
                           name="policyHolderName"
@@ -1087,9 +1137,11 @@ function PatientRegistration() {
                           onChange={handleInputChange}
                           fullWidth
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
+                            },
+                            "& .MuiOutlinedInput-input": {
+                              height: "0.5rem",
                             },
                           }}
                         />
@@ -1097,14 +1149,16 @@ function PatientRegistration() {
                     </Grid>
 
                     {/* Policyholder Relationship */}
-                    <Grid item xs={12} sm={6}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <p
-                          className="text-xs font-semibold text-end mr-2"
-                          style={{ width: "300px" }}
-                        >
-                          Policyholder Relationship:
-                        </p>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={3}
+                      sx={{
+                        paddingTop: "5px !important",
+                      }}
+                    >
+                      <Box>
+                        <p className="text-xs mb-2">Policyholder Relationship:</p>
                         <TextField
                           variant="outlined"
                           fullWidth
@@ -1112,9 +1166,11 @@ function PatientRegistration() {
                           value={patient.policyHolderRelationship}
                           onChange={handleInputChange}
                           sx={{
-                            backgroundColor: "#e0e0e0",
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
+                            },
+                            "& .MuiOutlinedInput-input": {
+                              height: "0.5rem",
                             },
                           }}
                         />
@@ -1125,22 +1181,27 @@ function PatientRegistration() {
               </>
             )}
 
-            <Grid container sx={{ marginTop: 1, justifyContent: "center" }} spacing={2}>
+            <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
               <Grid item sx={{ marginRight: 1 }}>
                 <MDButton variant="gradient" color="info">
-                  <button onClick={handleSubmit} type="submit" className="text-xs">
-                    Save
+                  <button
+                    style={{ borderRadius: 0, minHeight: 0 }}
+                    onClick={handleSubmit}
+                    type="submit"
+                    className="text-xs"
+                  >
+                    SAVE
                   </button>
                 </MDButton>
               </Grid>
-              <Grid item sx={{ marginRight: 1 }}>
-                <MDButton variant="gradient" color="info">
-                  <p className="text-xs">Save and Print Card</p>
-                </MDButton>
-              </Grid>
               <Grid item>
-                <MDButton variant="gradient" color="light" onClick={(e) => handleClear(e)}>
-                  <span className="text-xs">Clear</span>
+                <MDButton
+                  sx={{ borderRadius: 0, minHeight: 0 }}
+                  variant="gradient"
+                  color="light"
+                  onClick={(e) => handleClear(e)}
+                >
+                  <span className="text-xs">Cancel</span>
                 </MDButton>
               </Grid>
             </Grid>
