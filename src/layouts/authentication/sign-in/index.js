@@ -8,22 +8,34 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
+import { login } from "./login";
+import { useToken } from "./token";
 
 function Basic() {
+  const { setToken } = useToken();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "admin" && password === "admin") {
-      // Set user as authenticated (could use context or global state in a real app)
-      navigate("/dashboard"); // Redirect to a dashboard or another protected route
-    } else {
-      alert("Invalid credentials");
+
+    try {
+      const accessToken = await login(email, password);
+      setToken(accessToken);
+      setError("");
+      console.log(accessToken);
+      navigate("/register");
+    } catch (err) {
+      setError("Credentials do not match");
     }
   };
 
@@ -50,10 +62,10 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type="text"
-                label="Username"
+                label="email"
                 fullWidth
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -62,7 +74,7 @@ function Basic() {
                 label="Password"
                 fullWidth
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
               />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
