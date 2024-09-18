@@ -253,7 +253,11 @@ function PatientRegistration() {
           marginRight: "0 !important",
         }}
       >
-        <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }} className="h-screen">
+        <Paper
+          elevation={3}
+          sx={{ padding: 2, marginTop: 3, position: "relative" }}
+          className="h-screen"
+        >
           <section id="nav">
             <nav className="w-full mb-3">
               <div>
@@ -1181,15 +1185,25 @@ function PatientRegistration() {
               </>
             )}
 
-            <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
+            <Grid
+              container
+              sx={{
+                marginTop: 1,
+                justifyContent: "end",
+              }}
+              spacing={2}
+            >
               <Grid item sx={{ marginRight: 1 }}>
-                <MDButton variant="gradient" color="info">
-                  <button
-                    style={{ borderRadius: 0, minHeight: 0 }}
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="text-xs"
-                  >
+                <MDButton
+                  variant="gradient"
+                  style={{
+                    borderRadius: 0,
+                    minHeight: 0,
+                    backgroundColor: "#1694c4",
+                    color: "White",
+                  }}
+                >
+                  <button onClick={handleSubmit} type="submit" className="text-xs">
                     SAVE
                   </button>
                 </MDButton>
