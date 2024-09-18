@@ -34,20 +34,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
+
 import { createEmergencyCase } from "services/EmergencyCase";
+import { useToken } from "layouts/authentication/sign-in/token";
 
 function EmergencyCase() {
-  const [dob, setDob] = React.useState(null);
-  const [age, setAge] = React.useState("");
-
-  const handleDateChange = (newDate) => {
-    setDob(newDate);
-    if (newDate) {
-      const calculatedAge = dayjs().diff(newDate, "year");
-      setAge(calculatedAge);
-    }
-  };
-
   const [showPatientInfo, setShowPatientInfo] = useState("fastTrack");
 
   const handleVisitChange = (event) => {
@@ -59,6 +50,8 @@ function EmergencyCase() {
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
+
+  const { token } = useToken();
 
   const [emergencyCase, setEmergencyCase] = useState({
     patientId: "",
@@ -143,10 +136,10 @@ function EmergencyCase() {
         updatedDate: emergencyCase.updatedDate,
       };
 
-      await createPatient(saveEmergencyCase, token);
+      await createEmergencyCase(saveEmergencyCase, token);
       toast.success("Emergency case registered.");
 
-      setPatient({
+      setEmergencyCase({
         patientId: "",
         fullName: "",
         gender: "",
@@ -188,8 +181,19 @@ function EmergencyCase() {
     }
   };
 
+  const [dob, setDob] = React.useState(null);
+
+  const handleDateChange = (newDate) => {
+    emergencyCase.dob = setDob(newDate);
+    if (newDate) {
+      const calculatedAge = dayjs().diff(newDate, "year");
+      emergencyCase.age = calculatedAge;
+    }
+  };
+
   return (
     <DashboardLayout>
+      <ToastContainer />
       <DashboardNavbar />
       <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }} className="h-screen">
         <section id="nav">
@@ -266,7 +270,7 @@ function EmergencyCase() {
           </nav>
         </section>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {activeSection === "visitCategory" && (
             <>
               {/* Visit Category */}
@@ -327,6 +331,7 @@ function EmergencyCase() {
                         fullWidth
                         name="patientId"
                         value="000001-08-09-2024"
+                        onChange={handleInputChange}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -392,6 +397,8 @@ function EmergencyCase() {
                         variant="outlined"
                         fullWidth
                         name="fullName"
+                        value={emergencyCase.fullName}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -422,6 +429,8 @@ function EmergencyCase() {
                       <select
                         id="gender"
                         name="gender"
+                        value={emergencyCase.gender}
+                        onChange={handleInputChange}
                         className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         {/* Fetch options from the lab system */}
@@ -451,6 +460,8 @@ function EmergencyCase() {
                       <select
                         id="maritalStatus"
                         name="maritalStatus"
+                        value={emergencyCase.maritalStatus}
+                        onChange={handleInputChange}
                         className="block w-3/4 h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                       >
                         {/* Fetch options from the lab system */}
@@ -485,6 +496,8 @@ function EmergencyCase() {
                               name="dob"
                               fullWidth
                               variant="outlined"
+                              value={emergencyCase.dob}
+                              onChange={handleInputChange}
                               sx={{ backgroundColor: "#e0e0e0" }}
                             />
                           )}
@@ -510,7 +523,8 @@ function EmergencyCase() {
                           readOnly
                           name="age"
                           fullWidth
-                          value={age}
+                          value={emergencyCase.age}
+                          onChange={handleInputChange}
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
@@ -540,7 +554,8 @@ function EmergencyCase() {
                         variant="outlined"
                         fullWidth
                         name="phone"
-                        value={age}
+                        value={emergencyCase.phone}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -583,7 +598,8 @@ function EmergencyCase() {
                       <TextField
                         variant="outlined"
                         name="pulse"
-                        value={age}
+                        value={emergencyCase.pulse}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -612,8 +628,9 @@ function EmergencyCase() {
                     <div className="flex items-center">
                       <TextField
                         variant="outlined"
-                        value={age}
                         name="bloodPressure"
+                        value={emergencyCase.bloodPressure}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -642,8 +659,9 @@ function EmergencyCase() {
                     <div className="flex items-center">
                       <TextField
                         variant="outlined"
-                        value={age}
                         name="respiratoryRate"
+                        value={emergencyCase.respiratoryRate}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -672,6 +690,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="oxygenSaturation"
+                      value={emergencyCase.oxygenSaturation}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -699,6 +719,8 @@ function EmergencyCase() {
                       <TextField
                         variant="outlined"
                         name="temperature"
+                        value={emergencyCase.temperature}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -727,6 +749,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="painLevel"
+                      value={emergencyCase.painLevel}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -751,6 +775,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="levelOfConsciousness"
+                      value={emergencyCase.levelOfConsciousness}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -776,6 +802,8 @@ function EmergencyCase() {
                       <TextField
                         variant="outlined"
                         name="capillaryRefillTime"
+                        value={emergencyCase.capillaryRefillTime}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -803,6 +831,8 @@ function EmergencyCase() {
                       <TextField
                         variant="outlined"
                         name="bloodGlucoseLevel"
+                        value={emergencyCase.bloodGlucoseLevel}
+                        onChange={handleInputChange}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -850,6 +880,8 @@ function EmergencyCase() {
                     {/* Select Menu */}
                     <select
                       name="severityLevel"
+                      value={emergencyCase.severityLevel}
+                      onChange={handleInputChange}
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       {/* Fetch options from the lab system */}
@@ -877,6 +909,8 @@ function EmergencyCase() {
                     {/* Select Menu */}
                     <select
                       name="medication"
+                      value={emergencyCase.medication}
+                      onChange={handleInputChange}
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       {/* Fetch options from the lab system */}
@@ -923,6 +957,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="treatment"
+                      value={emergencyCase.treatment}
+                      onChange={handleInputChange}
                       fullWidth
                       sx={{
                         "& .MuiOutlinedInput-root": {
@@ -948,6 +984,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="diagnosis"
+                      value={emergencyCase.diagnosis}
+                      onChange={handleInputChange}
                       fullWidth
                       sx={{
                         "& .MuiOutlinedInput-root": {
@@ -973,6 +1011,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="instructions"
+                      value={emergencyCase.instructions}
+                      onChange={handleInputChange}
                       fullWidth
                       sx={{
                         "& .MuiOutlinedInput-root": {
@@ -1012,6 +1052,8 @@ function EmergencyCase() {
                     <select
                       id="referTo"
                       name="referTo"
+                      value={emergencyCase.referTo}
+                      onChange={handleInputChange}
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       {/* Fetch options from the lab system */}
@@ -1028,6 +1070,8 @@ function EmergencyCase() {
                       variant="outlined"
                       fullWidth
                       name="refferalReason"
+                      value={emergencyCase.refferalReason}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -1071,6 +1115,8 @@ function EmergencyCase() {
                     <TextField
                       variant="outlined"
                       name="surgeryType"
+                      value={emergencyCase.surgeryType}
+                      onChange={handleInputChange}
                       fullWidth
                       sx={{
                         "& .MuiOutlinedInput-root": {
@@ -1090,6 +1136,8 @@ function EmergencyCase() {
                       variant="outlined"
                       fullWidth
                       name="recoveryStatus"
+                      value={emergencyCase.recoveryStatus}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -1108,6 +1156,8 @@ function EmergencyCase() {
                       variant="outlined"
                       fullWidth
                       name="room"
+                      value={emergencyCase.room}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -1126,6 +1176,8 @@ function EmergencyCase() {
                       variant="outlined"
                       fullWidth
                       name="preOpNotes"
+                      value={emergencyCase.preOpNotes}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -1144,6 +1196,8 @@ function EmergencyCase() {
                       variant="outlined"
                       fullWidth
                       name="postOpNotes"
+                      value={emergencyCase.postOpNotes}
+                      onChange={handleInputChange}
                       sx={{
                         "& .MuiOutlinedInput-root": {
                           borderRadius: 1,
@@ -1162,7 +1216,7 @@ function EmergencyCase() {
           <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
             <Grid item sx={{ marginRight: 1 }}>
               <MDButton style={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="info">
-                <button type="submit" className="text-xs">
+                <button onClick={handleSubmit} type="submit" className="text-xs">
                   SAVE
                 </button>
               </MDButton>
