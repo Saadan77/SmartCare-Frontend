@@ -34,6 +34,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
+import { createEmergencyCase } from "services/EmergencyCase";
 
 function EmergencyCase() {
   const [dob, setDob] = React.useState(null);
@@ -57,6 +58,134 @@ function EmergencyCase() {
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
+  };
+
+  const [emergencyCase, setEmergencyCase] = useState({
+    patientId: "",
+    fullName: "",
+    gender: "",
+    maritalStatus: "",
+    dob: "",
+    age: "",
+    phoneNo: "",
+    pulse: "",
+    bloodPressure: "",
+    respiratoryRate: "",
+    oxygenSaturation: "",
+    temperature: "",
+    painLevel: "",
+    levelOfConsciousness: "",
+    capillaryRefillTime: "",
+    bloodGlucoseLevel: "",
+    severityLevel: "",
+    medication: "",
+    tests: "",
+    treatment: "",
+    diagnosis: "",
+    instructions: "",
+    referTo: "",
+    refferalReason: "",
+    surgeryType: "",
+    recoveryStatus: "",
+    room: "",
+    preOpNotes: "",
+    postOpNotes: "",
+    isActive: true,
+    createdBy: null,
+    createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+    updateBy: null,
+    updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEmergencyCase({
+      ...emergencyCase,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const saveEmergencyCase = {
+        patientId: emergencyCase.patientId,
+        fullName: emergencyCase.fullName,
+        gender: emergencyCase.gender,
+        maritalStatus: emergencyCase.maritalStatus,
+        dob: emergencyCase.dob,
+        age: emergencyCase.age,
+        phoneNo: emergencyCase.phoneNo,
+        pulse: emergencyCase.pulse,
+        bloodPressure: emergencyCase.bloodPressure,
+        respiratoryRate: emergencyCase.respiratoryRate,
+        oxygenSaturation: emergencyCase.oxygenSaturation,
+        temperature: emergencyCase.temperature,
+        painLevel: emergencyCase.painLevel,
+        levelOfConsciousness: emergencyCase.levelOfConsciousness,
+        capillaryRefillTime: emergencyCase.capillaryRefillTime,
+        bloodGlucoseLevel: emergencyCase.bloodGlucoseLevel,
+        severityLevel: emergencyCase.severityLevel,
+        medication: emergencyCase.medication,
+        tests: emergencyCase.tests,
+        treatment: emergencyCase.treatment,
+        diagnosis: emergencyCase.diagnosis,
+        instructions: emergencyCase.instructions,
+        surgeryType: emergencyCase.surgeryType,
+        recoveryStatus: emergencyCase.recoveryStatus,
+        room: emergencyCase.room,
+        preOpNotes: emergencyCase.preOpNotes,
+        postOpNotes: emergencyCase.postOpNotes,
+        isActive: emergencyCase.isActive,
+        createdBy: emergencyCase.createdBy,
+        createdDate: emergencyCase.createdDate,
+        updateBy: emergencyCase.updateBy,
+        updatedDate: emergencyCase.updatedDate,
+      };
+
+      await createPatient(saveEmergencyCase, token);
+      toast.success("Emergency case registered.");
+
+      setPatient({
+        patientId: "",
+        fullName: "",
+        gender: "",
+        maritalStatus: "",
+        dob: "",
+        age: "",
+        phoneNo: "",
+        pulse: "",
+        bloodPressure: "",
+        respiratoryRate: "",
+        oxygenSaturation: "",
+        temperature: "",
+        painLevel: "",
+        levelOfConsciousness: "",
+        capillaryRefillTime: "",
+        bloodGlucoseLevel: "",
+        severityLevel: "",
+        medication: "",
+        tests: "",
+        treatment: "",
+        diagnosis: "",
+        instructions: "",
+        referTo: "",
+        refferalReason: "",
+        surgeryType: "",
+        recoveryStatus: "",
+        room: "",
+        preOpNotes: "",
+        postOpNotes: "",
+        isActive: true,
+        createdBy: null,
+        createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        updateBy: null,
+        updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+      });
+    } catch (error) {
+      console.error("Error creating emergency case:", error.message);
+      toast.error("Failed to register emergency case.");
+    }
   };
 
   return (
@@ -720,8 +849,7 @@ function EmergencyCase() {
 
                     {/* Select Menu */}
                     <select
-                      id="severity-level"
-                      name="severity-level"
+                      name="severityLevel"
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
                       {/* Fetch options from the lab system */}
@@ -748,7 +876,6 @@ function EmergencyCase() {
 
                     {/* Select Menu */}
                     <select
-                      id="medication"
                       name="medication"
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
@@ -774,7 +901,6 @@ function EmergencyCase() {
 
                     {/* Select Menu */}
                     <select
-                      id="tests"
                       name="tests"
                       className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                     >
