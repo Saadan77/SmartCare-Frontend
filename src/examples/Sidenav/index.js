@@ -39,6 +39,8 @@ import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
+import logo from "../../assets/images/logo.png";
+
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
@@ -161,7 +163,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
+          {brand && <MDBox component="img" src={logo} alt="Brand" width="5rem" />}
           <MDBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}

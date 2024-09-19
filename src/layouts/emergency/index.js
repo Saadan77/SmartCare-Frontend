@@ -51,6 +51,14 @@ function EmergencyCase() {
     setActiveSection(section);
   };
 
+  const handleNextSection = () => {
+    if (activeSection === "visitCategory") {
+      setActiveSection("vitals");
+    } else if (activeSection === "vitals") {
+      setActiveSection("operationTheater");
+    }
+  };
+
   const { token } = useToken();
 
   const [emergencyCase, setEmergencyCase] = useState({
@@ -195,7 +203,7 @@ function EmergencyCase() {
     <DashboardLayout>
       <ToastContainer />
       <DashboardNavbar />
-      <Paper elevation={3} sx={{ padding: 3, marginTop: 5 }} className="h-screen">
+      <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }} className="h-screen">
         <section id="nav">
           <nav className="w-full mb-3">
             <div>
@@ -847,6 +855,24 @@ function EmergencyCase() {
                   </Box>
                 </Grid>
               </Grid>
+
+              <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
+                <Grid item sx={{ marginRight: 1 }}>
+                  <MDButton
+                    style={{ borderRadius: 0, minHeight: 0 }}
+                    variant="gradient"
+                    color="info"
+                    onClick={handleNextSection}
+                  >
+                    <button className="text-xs">CONTINUE</button>
+                  </MDButton>
+                </Grid>
+                <Grid item>
+                  <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+                    <span className="text-xs">Cancel</span>
+                  </MDButton>
+                </Grid>
+              </Grid>
             </>
           )}
 
@@ -1090,6 +1116,24 @@ function EmergencyCase() {
                   />
                 </Grid>
               </Grid>
+
+              <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
+                <Grid item sx={{ marginRight: 1 }}>
+                  <MDButton
+                    style={{ borderRadius: 0, minHeight: 0 }}
+                    variant="gradient"
+                    color="info"
+                    onClick={handleNextSection}
+                  >
+                    <button className="text-xs">CONTINUE</button>
+                  </MDButton>
+                </Grid>
+                <Grid item>
+                  <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+                    <span className="text-xs">Clear</span>
+                  </MDButton>
+                </Grid>
+              </Grid>
             </>
           )}
 
@@ -1210,23 +1254,27 @@ function EmergencyCase() {
                   </Box>
                 </Grid>
               </Grid>
+
+              <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
+                <Grid item sx={{ marginRight: 1 }}>
+                  <MDButton
+                    style={{ borderRadius: 0, minHeight: 0 }}
+                    variant="gradient"
+                    color="info"
+                  >
+                    <button onClick={handleSubmit} type="submit" className="text-xs">
+                      SAVE
+                    </button>
+                  </MDButton>
+                </Grid>
+                <Grid item>
+                  <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+                    <span className="text-xs">Cancel</span>
+                  </MDButton>
+                </Grid>
+              </Grid>
             </>
           )}
-
-          <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
-            <Grid item sx={{ marginRight: 1 }}>
-              <MDButton style={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="info">
-                <button onClick={handleSubmit} type="submit" className="text-xs">
-                  SAVE
-                </button>
-              </MDButton>
-            </Grid>
-            <Grid item>
-              <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-                <span className="text-xs">Cancel</span>
-              </MDButton>
-            </Grid>
-          </Grid>
         </form>
       </Paper>
     </DashboardLayout>
