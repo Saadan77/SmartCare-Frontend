@@ -345,7 +345,7 @@ function PatientRegistration() {
               <>
                 <Box>
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-gray-500 font-semibold mr-2">
+                    <p className="text-base text-[#42424a] font-semibold mr-2">
                       Personal Information
                     </p>
                   </Typography>
@@ -562,7 +562,7 @@ function PatientRegistration() {
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-gray-500 font-semibold mr-2">
+                    <p className="text-base text-[#42424a] font-semibold mr-2">
                       Contact Information
                     </p>
                   </Typography>
@@ -747,7 +747,7 @@ function PatientRegistration() {
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-gray-500 font-semibold mr-2">
+                    <p className="text-base text-[#42424a] font-semibold mr-2">
                       Identification Information
                     </p>
                   </Typography>
@@ -904,7 +904,7 @@ function PatientRegistration() {
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-gray-500 font-semibold mr-2">
+                    <p className="text-base text-[#42424a] font-semibold mr-2">
                       Emergency Contact Information
                     </p>
                   </Typography>
@@ -1075,7 +1075,7 @@ function PatientRegistration() {
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-gray-500 font-semibold mr-2">
+                    <p className="text-base text-[#42424a] font-semibold mr-2">
                       Insurance Information
                     </p>
                   </Typography>

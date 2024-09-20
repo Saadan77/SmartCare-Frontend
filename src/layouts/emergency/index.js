@@ -288,7 +288,7 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">Visit Category</p>
+                  <p className="text-base text-[#42424a] font-semibold mr-2">Visit Category</p>
                 </Typography>
               </Box>
 
@@ -312,7 +312,9 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">Personal Information</p>
+                  <p className="text-base text-[#42424a] font-semibold mr-2">
+                    Personal Information
+                  </p>
                 </Typography>
               </Box>
 
@@ -581,7 +583,7 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">Add Vitals</p>
+                  <p className="text-base text-[#42424a] font-semibold mr-2">Add Vitals</p>
                 </Typography>
               </Box>
 
@@ -880,7 +882,7 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">Vital Details</p>
+                  <p className="text-base text-[#42424a] font-semibold mr-2">Vital Details</p>
                 </Typography>
               </Box>
 
@@ -1053,7 +1055,7 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">
+                  <p className="text-base text-[#42424a] font-semibold mr-2">
                     Interdepartmental Referrals
                   </p>
                 </Typography>
@@ -1138,7 +1140,7 @@ function EmergencyCase() {
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-gray-500 font-semibold mr-2">
+                  <p className="text-base text-[#42424a] font-semibold mr-2">
                     Operation Theater and Post-Op Care
                   </p>
                 </Typography>
