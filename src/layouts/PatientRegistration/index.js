@@ -32,6 +32,23 @@ function PatientRegistration() {
 
   const [patients, setPatients] = useState([]);
 
+  const formatDate = (date) => {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const getPatientCountForToday = (patients) => {
+    const today = formatDate(new Date());
+    return (
+      patients.filter((patient) => {
+        const registrationDate = new Date(patient.registrationDate);
+        return formatDate(registrationDate) === today;
+      }).length + 1
+    );
+  };
+
   useEffect(() => {
     if (!token) {
       console.log("Token is not available yet.");
@@ -39,11 +56,12 @@ function PatientRegistration() {
     }
     const fetchData = async () => {
       try {
-        if (token) {
-          const reponsePatients = await fetchPatients(token);
-          setPatients(reponsePatients || []);
-          console.log(reponsePatients);
-        }
+        const reponsePatients = await fetchPatients(token);
+        setPatients(reponsePatients || []);
+
+        const count = getPatientCountForToday(reponsePatients || []);
+        const newPatientId = `${count.toString().padStart(5, "0")}-${formatDate(new Date())}`;
+        setPatient((prev) => ({ ...prev, patientId: newPatientId }));
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
@@ -78,7 +96,6 @@ function PatientRegistration() {
     passportNo: "",
     driverLicenseNo: "",
     photoId: "",
-    registrationDate: new Date().toISOString().slice(0, 19).replace("T", " "),
     isActive: true,
     createdBy: null,
     createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
@@ -92,9 +109,18 @@ function PatientRegistration() {
       ...patient,
       [name]: value,
     });
+
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
+    const currentRegistrationDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+
     e.preventDefault();
     try {
       const savePatient = {
@@ -124,7 +150,7 @@ function PatientRegistration() {
         passportNo: patient.passportNo,
         driverLicenseNo: patient.driverLicenseNo,
         photoId: patient.photoId,
-        registrationDate: patient.registrationDate,
+        registrationDate: currentRegistrationDate,
         isActive: patient.isActive,
         createdBy: patient.createdBy,
         createdDate: patient.createdDate,
@@ -162,7 +188,7 @@ function PatientRegistration() {
         passportNo: "",
         driverLicenseNo: "",
         photoId: "",
-        registrationDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        registrationDate: currentRegistrationDate,
         isActive: true,
         createdBy: null,
         createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
@@ -172,16 +198,6 @@ function PatientRegistration() {
     } catch (error) {
       console.error("Error creating patient:", error.message);
       toast.error("Failed to register patient.");
-    }
-  };
-
-  const [dob, setDob] = React.useState(null);
-
-  const handleDateChange = (newDate) => {
-    patient.dob = setDob(newDate);
-    if (newDate) {
-      const calculatedAge = dayjs().diff(newDate, "year");
-      patient.age = calculatedAge;
     }
   };
 
@@ -228,23 +244,76 @@ function PatientRegistration() {
         updateBy: null,
         updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
       });
-      setDob(null);
       setShowInsuranceForm(false);
     },
-    [setPatient, setDob, setShowInsuranceForm]
+    [setPatient, setShowInsuranceForm]
   );
 
   const [activeSection, setActiveSection] = useState("patientDetails");
+  const [errors, setErrors] = useState({});
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
 
   const handleNextSection = () => {
-    if (activeSection === "patientDetails") {
-      setActiveSection("emergencyInfo");
-    } else if (activeSection === "emergencyInfo") {
-      setActiveSection("insuranceDetails");
+    const newErrors = {};
+    if (!patient.patientId) {
+      newErrors.patientId = "Patient ID is required";
+    }
+    if (!patient.fullName) {
+      newErrors.fullName = "Full Name is required";
+    }
+    if (!patient.dob) {
+      newErrors.dob = "Date of birth is required";
+    }
+    if (!patient.age) {
+      newErrors.age = "Age is required";
+    }
+    if (!patient.gender) {
+      newErrors.gender = "Gender is required";
+    }
+    if (!patient.maritalStatus) {
+      newErrors.maritalStatus = "Maritial status is required";
+    }
+    if (!patient.phoneNo) {
+      newErrors.phoneNo = "Phone number is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+      console.log("Current section:", activeSection);
+      if (activeSection === "patientDetails") {
+        setActiveSection("emergencyInfo");
+      } else if (activeSection === "emergencyInfo") {
+        setActiveSection("insuranceDetails");
+      }
+    }
+  };
+
+  const handleDateChange = (newDate) => {
+    if (newDate) {
+      const calculatedAge = dayjs().diff(newDate, "year");
+
+      setPatient((prevPatient) => ({
+        ...prevPatient,
+        dob: newDate,
+        age: calculatedAge,
+      }));
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        dob: "",
+        age: "",
+      }));
+    } else {
+      setPatient((prevPatient) => ({
+        ...prevPatient,
+        dob: "",
+        age: "",
+      }));
     }
   };
 
@@ -361,10 +430,18 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs mb-2">Patient ID:</p>
+                      <p className="flex flex-row text-xs items-center">
+                        Patient ID:<span className="text-red-600 text-base mx-2">*</span>
+                      </p>
                       <TextField
                         variant="outlined"
                         fullWidth
+                        name="patientId"
+                        readOnly
+                        value={patient.patientId || ""}
+                        InputProps={{
+                          readOnly: true,
+                        }}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -386,13 +463,18 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs mb-2">Full Name:</p>
+                      <p className="flex flex-row text-xs items-center">
+                        Full Name:<span className="text-red-600 text-base mx-2">*</span>
+                      </p>
                       <TextField
                         variant="outlined"
                         fullWidth
                         name="fullName"
+                        required
                         value={patient.fullName}
                         onChange={handleInputChange}
+                        error={!!errors.fullName}
+                        helperText={errors.fullName}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -416,8 +498,8 @@ function PatientRegistration() {
                   >
                     <div>
                       {/* Label */}
-                      <p htmlFor="gender" className="text-xs mb-2">
-                        Gender:
+                      <p htmlFor="gender" className="flex flex-row text-xs items-center">
+                        Gender:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
 
                       {/* Select Menu */}
@@ -426,13 +508,20 @@ function PatientRegistration() {
                         name="gender"
                         value={patient.gender}
                         onChange={handleInputChange}
-                        className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required
+                        className={`block w-full h-7 border ${
+                          errors.gender ? "border-red-500" : "border-gray-300"
+                        } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                       >
-                        {/* Fetch options from the lab system */}
+                        <option value="">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
+                        <option value="Transgender">Transgender</option>
                         <option value="Other">Other</option>
                       </select>
+                      {errors.gender && (
+                        <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+                      )}
                     </div>
                   </Grid>
 
@@ -447,24 +536,30 @@ function PatientRegistration() {
                   >
                     <div>
                       {/* Label */}
-                      <p htmlFor="maritalStatus" className="text-xs mb-2">
-                        Maritial Status:
+                      <p htmlFor="maritalStatus" className="flex flex-row text-xs items-center">
+                        Maritial Status:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
 
                       {/* Select Menu */}
                       <select
                         id="maritalStatus"
                         name="maritalStatus"
+                        required
                         value={patient.maritalStatus}
                         onChange={handleInputChange}
-                        className="block w-3/4 h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className={`block w-full h-7 border ${
+                          errors.maritalStatus ? "border-red-500" : "border-gray-300"
+                        } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                       >
-                        {/* Fetch options from the lab system */}
+                        <option value="">Select Marriage Status</option>
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
                         <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option>
                       </select>
+                      {errors.maritalStatus && (
+                        <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
+                      )}
                     </div>
                   </Grid>
 
@@ -479,20 +574,26 @@ function PatientRegistration() {
                       }}
                     >
                       <Box>
-                        <p className="text-xs mb-2">Date of Birth:</p>
+                        <p className="flex flex-row text-xs items-center">
+                          Date of Birth:<span className="text-red-600 text-base mx-2">*</span>
+                        </p>
                         <DatePicker
-                          value={dob}
                           onChange={(newDate) => handleDateChange(newDate)}
                           renderInput={(params) => (
                             <TextField
                               name="dob"
+                              required
                               value={patient.dob}
+                              onChange={handleInputChange}
                               {...params}
                               fullWidth
                               variant="outlined"
+                              error={!!errors.dob}
+                              helperText={errors.dob}
                             />
                           )}
                         />
+                        {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
                       </Box>
                     </Grid>
 
@@ -506,14 +607,21 @@ function PatientRegistration() {
                       }}
                     >
                       <Box>
-                        <p className="text-xs mb-2">Age:</p>
+                        <p className="flex flex-row text-xs items-center">
+                          Age:<span className="text-red-600 text-base mx-2">*</span>
+                        </p>
                         <TextField
                           variant="outlined"
-                          readOnly
                           fullWidth
+                          required
                           name="age"
                           onChange={handleInputChange}
                           value={patient.age}
+                          error={!!errors.age}
+                          helperText={errors.age}
+                          InputProps={{
+                            readOnly: true,
+                          }}
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
@@ -670,6 +778,8 @@ function PatientRegistration() {
                         name="phoneNo"
                         value={patient.phoneNo}
                         onChange={handleInputChange}
+                        error={!!errors.phoneNo}
+                        helperText={errors.phoneNo}
                         fullWidth
                         sx={{
                           "& .MuiOutlinedInput-root": {
@@ -870,6 +980,7 @@ function PatientRegistration() {
                   <Grid item sx={{ marginRight: 1 }}>
                     <MDButton
                       variant="gradient"
+                      onClick={handleNextSection}
                       style={{
                         borderRadius: 0,
                         minHeight: 0,
@@ -877,9 +988,7 @@ function PatientRegistration() {
                         color: "White",
                       }}
                     >
-                      <button onClick={handleNextSection} className="text-xs">
-                        CONTINUE
-                      </button>
+                      <span className="text-xs">Continue</span>
                     </MDButton>
                   </Grid>
                   <Grid item>
@@ -1040,6 +1149,7 @@ function PatientRegistration() {
                   <Grid item sx={{ marginRight: 1 }}>
                     <MDButton
                       variant="gradient"
+                      onClick={handleNextSection}
                       style={{
                         borderRadius: 0,
                         minHeight: 0,
@@ -1047,9 +1157,7 @@ function PatientRegistration() {
                         color: "White",
                       }}
                     >
-                      <button onClick={handleNextSection} className="text-xs">
-                        CONTINUE
-                      </button>
+                      <span className="text-xs">Continue</span>
                     </MDButton>
                   </Grid>
                   <Grid item>

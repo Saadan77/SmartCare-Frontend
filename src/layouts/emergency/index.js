@@ -336,6 +336,7 @@ function EmergencyCase() {
                         variant="outlined"
                         fullWidth
                         name="patientId"
+                        readonly
                         value="000001-08-09-2024"
                         onChange={handleInputChange}
                         InputProps={{
