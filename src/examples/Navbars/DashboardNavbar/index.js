@@ -76,7 +76,14 @@ function DashboardNavbar({ absolute, light }) {
         minHeight: 0,
       })}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          paddingTop: "0 !important",
+          paddingBottom: "0 !important",
+        }}
+      >
         <Typography variant="h5" component="div">
           {currentRoute ? currentRoute.name : "Default Heading"}
         </Typography>

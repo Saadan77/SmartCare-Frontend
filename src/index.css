@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.css-mvs481 {
+  color: black !important;
+  padding: 0.25rem !important;
+}
+
+.css-mvs481 .css-7qqlnw-MuiListItemIcon-root {
+  color: black !important;
+}
+
+.css-jd7pm9-MuiListItemText-root span {
+  font-weight: 400 !important;
+}
+
+.css-1x3v3vy {
+  background: #1694c4 !important;
+}

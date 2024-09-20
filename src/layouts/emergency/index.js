@@ -203,7 +203,7 @@ function EmergencyCase() {
     <DashboardLayout>
       <ToastContainer />
       <DashboardNavbar />
-      <Paper elevation={3} sx={{ padding: 2, marginTop: 3 }} className="h-screen">
+      <Paper elevation={3} sx={{ padding: 2, marginTop: 2 }} className="h-screen">
         <section id="nav">
           <nav className="w-full mb-3">
             <div>
@@ -284,12 +284,11 @@ function EmergencyCase() {
               {/* Visit Category */}
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">Visit Category</p>
+                  <p className="text-base text-gray-500 font-semibold mr-2">Visit Category</p>
                 </Typography>
               </Box>
 
@@ -309,14 +308,11 @@ function EmergencyCase() {
 
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">
-                    Personal Information
-                  </p>
+                  <p className="text-base text-gray-500 font-semibold mr-2">Personal Information</p>
                 </Typography>
               </Box>
 
@@ -581,12 +577,11 @@ function EmergencyCase() {
               {/* Add Vitals Section */}
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">Add Vitals</p>
+                  <p className="text-base text-gray-500 font-semibold mr-2">Add Vitals</p>
                 </Typography>
               </Box>
 
@@ -881,12 +876,11 @@ function EmergencyCase() {
               {/* Vital Details Section */}
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">Vital Details</p>
+                  <p className="text-base text-gray-500 font-semibold mr-2">Vital Details</p>
                 </Typography>
               </Box>
 
@@ -1055,12 +1049,11 @@ function EmergencyCase() {
 
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">
+                  <p className="text-base text-gray-500 font-semibold mr-2">
                     Interdepartmental Referrals
                   </p>
                 </Typography>
@@ -1141,12 +1134,11 @@ function EmergencyCase() {
             <>
               <Box
                 sx={{
-                  paddingLeft: 1,
                   marginTop: 2,
                 }}
               >
                 <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                  <p className="text-base text-[#1694c4] font-semibold mr-2">
+                  <p className="text-base text-gray-500 font-semibold mr-2">
                     Operation Theater and Post-Op Care
                   </p>
                 </Typography>

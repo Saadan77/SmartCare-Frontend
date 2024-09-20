@@ -240,6 +240,14 @@ function PatientRegistration() {
     setActiveSection(section);
   };
 
+  const handleNextSection = () => {
+    if (activeSection === "patientDetails") {
+      setActiveSection("emergencyInfo");
+    } else if (activeSection === "emergencyInfo") {
+      setActiveSection("insuranceDetails");
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -335,13 +343,9 @@ function PatientRegistration() {
           <form onSubmit={handleSubmit}>
             {activeSection === "patientDetails" && (
               <>
-                <Box
-                  sx={{
-                    paddingLeft: 1,
-                  }}
-                >
+                <Box>
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                    <p className="text-base text-gray-500 font-semibold mr-2">
                       Personal Information
                     </p>
                   </Typography>
@@ -554,12 +558,11 @@ function PatientRegistration() {
 
                 <Box
                   sx={{
-                    paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                    <p className="text-base text-gray-500 font-semibold mr-2">
                       Contact Information
                     </p>
                   </Typography>
@@ -740,12 +743,11 @@ function PatientRegistration() {
                 {/* Identification Information Heading */}
                 <Box
                   sx={{
-                    paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                    <p className="text-base text-gray-500 font-semibold mr-2">
                       Identification Information
                     </p>
                   </Typography>
@@ -857,6 +859,40 @@ function PatientRegistration() {
                     </Box>
                   </Grid>
                 </Grid>
+                <Grid
+                  container
+                  sx={{
+                    marginTop: 1,
+                    justifyContent: "end",
+                  }}
+                  spacing={2}
+                >
+                  <Grid item sx={{ marginRight: 1 }}>
+                    <MDButton
+                      variant="gradient"
+                      style={{
+                        borderRadius: 0,
+                        minHeight: 0,
+                        backgroundColor: "#1694c4",
+                        color: "White",
+                      }}
+                    >
+                      <button onClick={handleNextSection} className="text-xs">
+                        CONTINUE
+                      </button>
+                    </MDButton>
+                  </Grid>
+                  <Grid item>
+                    <MDButton
+                      sx={{ borderRadius: 0, minHeight: 0 }}
+                      variant="gradient"
+                      color="light"
+                      onClick={(e) => handleClear(e)}
+                    >
+                      <span className="text-xs">Clear</span>
+                    </MDButton>
+                  </Grid>
+                </Grid>
               </>
             )}
 
@@ -864,12 +900,11 @@ function PatientRegistration() {
               <>
                 <Box
                   sx={{
-                    paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                    <p className="text-base text-gray-500 font-semibold mr-2">
                       Emergency Contact Information
                     </p>
                   </Typography>
@@ -994,6 +1029,40 @@ function PatientRegistration() {
                     </Box>
                   </Grid>
                 </Grid>
+                <Grid
+                  container
+                  sx={{
+                    marginTop: 1,
+                    justifyContent: "end",
+                  }}
+                  spacing={2}
+                >
+                  <Grid item sx={{ marginRight: 1 }}>
+                    <MDButton
+                      variant="gradient"
+                      style={{
+                        borderRadius: 0,
+                        minHeight: 0,
+                        backgroundColor: "#1694c4",
+                        color: "White",
+                      }}
+                    >
+                      <button onClick={handleNextSection} className="text-xs">
+                        CONTINUE
+                      </button>
+                    </MDButton>
+                  </Grid>
+                  <Grid item>
+                    <MDButton
+                      sx={{ borderRadius: 0, minHeight: 0 }}
+                      variant="gradient"
+                      color="light"
+                      onClick={(e) => handleClear(e)}
+                    >
+                      <span className="text-xs">Clear</span>
+                    </MDButton>
+                  </Grid>
+                </Grid>
               </>
             )}
 
@@ -1002,12 +1071,11 @@ function PatientRegistration() {
                 {/* Insurance Information Heading */}
                 <Box
                   sx={{
-                    paddingLeft: 1,
                     marginTop: 2,
                   }}
                 >
                   <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                    <p className="text-base text-[#1694c4] font-semibold mr-2">
+                    <p className="text-base text-gray-500 font-semibold mr-2">
                       Insurance Information
                     </p>
                   </Typography>
@@ -1182,43 +1250,42 @@ function PatientRegistration() {
                     </Grid>
                   </Grid>
                 )}
+                <Grid
+                  container
+                  sx={{
+                    marginTop: 1,
+                    justifyContent: "end",
+                  }}
+                  spacing={2}
+                >
+                  <Grid item sx={{ marginRight: 1 }}>
+                    <MDButton
+                      variant="gradient"
+                      style={{
+                        borderRadius: 0,
+                        minHeight: 0,
+                        backgroundColor: "#1694c4",
+                        color: "White",
+                      }}
+                    >
+                      <button onClick={handleSubmit} type="submit" className="text-xs">
+                        SAVE
+                      </button>
+                    </MDButton>
+                  </Grid>
+                  <Grid item>
+                    <MDButton
+                      sx={{ borderRadius: 0, minHeight: 0 }}
+                      variant="gradient"
+                      color="light"
+                      onClick={(e) => handleClear(e)}
+                    >
+                      <span className="text-xs">Cancel</span>
+                    </MDButton>
+                  </Grid>
+                </Grid>
               </>
             )}
-
-            <Grid
-              container
-              sx={{
-                marginTop: 1,
-                justifyContent: "end",
-              }}
-              spacing={2}
-            >
-              <Grid item sx={{ marginRight: 1 }}>
-                <MDButton
-                  variant="gradient"
-                  style={{
-                    borderRadius: 0,
-                    minHeight: 0,
-                    backgroundColor: "#1694c4",
-                    color: "White",
-                  }}
-                >
-                  <button onClick={handleSubmit} type="submit" className="text-xs">
-                    SAVE
-                  </button>
-                </MDButton>
-              </Grid>
-              <Grid item>
-                <MDButton
-                  sx={{ borderRadius: 0, minHeight: 0 }}
-                  variant="gradient"
-                  color="light"
-                  onClick={(e) => handleClear(e)}
-                >
-                  <span className="text-xs">Cancel</span>
-                </MDButton>
-              </Grid>
-            </Grid>
           </form>
         </Paper>
       </Container>
