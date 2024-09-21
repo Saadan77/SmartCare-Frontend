@@ -11,6 +11,7 @@ async function fetchPatients(token) {
       gender: 1,
       phoneNo: 1,
       createdDate: 1,
+      registrationDate: 1,
     },
   });
 

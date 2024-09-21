@@ -32,44 +32,8 @@ function PatientRegistration() {
 
   const [patients, setPatients] = useState([]);
 
-  const formatDate = (date) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
-
-  const getPatientCountForToday = (patients) => {
-    const today = formatDate(new Date());
-    return (
-      patients.filter((patient) => {
-        const registrationDate = new Date(patient.createdDate);
-        return formatDate(registrationDate) === today;
-      }).length + 1
-    );
-  };
-
-  useEffect(() => {
-    if (!token) {
-      console.log("Token is not available yet.");
-      return;
-    }
-    const fetchData = async () => {
-      try {
-        const reponsePatients = await fetchPatients(token);
-        setPatients(reponsePatients || []);
-
-        const count = getPatientCountForToday(reponsePatients || []);
-        const newPatientId = `${count.toString().padStart(5, "0")}-${formatDate(new Date())}`;
-        setPatient((prev) => ({ ...prev, patientId: newPatientId }));
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      }
-    };
-    fetchData();
-  }, [token]);
-
   const [patient, setPatient] = useState({
+    patientId: "",
     fullName: "",
     gender: "",
     maritalStatus: "",
@@ -96,12 +60,41 @@ function PatientRegistration() {
     passportNo: "",
     driverLicenseNo: "",
     photoId: "",
-    isActive: true,
-    createdBy: null,
-    createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-    updateBy: null,
-    updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
   });
+
+  const formatDate = (date) => {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
+  const today = formatDate(new Date());
+
+  const getPatientCountForToday = (patients) => {
+    return (
+      patients.filter((patient) => {
+        const registrationDate = new Date(patient.createdDate);
+        return formatDate(registrationDate) === today;
+      }).length + 1
+    );
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responsePatients = await fetchPatients(token);
+        setPatients(responsePatients || []);
+
+        const count = getPatientCountForToday(responsePatients || []);
+        const newPatientId = `${count.toString().padStart(5, "0")}-${formatDate(new Date())}`;
+        setPatient((prev) => ({ ...prev, patientId: newPatientId }));
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+    fetchData();
+  }, [token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -116,12 +109,22 @@ function PatientRegistration() {
         [name]: "",
       }));
     }
+
+    if (name === "fullName") {
+      const regex = /^[a-zA-Z\s]*$/;
+      if (!regex.test(value)) {
+        setErrors({ ...errors, fullName: "Only alphabets are allowed" });
+      } else {
+        setErrors({ ...errors, fullName: "" });
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
-    const currentRegistrationDate = new Date().toISOString().slice(0, 19).replace("T", " ");
-
     e.preventDefault();
+
+    const currentDate = new Date();
+
     try {
       const savePatient = {
         patientId: patient.patientId,
@@ -151,17 +154,19 @@ function PatientRegistration() {
         passportNo: patient.passportNo,
         driverLicenseNo: patient.driverLicenseNo,
         photoId: patient.photoId,
-        isActive: patient.isActive,
-        createdBy: patient.createdBy,
-        createdDate: currentRegistrationDate,
+        registrationDate: currentDate,
+        isActive: true,
+        createdBy: null,
+        createdDate: currentDate,
         updateBy: patient.updateBy,
-        updatedDate: currentRegistrationDate,
+        updatedDate: currentDate,
       };
 
       await createPatient(savePatient, token);
       toast.success("Patient registered successfully.");
 
       setPatient({
+        patientId: "",
         fullName: "",
         gender: "",
         maritalStatus: "",
@@ -188,11 +193,6 @@ function PatientRegistration() {
         passportNo: "",
         driverLicenseNo: "",
         photoId: "",
-        isActive: true,
-        createdBy: null,
-        createdDate: currentRegistrationDate,
-        updateBy: null,
-        updatedDate: currentRegistrationDate,
       });
     } catch (error) {
       console.error("Error creating patient:", error.message);
@@ -210,6 +210,7 @@ function PatientRegistration() {
     (e) => {
       e.preventDefault();
       setPatient({
+        patientId: "",
         fullName: "",
         gender: "",
         maritalStatus: "",
@@ -236,11 +237,6 @@ function PatientRegistration() {
         passportNo: "",
         driverLicenseNo: "",
         photoId: "",
-        isActive: true,
-        createdBy: null,
-        createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
-        updateBy: null,
-        updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
       });
       setShowInsuranceForm(false);
     },
@@ -256,9 +252,6 @@ function PatientRegistration() {
 
   const handleNextSection = () => {
     const newErrors = {};
-    if (!patient.patientId) {
-      newErrors.patientId = "Patient ID is required";
-    }
     if (!patient.fullName) {
       newErrors.fullName = "Full Name is required";
     }
@@ -282,7 +275,6 @@ function PatientRegistration() {
       setErrors(newErrors);
     } else {
       setErrors({});
-      console.log("Current section:", activeSection);
       if (activeSection === "patientDetails") {
         setActiveSection("emergencyInfo");
       } else if (activeSection === "emergencyInfo") {
@@ -440,14 +432,6 @@ function PatientRegistration() {
                         InputProps={{
                           readOnly: true,
                         }}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -473,14 +457,6 @@ function PatientRegistration() {
                         onChange={handleInputChange}
                         error={!!errors.fullName}
                         helperText={errors.fullName}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -620,14 +596,6 @@ function PatientRegistration() {
                           InputProps={{
                             readOnly: true,
                           }}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>
@@ -649,14 +617,6 @@ function PatientRegistration() {
                         name="nationality"
                         value={patient.nationality}
                         onChange={handleInputChange}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -691,14 +651,6 @@ function PatientRegistration() {
                         name="address"
                         value={patient.address}
                         onChange={handleInputChange}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -719,14 +671,6 @@ function PatientRegistration() {
                         value={patient.city}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -747,14 +691,6 @@ function PatientRegistration() {
                         value={patient.area}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -779,14 +715,6 @@ function PatientRegistration() {
                         error={!!errors.phoneNo}
                         helperText={errors.phoneNo}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -807,14 +735,6 @@ function PatientRegistration() {
                         name="alternatePhoneNumber"
                         value={patient.alternatePhoneNumber}
                         onChange={handleInputChange}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -835,14 +755,6 @@ function PatientRegistration() {
                         value={patient.email}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -874,18 +786,7 @@ function PatientRegistration() {
                   >
                     <Box>
                       <p className="text-xs mb-2">National ID Number/SSN:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
-                      />
+                      <TextField variant="outlined" fullWidth />
                     </Box>
                   </Grid>
 
@@ -900,18 +801,7 @@ function PatientRegistration() {
                   >
                     <Box>
                       <p className="text-xs mb-2">Passport Number:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
-                      />
+                      <TextField variant="outlined" fullWidth />
                     </Box>
                   </Grid>
 
@@ -926,18 +816,7 @@ function PatientRegistration() {
                   >
                     <Box>
                       <p className="text-xs mb-2">Driver’s License Number:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
-                      />
+                      <TextField variant="outlined" fullWidth />
                     </Box>
                   </Grid>
 
@@ -952,18 +831,7 @@ function PatientRegistration() {
                   >
                     <Box>
                       <p className="text-xs mb-2">Photo ID:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
-                      />
+                      <TextField variant="outlined" fullWidth />
                     </Box>
                   </Grid>
                 </Grid>
@@ -1037,14 +905,6 @@ function PatientRegistration() {
                         value={patient.emergencyContactName}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -1096,14 +956,6 @@ function PatientRegistration() {
                         name="emergencyContactNo"
                         value={patient.emergencyContactNo}
                         onChange={handleInputChange}
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -1124,14 +976,6 @@ function PatientRegistration() {
                         value={patient.alternateEmergencyContactNo}
                         onChange={handleInputChange}
                         fullWidth
-                        sx={{
-                          "& .MuiOutlinedInput-root": {
-                            borderRadius: 1,
-                          },
-                          "& .MuiOutlinedInput-input": {
-                            height: "0.5rem",
-                          },
-                        }}
                       />
                     </Box>
                   </Grid>
@@ -1227,14 +1071,6 @@ function PatientRegistration() {
                           name="insuranceProvider"
                           value={patient.insuranceProvider}
                           onChange={handleInputChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>
@@ -1256,14 +1092,6 @@ function PatientRegistration() {
                           value={patient.insurancePolicyNumber}
                           onChange={handleInputChange}
                           fullWidth
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>
@@ -1285,14 +1113,6 @@ function PatientRegistration() {
                           name="insuranceGroupNo"
                           value={patient.insuranceGroupNo}
                           onChange={handleInputChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>
@@ -1314,14 +1134,6 @@ function PatientRegistration() {
                           value={patient.policyHolderName}
                           onChange={handleInputChange}
                           fullWidth
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>
@@ -1343,14 +1155,6 @@ function PatientRegistration() {
                           name="policyHolderRelationship"
                           value={patient.policyHolderRelationship}
                           onChange={handleInputChange}
-                          sx={{
-                            "& .MuiOutlinedInput-root": {
-                              borderRadius: 1,
-                            },
-                            "& .MuiOutlinedInput-input": {
-                              height: "0.5rem",
-                            },
-                          }}
                         />
                       </Box>
                     </Grid>

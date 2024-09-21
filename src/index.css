@@ -15,5 +15,17 @@
 }
 
 .css-1xr7jc4-MuiInputBase-input-MuiOutlinedInput-input {
-    height: 0.5rem !important;
+  height: 0.5rem !important;
+}
+
+.MuiOutlinedInput-root {
+  border-radius: 4px !important;
+}
+
+.MuiOutlinedInput-input {
+  height: 0.5rem !important;
+}
+
+.css-19o5iax-MuiGrid-root {
+  padding-top: 5px !important;
 }
