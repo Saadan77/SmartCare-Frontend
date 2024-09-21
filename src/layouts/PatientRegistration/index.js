@@ -27,6 +27,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
 
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 function PatientRegistration() {
   const { token } = useToken();
 
@@ -280,6 +283,18 @@ function PatientRegistration() {
       } else if (activeSection === "emergencyInfo") {
         setActiveSection("insuranceDetails");
       }
+    }
+  };
+
+  const [countryCode, setCountryCode] = useState("");
+
+  const handlePhoneChange = (value, country) => {
+    const isNumeric = /^\d+$/.test(value.replace(/\D/g, ""));
+    if (isNumeric) {
+      setPatient({ ...patient, phoneNo: value });
+      setCountryCode(country.dialCode);
+    } else {
+      setErrors({ ...errors, phoneNo: "Only numbers are allowed" });
     }
   };
 
@@ -707,15 +722,27 @@ function PatientRegistration() {
                       <p className="flex flex-row text-xs items-center">
                         Phone number:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
-                      <TextField
-                        variant="outlined"
-                        name="phoneNo"
+                      <PhoneInput
+                        country={"pak"}
                         value={patient.phoneNo}
-                        onChange={handleInputChange}
-                        error={!!errors.phoneNo}
-                        helperText={errors.phoneNo}
-                        fullWidth
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "phoneNo",
+                          required: true,
+                          autoFocus: true,
+                        }}
+                        containerStyle={{
+                          height: "35px",
+                        }}
+                        inputStyle={{
+                          height: "35px",
+                          width: "250px",
+                        }}
+                        enableAreaCodes={true}
+                        countryCodeEditable={false}
+                        specialLabel=""
                       />
+                      {errors.phoneNo && <p style={{ color: "red" }}>{errors.phoneNo}</p>}
                     </Box>
                   </Grid>
 
