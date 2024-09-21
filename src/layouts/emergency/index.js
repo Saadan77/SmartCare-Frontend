@@ -45,20 +45,6 @@ function EmergencyCase() {
     setShowPatientInfo(event.target.value);
   };
 
-  const [activeSection, setActiveSection] = useState("visitCategory");
-
-  const handleSectionClick = (section) => {
-    setActiveSection(section);
-  };
-
-  const handleNextSection = () => {
-    if (activeSection === "visitCategory") {
-      setActiveSection("vitals");
-    } else if (activeSection === "vitals") {
-      setActiveSection("operationTheater");
-    }
-  };
-
   const { token } = useToken();
 
   const [emergencyCase, setEmergencyCase] = useState({
@@ -98,12 +84,63 @@ function EmergencyCase() {
     updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
   });
 
+  const [activeSection, setActiveSection] = useState("visitCategory");
+  const [errors, setErrors] = useState({});
+
+  const handleSectionClick = (section) => {
+    setActiveSection(section);
+  };
+
+  const handleNextSection = () => {
+    const newErrors = {};
+    // if (!emergencyCase.patientId) {
+    //   newErrors.patientId = "Patient ID is required";
+    // }
+    if (!emergencyCase.fullName) {
+      newErrors.fullName = "Full Name is required";
+    }
+    if (!emergencyCase.dob) {
+      newErrors.dob = "Date of birth is required";
+    }
+    if (!emergencyCase.age) {
+      newErrors.age = "Age is required";
+    }
+    if (!emergencyCase.gender) {
+      newErrors.gender = "Gender is required";
+    }
+    if (!emergencyCase.maritalStatus) {
+      newErrors.maritalStatus = "Maritial status is required";
+    }
+    if (!emergencyCase.phoneNo) {
+      newErrors.phoneNo = "Phone number is required";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+      console.log("Current section:", activeSection);
+      if (activeSection === "visitCategory") {
+        setActiveSection("vitals");
+      } else if (activeSection === "vitals") {
+        setActiveSection("operationTheater");
+      }
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEmergencyCase({
       ...emergencyCase,
       [name]: value,
     });
+
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -189,13 +226,27 @@ function EmergencyCase() {
     }
   };
 
-  const [dob, setDob] = React.useState(null);
-
   const handleDateChange = (newDate) => {
-    emergencyCase.dob = setDob(newDate);
     if (newDate) {
       const calculatedAge = dayjs().diff(newDate, "year");
-      emergencyCase.age = calculatedAge;
+
+      setEmergencyCase((prevPatient) => ({
+        ...prevPatient,
+        dob: newDate,
+        age: calculatedAge,
+      }));
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        dob: "",
+        age: "",
+      }));
+    } else {
+      setEmergencyCase((prevPatient) => ({
+        ...prevPatient,
+        dob: "",
+        age: "",
+      }));
     }
   };
 
@@ -406,6 +457,8 @@ function EmergencyCase() {
                         name="fullName"
                         value={emergencyCase.fullName}
                         onChange={handleInputChange}
+                        error={!!errors.fullName}
+                        helperText={errors.fullName}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -438,13 +491,20 @@ function EmergencyCase() {
                         name="gender"
                         value={emergencyCase.gender}
                         onChange={handleInputChange}
-                        className="block w-full h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        required
+                        className={`block w-full h-7 border ${
+                          errors.gender ? "border-red-500" : "border-gray-300"
+                        } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                       >
-                        {/* Fetch options from the lab system */}
+                        <option value="">Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
+                        <option value="Transgender">Transgender</option>
                         <option value="Other">Other</option>
                       </select>
+                      {errors.gender && (
+                        <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+                      )}
                     </div>
                   </Grid>
 
@@ -467,16 +527,22 @@ function EmergencyCase() {
                       <select
                         id="maritalStatus"
                         name="maritalStatus"
+                        required
                         value={emergencyCase.maritalStatus}
                         onChange={handleInputChange}
-                        className="block w-3/4 h-7 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className={`block w-full h-7 border ${
+                          errors.maritalStatus ? "border-red-500" : "border-gray-300"
+                        } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                       >
-                        {/* Fetch options from the lab system */}
+                        <option value="">Select Marriage Status</option>
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
                         <option value="Divorced">Divorced</option>
                         <option value="Widowed">Widowed</option>
                       </select>
+                      {errors.maritalStatus && (
+                        <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
+                      )}
                     </div>
                   </Grid>
 
@@ -495,17 +561,18 @@ function EmergencyCase() {
                           Date of Birth:<span className="text-red-600 text-base mx-2">*</span>
                         </p>
                         <DatePicker
-                          value={dob}
                           onChange={(newDate) => handleDateChange(newDate)}
                           renderInput={(params) => (
                             <TextField
-                              {...params}
                               name="dob"
+                              required
+                              value={patient.dob}
+                              onChange={handleInputChange}
+                              {...params}
                               fullWidth
                               variant="outlined"
-                              value={emergencyCase.dob}
-                              onChange={handleInputChange}
-                              sx={{ backgroundColor: "#e0e0e0" }}
+                              error={!!errors.dob}
+                              helperText={errors.dob}
                             />
                           )}
                         />
@@ -532,6 +599,11 @@ function EmergencyCase() {
                           fullWidth
                           value={emergencyCase.age}
                           onChange={handleInputChange}
+                          error={!!errors.age}
+                          helperText={errors.age}
+                          InputProps={{
+                            readOnly: true,
+                          }}
                           sx={{
                             "& .MuiOutlinedInput-root": {
                               borderRadius: 1,
@@ -560,9 +632,11 @@ function EmergencyCase() {
                       <TextField
                         variant="outlined"
                         fullWidth
-                        name="phone"
-                        value={emergencyCase.phone}
+                        name="phoneNo"
+                        value={emergencyCase.phoneNo}
                         onChange={handleInputChange}
+                        error={!!errors.phoneNo}
+                        helperText={errors.phoneNo}
                         sx={{
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1,
@@ -857,12 +931,16 @@ function EmergencyCase() {
               <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
                 <Grid item sx={{ marginRight: 1 }}>
                   <MDButton
-                    style={{ borderRadius: 0, minHeight: 0 }}
                     variant="gradient"
-                    color="info"
                     onClick={handleNextSection}
+                    style={{
+                      borderRadius: 0,
+                      minHeight: 0,
+                      backgroundColor: "#1694c4",
+                      color: "White",
+                    }}
                   >
-                    <button className="text-xs">CONTINUE</button>
+                    <span className="text-xs">Continue</span>
                   </MDButton>
                 </Grid>
                 <Grid item>
@@ -1116,12 +1194,16 @@ function EmergencyCase() {
               <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
                 <Grid item sx={{ marginRight: 1 }}>
                   <MDButton
-                    style={{ borderRadius: 0, minHeight: 0 }}
                     variant="gradient"
-                    color="info"
                     onClick={handleNextSection}
+                    style={{
+                      borderRadius: 0,
+                      minHeight: 0,
+                      backgroundColor: "#1694c4",
+                      color: "White",
+                    }}
                   >
-                    <button className="text-xs">CONTINUE</button>
+                    <span className="text-xs">Continue</span>
                   </MDButton>
                 </Grid>
                 <Grid item>
