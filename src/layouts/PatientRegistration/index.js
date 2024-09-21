@@ -43,7 +43,7 @@ function PatientRegistration() {
     const today = formatDate(new Date());
     return (
       patients.filter((patient) => {
-        const registrationDate = new Date(patient.registrationDate);
+        const registrationDate = new Date(patient.createdDate);
         return formatDate(registrationDate) === today;
       }).length + 1
     );
@@ -124,6 +124,7 @@ function PatientRegistration() {
     e.preventDefault();
     try {
       const savePatient = {
+        patientId: patient.patientId,
         fullName: patient.fullName,
         gender: patient.gender,
         maritalStatus: patient.maritalStatus,
@@ -150,12 +151,11 @@ function PatientRegistration() {
         passportNo: patient.passportNo,
         driverLicenseNo: patient.driverLicenseNo,
         photoId: patient.photoId,
-        registrationDate: currentRegistrationDate,
         isActive: patient.isActive,
         createdBy: patient.createdBy,
-        createdDate: patient.createdDate,
+        createdDate: currentRegistrationDate,
         updateBy: patient.updateBy,
-        updatedDate: patient.updatedDate,
+        updatedDate: currentRegistrationDate,
       };
 
       await createPatient(savePatient, token);
@@ -188,12 +188,11 @@ function PatientRegistration() {
         passportNo: "",
         driverLicenseNo: "",
         photoId: "",
-        registrationDate: currentRegistrationDate,
         isActive: true,
         createdBy: null,
-        createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        createdDate: currentRegistrationDate,
         updateBy: null,
-        updatedDate: new Date().toISOString().slice(0, 19).replace("T", " "),
+        updatedDate: currentRegistrationDate,
       });
     } catch (error) {
       console.error("Error creating patient:", error.message);
@@ -237,7 +236,6 @@ function PatientRegistration() {
         passportNo: "",
         driverLicenseNo: "",
         photoId: "",
-        registrationDate: new Date().toISOString().slice(0, 19).replace("T", " "),
         isActive: true,
         createdBy: null,
         createdDate: new Date().toISOString().slice(0, 19).replace("T", " "),

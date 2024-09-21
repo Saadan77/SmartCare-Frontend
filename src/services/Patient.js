@@ -6,8 +6,11 @@ async function fetchPatients(token) {
     database: "ER",
     dataSource: "ERMS",
     projection: {
-      _id: 1,
-      name: 1,
+      patientId: 1,
+      fullName: 1,
+      gender: 1,
+      phoneNo: 1,
+      createdDate: 1,
     },
   });
 
