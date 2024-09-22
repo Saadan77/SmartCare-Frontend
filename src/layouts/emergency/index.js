@@ -139,30 +139,50 @@ function EmergencyCase() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    if (
-      name === "pulse" ||
-      name === "bloodPressure" ||
-      name === "respiratoryRate" ||
-      name === "oxygenSaturation" ||
-      name === "temperature" ||
-      name === "painLevel" ||
-      name === "levelOfConsciousness" ||
-      name === "capillaryRefillTime" ||
-      name === "bloodGlucoseLevel"
-    ) {
-      const regex = /^\d+$/; // Only digits allowed
-      if (!regex.test(value)) {
-        setErrors({ ...errors, [name]: "Only numbers are allowed" });
-      } else {
-        setErrors({ ...errors, [name]: "" });
-      }
-    } else if (name === "fullName") {
-      const regex = /^[A-Za-z\s]+$/; // Only alphabets allowed
+    const numericFields = [
+      "pulse",
+      "bloodPressure",
+      "respiratoryRate",
+      "oxygenSaturation",
+      "temperature",
+      "painLevel",
+      "levelOfConsciousness",
+      "capillaryRefillTime",
+      "bloodGlucoseLevel",
+    ];
+
+    if (name === "fullName") {
+      const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(value)) {
         setErrors({ ...errors, fullName: "Only alphabets are allowed" });
       } else {
         setErrors({ ...errors, fullName: "" });
       }
+      setEmergencyCase({ ...emergencyCase, fullName: value });
+      return;
+    }
+
+    if (numericFields.includes(name)) {
+      const numericValue = value.replace(/\D/g, "");
+
+      if (!/^\d+$/.test(value)) {
+        setErrors({
+          ...errors,
+          [name]: "Only numbers are allowed",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          [name]: "",
+        });
+      }
+
+      setEmergencyCase({
+        ...emergencyCase,
+        [name]: value,
+      });
+
+      return;
     }
 
     setEmergencyCase({ ...emergencyCase, [name]: value });
@@ -695,6 +715,8 @@ function EmergencyCase() {
                         name="pulse"
                         value={emergencyCase.pulse}
                         onChange={handleInputChange}
+                        error={!!errors.pulse}
+                        helperText={errors.pulse}
                       />
                       <p className="text-sm ml-2">pm</p>
                     </div>
@@ -718,6 +740,8 @@ function EmergencyCase() {
                         name="bloodPressure"
                         value={emergencyCase.bloodPressure}
                         onChange={handleInputChange}
+                        error={!!errors.bloodPressure}
+                        helperText={errors.bloodPressure}
                       />
                       <p className="text-sm ml-2">mmHg</p>
                     </div>
@@ -741,6 +765,8 @@ function EmergencyCase() {
                         name="respiratoryRate"
                         value={emergencyCase.respiratoryRate}
                         onChange={handleInputChange}
+                        error={!!errors.respiratoryRate}
+                        helperText={errors.respiratoryRate}
                       />
                       <p className="text-sm ml-2">pm</p>
                     </div>
@@ -763,14 +789,8 @@ function EmergencyCase() {
                       name="oxygenSaturation"
                       value={emergencyCase.oxygenSaturation}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
+                      error={!!errors.oxygenSaturation}
+                      helperText={errors.oxygenSaturation}
                     />
                   </Box>
                 </Grid>
@@ -792,6 +812,8 @@ function EmergencyCase() {
                         name="temperature"
                         value={emergencyCase.temperature}
                         onChange={handleInputChange}
+                        error={!!errors.temperature}
+                        helperText={errors.temperature}
                       />
                       <p className="text-sm ml-2">C</p>
                     </div>
@@ -814,14 +836,8 @@ function EmergencyCase() {
                       name="painLevel"
                       value={emergencyCase.painLevel}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
+                      error={!!errors.painLevel}
+                      helperText={errors.painLevel}
                     />
                   </Box>
                 </Grid>
@@ -840,14 +856,8 @@ function EmergencyCase() {
                       name="levelOfConsciousness"
                       value={emergencyCase.levelOfConsciousness}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
+                      error={!!errors.levelOfConsciousness}
+                      helperText={errors.levelOfConsciousness}
                     />
                   </Box>
                 </Grid>
@@ -867,6 +877,8 @@ function EmergencyCase() {
                         name="capillaryRefillTime"
                         value={emergencyCase.capillaryRefillTime}
                         onChange={handleInputChange}
+                        error={!!errors.capillaryRefillTime}
+                        helperText={errors.capillaryRefillTime}
                       />
                       <p className="text-sm ml-2">sec</p>
                     </div>
@@ -888,6 +900,8 @@ function EmergencyCase() {
                         name="bloodGlucoseLevel"
                         value={emergencyCase.bloodGlucoseLevel}
                         onChange={handleInputChange}
+                        error={!!errors.bloodGlucoseLevel}
+                        helperText={errors.bloodGlucoseLevel}
                       />
                       <p className="text-sm ml-2">mg/dl</p>
                     </div>
@@ -1028,14 +1042,6 @@ function EmergencyCase() {
                       value={emergencyCase.treatment}
                       onChange={handleInputChange}
                       fullWidth
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1055,14 +1061,6 @@ function EmergencyCase() {
                       value={emergencyCase.diagnosis}
                       onChange={handleInputChange}
                       fullWidth
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1082,14 +1080,6 @@ function EmergencyCase() {
                       value={emergencyCase.instructions}
                       onChange={handleInputChange}
                       fullWidth
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1139,14 +1129,6 @@ function EmergencyCase() {
                       name="refferalReason"
                       value={emergencyCase.refferalReason}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1211,14 +1193,6 @@ function EmergencyCase() {
                       value={emergencyCase.surgeryType}
                       onChange={handleInputChange}
                       fullWidth
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1231,14 +1205,6 @@ function EmergencyCase() {
                       name="recoveryStatus"
                       value={emergencyCase.recoveryStatus}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1251,14 +1217,6 @@ function EmergencyCase() {
                       name="room"
                       value={emergencyCase.room}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1271,14 +1229,6 @@ function EmergencyCase() {
                       name="preOpNotes"
                       value={emergencyCase.preOpNotes}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
@@ -1291,14 +1241,6 @@ function EmergencyCase() {
                       name="postOpNotes"
                       value={emergencyCase.postOpNotes}
                       onChange={handleInputChange}
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          borderRadius: 1,
-                        },
-                        "& .MuiOutlinedInput-input": {
-                          height: "0.5rem",
-                        },
-                      }}
                     />
                   </Box>
                 </Grid>
