@@ -6,6 +6,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import PatientTable from "layouts/dashboard/patientTable";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -24,7 +25,7 @@ const routes = [
         key: "patients",
         route: "/dashboard/patients",
         icon: <Icon fontSize="small">attribution</Icon>,
-        component: <Dashboard />,
+        component: <PatientTable />,
       },
       {
         name: "Emergency Cases",

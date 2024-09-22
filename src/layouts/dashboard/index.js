@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -31,7 +16,7 @@ import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
+import Patients from "layouts/dashboard/components/Patients";
 
 function Dashboard() {
   const { sales, tasks } = reportsLineChartData;
@@ -139,13 +124,6 @@ function Dashboard() {
                   chart={tasks}
                 />
               </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={12} sm={12} lg={12}>
-              <Projects />
             </Grid>
           </Grid>
         </MDBox>

@@ -9,12 +9,12 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import data from "layouts/dashboard/components/Projects/data";
+import data from "layouts/dashboard/components/Patients/data";
 import MDButton from "components/MDButton";
 
 import { useNavigate } from "react-router-dom";
 
-function Projects() {
+function Patients() {
   const { columns, rows } = data();
 
   const navigate = useNavigate();
@@ -59,4 +59,4 @@ function Projects() {
   );
 }
 
-export default Projects;
+export default Patients;
