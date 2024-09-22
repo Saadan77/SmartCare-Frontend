@@ -286,13 +286,24 @@ function PatientRegistration() {
     }
   };
 
+  const handlePreviousSection = () => {
+    if (activeSection === "emergencyInfo") {
+      setActiveSection("patientDetails");
+    } else if (activeSection === "insuranceDetails") {
+      setActiveSection("emergencyInfo");
+    }
+  };
+
   const [countryCode, setCountryCode] = useState("");
 
   const handlePhoneChange = (value, country) => {
-    const isNumeric = /^\d+$/.test(value.replace(/\D/g, ""));
+    const numericValue = value.replace(/\D/g, "");
+    const isNumeric = /^\d+$/.test(numericValue);
+
     if (isNumeric) {
       setPatient({ ...patient, phoneNo: value });
       setCountryCode(country.dialCode);
+      setErrors({ ...errors, phoneNo: "" });
     } else {
       setErrors({ ...errors, phoneNo: "Only numbers are allowed" });
     }
@@ -723,7 +734,7 @@ function PatientRegistration() {
                         Phone number:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
                       <PhoneInput
-                        country={"pak"}
+                        country={"pk"}
                         value={patient.phoneNo}
                         onChange={handlePhoneChange}
                         inputProps={{
@@ -732,17 +743,19 @@ function PatientRegistration() {
                           autoFocus: true,
                         }}
                         containerStyle={{
-                          height: "35px",
+                          height: "30px",
                         }}
                         inputStyle={{
-                          height: "35px",
+                          height: "30px",
                           width: "250px",
                         }}
                         enableAreaCodes={true}
                         countryCodeEditable={false}
                         specialLabel=""
                       />
-                      {errors.phoneNo && <p style={{ color: "red" }}>{errors.phoneNo}</p>}
+                      {errors.phoneNo && (
+                        <p className="text-red-500 text-xs mt-1">{errors.phoneNo}</p>
+                      )}
                     </Box>
                   </Grid>
 
@@ -756,12 +769,24 @@ function PatientRegistration() {
                   >
                     <Box>
                       <p className="text-xs mb-2">Alternate phone number:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        name="alternatePhoneNumber"
+                      <PhoneInput
+                        country={"pk"}
                         value={patient.alternatePhoneNumber}
-                        onChange={handleInputChange}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "alternatePhoneNumber",
+                          autoFocus: true,
+                        }}
+                        containerStyle={{
+                          height: "30px",
+                        }}
+                        inputStyle={{
+                          height: "30px",
+                          width: "250px",
+                        }}
+                        enableAreaCodes={true}
+                        countryCodeEditable={false}
+                        specialLabel=""
                       />
                     </Box>
                   </Grid>
@@ -889,9 +914,9 @@ function PatientRegistration() {
                       sx={{ borderRadius: 0, minHeight: 0 }}
                       variant="gradient"
                       color="light"
-                      onClick={(e) => handleClear(e)}
+                      onClick={handlePreviousSection}
                     >
-                      <span className="text-xs">Clear</span>
+                      <span className="text-xs">Back</span>
                     </MDButton>
                   </Grid>
                 </Grid>
@@ -976,13 +1001,25 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs mb-2">Emergency Contact Phone Number:</p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        name="emergencyContactNo"
+                      <p className="text-xs mb-2">Emergency Contact Number:</p>
+                      <PhoneInput
+                        country={"pk"}
                         value={patient.emergencyContactNo}
-                        onChange={handleInputChange}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "emergencyContactNo",
+                          autoFocus: true,
+                        }}
+                        containerStyle={{
+                          height: "30px",
+                        }}
+                        inputStyle={{
+                          height: "30px",
+                          width: "250px",
+                        }}
+                        enableAreaCodes={true}
+                        countryCodeEditable={false}
+                        specialLabel=""
                       />
                     </Box>
                   </Grid>
@@ -996,13 +1033,25 @@ function PatientRegistration() {
                     }}
                   >
                     <Box>
-                      <p className="text-xs mb-2">Alternate Emergency Contact Phone Number:</p>
-                      <TextField
-                        variant="outlined"
-                        name="alternateEmergencyContactNo"
+                      <p className="text-xs mb-2">Alternate Emergency Contact Number:</p>
+                      <PhoneInput
+                        country={"pk"}
                         value={patient.alternateEmergencyContactNo}
-                        onChange={handleInputChange}
-                        fullWidth
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "alternateEmergencyContactNo",
+                          autoFocus: true,
+                        }}
+                        containerStyle={{
+                          height: "30px",
+                        }}
+                        inputStyle={{
+                          height: "30px",
+                          width: "250px",
+                        }}
+                        enableAreaCodes={true}
+                        countryCodeEditable={false}
+                        specialLabel=""
                       />
                     </Box>
                   </Grid>
@@ -1034,9 +1083,9 @@ function PatientRegistration() {
                       sx={{ borderRadius: 0, minHeight: 0 }}
                       variant="gradient"
                       color="light"
-                      onClick={(e) => handleClear(e)}
+                      onClick={handlePreviousSection}
                     >
-                      <span className="text-xs">Clear</span>
+                      <span className="text-xs">Back</span>
                     </MDButton>
                   </Grid>
                 </Grid>
@@ -1215,9 +1264,9 @@ function PatientRegistration() {
                       sx={{ borderRadius: 0, minHeight: 0 }}
                       variant="gradient"
                       color="light"
-                      onClick={(e) => handleClear(e)}
+                      onClick={handlePreviousSection}
                     >
-                      <span className="text-xs">Cancel</span>
+                      <span className="text-xs">Back</span>
                     </MDButton>
                   </Grid>
                 </Grid>

@@ -38,6 +38,9 @@ import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
 import { createEmergencyCase } from "services/EmergencyCase";
 import { useToken } from "layouts/authentication/sign-in/token";
 
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 function EmergencyCase() {
   const [showPatientInfo, setShowPatientInfo] = useState("fastTrack");
 
@@ -93,9 +96,6 @@ function EmergencyCase() {
 
   const handleNextSection = () => {
     const newErrors = {};
-    // if (!emergencyCase.patientId) {
-    //   newErrors.patientId = "Patient ID is required";
-    // }
     if (!emergencyCase.fullName) {
       newErrors.fullName = "Full Name is required";
     }
@@ -128,18 +128,58 @@ function EmergencyCase() {
     }
   };
 
+  const handlePreviousSection = () => {
+    if (activeSection === "operationTheater") {
+      setActiveSection("vitals");
+    } else if (activeSection === "vitals") {
+      setActiveSection("visitCategory");
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEmergencyCase({
-      ...emergencyCase,
-      [name]: value,
-    });
 
-    if (value) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
+    if (
+      name === "pulse" ||
+      name === "bloodPressure" ||
+      name === "respiratoryRate" ||
+      name === "oxygenSaturation" ||
+      name === "temperature" ||
+      name === "painLevel" ||
+      name === "levelOfConsciousness" ||
+      name === "capillaryRefillTime" ||
+      name === "bloodGlucoseLevel"
+    ) {
+      const regex = /^\d+$/; // Only digits allowed
+      if (!regex.test(value)) {
+        setErrors({ ...errors, [name]: "Only numbers are allowed" });
+      } else {
+        setErrors({ ...errors, [name]: "" });
+      }
+    } else if (name === "fullName") {
+      const regex = /^[A-Za-z\s]+$/; // Only alphabets allowed
+      if (!regex.test(value)) {
+        setErrors({ ...errors, fullName: "Only alphabets are allowed" });
+      } else {
+        setErrors({ ...errors, fullName: "" });
+      }
+    }
+
+    setEmergencyCase({ ...emergencyCase, [name]: value });
+  };
+
+  const [countryCode, setCountryCode] = useState("");
+
+  const handlePhoneChange = (value, country) => {
+    const numericValue = value.replace(/\D/g, "");
+    const isNumeric = /^\d+$/.test(numericValue);
+
+    if (isNumeric) {
+      setEmergencyCase({ ...emergencyCase, phoneNo: value });
+      setCountryCode(country.dialCode);
+      setErrors({ ...errors, phoneNo: "" });
+    } else {
+      setErrors({ ...errors, phoneNo: "Only numbers are allowed" });
     }
   };
 
@@ -542,7 +582,7 @@ function EmergencyCase() {
                             <TextField
                               name="dob"
                               required
-                              value={patient.dob}
+                              value={emergencyCase.dob}
                               onChange={handleInputChange}
                               {...params}
                               fullWidth
@@ -552,6 +592,7 @@ function EmergencyCase() {
                             />
                           )}
                         />
+                        {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
                       </Box>
                     </Grid>
 
@@ -597,15 +638,29 @@ function EmergencyCase() {
                       <p className="flex flex-row text-xs items-center">
                         Phone Number:<span className="text-red-600 text-base mx-2">*</span>
                       </p>
-                      <TextField
-                        variant="outlined"
-                        fullWidth
-                        name="phoneNo"
+                      <PhoneInput
+                        country={"pk"}
                         value={emergencyCase.phoneNo}
-                        onChange={handleInputChange}
-                        error={!!errors.phoneNo}
-                        helperText={errors.phoneNo}
+                        onChange={handlePhoneChange}
+                        inputProps={{
+                          name: "phoneNo",
+                          required: true,
+                          autoFocus: true,
+                        }}
+                        containerStyle={{
+                          height: "30px",
+                        }}
+                        inputStyle={{
+                          height: "30px",
+                          width: "250px",
+                        }}
+                        enableAreaCodes={true}
+                        countryCodeEditable={false}
+                        specialLabel=""
                       />
+                      {errors.phoneNo && (
+                        <p className="text-red-500 text-xs mt-1">{errors.phoneNo}</p>
+                      )}
                     </Box>
                   </Grid>
                 </Grid>
@@ -857,7 +912,7 @@ function EmergencyCase() {
                 </Grid>
                 <Grid item>
                   <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-                    <span className="text-xs">Cancel</span>
+                    <span className="text-xs">Clear</span>
                   </MDButton>
                 </Grid>
               </Grid>
@@ -1119,8 +1174,13 @@ function EmergencyCase() {
                   </MDButton>
                 </Grid>
                 <Grid item>
-                  <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-                    <span className="text-xs">Clear</span>
+                  <MDButton
+                    sx={{ borderRadius: 0, minHeight: 0 }}
+                    variant="gradient"
+                    color="light"
+                    onClick={handlePreviousSection}
+                  >
+                    <span className="text-xs">Back</span>
                   </MDButton>
                 </Grid>
               </Grid>
@@ -1247,9 +1307,13 @@ function EmergencyCase() {
               <Grid container sx={{ marginTop: 1, justifyContent: "end" }} spacing={2}>
                 <Grid item sx={{ marginRight: 1 }}>
                   <MDButton
-                    style={{ borderRadius: 0, minHeight: 0 }}
                     variant="gradient"
-                    color="info"
+                    style={{
+                      borderRadius: 0,
+                      minHeight: 0,
+                      backgroundColor: "#1694c4",
+                      color: "White",
+                    }}
                   >
                     <button onClick={handleSubmit} type="submit" className="text-xs">
                       SAVE
@@ -1257,8 +1321,13 @@ function EmergencyCase() {
                   </MDButton>
                 </Grid>
                 <Grid item>
-                  <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-                    <span className="text-xs">Cancel</span>
+                  <MDButton
+                    sx={{ borderRadius: 0, minHeight: 0 }}
+                    variant="gradient"
+                    color="light"
+                    onClick={handlePreviousSection}
+                  >
+                    <span className="text-xs">Back</span>
                   </MDButton>
                 </Grid>
               </Grid>
