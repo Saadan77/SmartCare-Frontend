@@ -30,10 +30,16 @@ import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+import Webcam from "react-webcam";
+
+import { useNavigate } from "react-router-dom";
+
 function PatientRegistration() {
   const { token } = useToken();
 
   const [patients, setPatients] = useState([]);
+
+  const navigate = useNavigate();
 
   const [patient, setPatient] = useState({
     patientId: "",
@@ -167,6 +173,7 @@ function PatientRegistration() {
 
       await createPatient(savePatient, token);
       toast.success("Patient registered successfully.");
+      navigate("/dashboard");
 
       setPatient({
         patientId: "",
@@ -332,6 +339,21 @@ function PatientRegistration() {
       }));
     }
   };
+
+  // const videoConstraints = {
+  //   width: 1280,
+  //   height: 720,
+  //   facingMode: "user",
+  // };
+
+  // const [capturedImage, setCapturedImage] = useState(null);
+  // const webcamRef = React.useRef(null);
+
+  // const capture = useCallback(() => {
+  //   const imageSrc = webcamRef.current.getScreenshot();
+  //   setCapturedImage(imageSrc);
+  //   setPatient((prev) => ({ ...prev, photoId: imageSrc }));
+  // }, [webcamRef, setPatient]);
 
   return (
     <DashboardLayout>
@@ -646,6 +668,45 @@ function PatientRegistration() {
                       />
                     </Box>
                   </Grid>
+                  {/* Webcam Capture */}
+                  {/* <Grid
+                    item
+                    xs={6}
+                    sm={3}
+                    sx={{
+                      paddingTop: "5px !important",
+                    }}
+                  >
+                    <Box>
+                      <p className="text-xs mb-2">Capture Patient Photo:</p>
+                      <Webcam
+                        audio={false}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        width="100%"
+                        videoConstraints={videoConstraints}
+                      />
+                      <MDButton
+                        variant="contained"
+                        color="primary"
+                        onClick={capture}
+                        style={{ marginTop: "10px" }}
+                      >
+                        Capture
+                      </MDButton>
+                    </Box> */}
+
+                  {/* Display captured image */}
+                  {/* {capturedImage && (
+                      <Box mt={2}>
+                        <img
+                          src={capturedImage}
+                          alt="Patient"
+                          style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                        />
+                      </Box>
+                    )}
+                  </Grid> */}
                 </Grid>
 
                 <Box

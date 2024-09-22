@@ -35,7 +35,7 @@ function Basic() {
       setToken(accessToken);
       setError("");
       console.log(accessToken);
-      navigate("/register");
+      navigate("/dashboard");
     } catch (err) {
       setError("Credentials do not match");
     }

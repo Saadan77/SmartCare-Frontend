@@ -1,25 +1,5 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
 // @mui material components
 import Card from "@mui/material/Card";
-import Icon from "@mui/material/Icon";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -30,12 +10,42 @@ import DataTable from "examples/Tables/DataTable";
 
 // Data
 import data from "layouts/dashboard/components/Projects/data";
+import MDButton from "components/MDButton";
+
+import { useNavigate } from "react-router-dom";
 
 function Projects() {
   const { columns, rows } = data();
 
+  const navigate = useNavigate();
+
+  const handleAddPatientBtn = () => {
+    navigate("/register");
+  };
+
   return (
     <Card>
+      <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+        <MDBox>
+          <MDTypography variant="h6" gutterBottom>
+            Patients
+          </MDTypography>
+        </MDBox>
+        <MDButton
+          variant="gradient"
+          style={{
+            borderRadius: 0,
+            minHeight: 0,
+            backgroundColor: "#1694c4",
+            color: "White",
+          }}
+          onClick={handleAddPatientBtn}
+        >
+          <button type="submit" className="text-xs">
+            Add Patient
+          </button>
+        </MDButton>
+      </MDBox>
       <MDBox>
         <DataTable
           table={{ columns, rows }}

@@ -37,8 +37,26 @@ function DashboardNavbar({ absolute, light }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
   const { transparentNavbar, fixedNavbar, darkMode } = controller;
+
+  const findCurrentRoute = (allRoutes, pathname) => {
+    for (let r of allRoutes) {
+      // Check if the current top-level route matches
+      if (r.route === pathname) {
+        return r;
+      }
+      // If the route has a collapse (sub-routes), check those too
+      if (r.collapse) {
+        const found = findCurrentRoute(r.collapse, pathname);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
+  };
+
   const route = useLocation().pathname;
-  const currentRoute = routes.find((r) => r.route === route);
+  const currentRoute = findCurrentRoute(routes, route);
 
   useEffect(() => {
     // Setting the navbar type
