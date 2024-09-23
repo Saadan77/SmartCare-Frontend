@@ -57,4 +57,29 @@ async function createPatient(patientData, token) {
   }
 }
 
-export { createPatient, fetchPatients };
+async function deletePatient(patientId, token) {
+  try {
+    const response = await axios.post(
+      "https://ap-southeast-1.aws.data.mongodb-api.com/app/data-yqqjxmm/endpoint/data/v1/action/deleteOne",
+      {
+        collection: "Patients",
+        database: "ER",
+        dataSource: "ERMS",
+        filter: { patientId: patientId },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting patient:", error);
+    throw new Error("Failed to delete patient.");
+  }
+}
+
+export { createPatient, fetchPatients, deletePatient };

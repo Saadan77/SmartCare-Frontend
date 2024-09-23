@@ -6,7 +6,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { useToken } from "layouts/authentication/sign-in/token";
-import { fetchPatients } from "services/Patient";
+import { fetchPatients, deletePatient } from "services/Patient";
 import { useState, useEffect } from "react";
 import { Icon } from "@mui/material";
 
@@ -35,7 +35,14 @@ export default function data() {
       open={Boolean(menu)}
       onClose={closeMenu}
     >
-      <MenuItem onClick={closeMenu}>Delete</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleDelete(menu?.dataset?.patientId);
+          closeMenu();
+        }}
+      >
+        Delete
+      </MenuItem>
       <MenuItem onClick={closeMenu}>Edit</MenuItem>
     </Menu>
   );
@@ -51,6 +58,15 @@ export default function data() {
     };
     fetchData();
   }, [token]);
+
+  const handleDelete = async (patientId) => {
+    try {
+      await deletePatient(patientId, token);
+      setPatients(patients.filter((patient) => patient.patientId !== patientId));
+    } catch (error) {
+      console.error("Error deleting patient:", error);
+    }
+  };
 
   const columns = [
     { Header: "Patient ID", accessor: "patientId", width: "20%", align: "left" },

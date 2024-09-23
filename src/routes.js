@@ -21,22 +21,6 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
-    collapse: [
-      {
-        name: "Patients",
-        key: "patients",
-        route: "/dashboard/patients",
-        icon: <Icon fontSize="small">attribution</Icon>,
-        component: <PatientTable />,
-      },
-      {
-        name: "Emergency Cases",
-        key: "emergency-cases",
-        icon: <Icon fontSize="small">medication</Icon>,
-        route: "/dashboard/emergency-cases",
-        component: <EmergencyCasesTable />,
-      },
-    ],
   },
   {
     type: "collapse",

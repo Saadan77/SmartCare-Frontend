@@ -1,5 +1,6 @@
 // @mui material components
 import Card from "@mui/material/Card";
+import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -38,11 +39,12 @@ function EmergencyCases() {
             minHeight: 0,
             backgroundColor: "#1694c4",
             color: "White",
+            padding: "0.5rem",
           }}
           onClick={handleAddEmergencyBtn}
         >
-          <button type="submit" className="text-xs">
-            Add Emergency Case
+          <button type="submit" className="text-xs flex items-center">
+            <Icon fontSize="small">add</Icon> Add Emergency
           </button>
         </MDButton>
       </MDBox>
