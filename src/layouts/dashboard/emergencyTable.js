@@ -12,15 +12,13 @@ import EmergencyCases from "layouts/dashboard/components/Emergency Case";
 
 function EmergencyCasesTable() {
   return (
-    <DashboardLayout>
-      <MDBox>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12} sm={12} lg={12}>
-            <EmergencyCases />
-          </Grid>
+    <MDBox>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={12} sm={12} lg={12}>
+          <EmergencyCases />
         </Grid>
-      </MDBox>
-    </DashboardLayout>
+      </Grid>
+    </MDBox>
   );
 }
 

@@ -377,7 +377,7 @@ function PatientRegistration() {
         <MDButton
           onClick={() => handleActiveView("listView")}
           sx={{
-            backgroundColor: "",
+            backgroundColor: "transparent !important",
             color: activeView === "listView" ? "#1694c4" : "",
           }}
         >
@@ -387,7 +387,7 @@ function PatientRegistration() {
         <MDButton
           onClick={() => handleActiveView("registrationForm")}
           sx={{
-            backgroundColor: "",
+            backgroundColor: "transparent !important",
             color: activeView === "registrationForm" ? "#1694c4" : "",
           }}
         >
