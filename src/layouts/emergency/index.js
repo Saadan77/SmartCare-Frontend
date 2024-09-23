@@ -163,8 +163,6 @@ function EmergencyCase() {
     }
 
     if (numericFields.includes(name)) {
-      const numericValue = value.replace(/\D/g, "");
-
       if (!/^\d+$/.test(value)) {
         setErrors({
           ...errors,

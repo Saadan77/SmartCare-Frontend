@@ -6,14 +6,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { useToken } from "layouts/authentication/sign-in/token";
-import { fetchPatients } from "services/Patient";
 import { useState, useEffect } from "react";
 import { Icon } from "@mui/material";
+import { fetchEmergencyCases } from "services/EmergencyCase";
 
 export default function data() {
   const { token } = useToken();
 
-  const [patients, setPatients] = useState([]);
+  const [emergencyCases, setEmergencyCases] = useState([]);
 
   const [menu, setMenu] = useState(null);
 
@@ -43,8 +43,8 @@ export default function data() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const reponsePatients = await fetchPatients(token);
-        setPatients(reponsePatients || []);
+        const reponseCases = await fetchEmergencyCases(token);
+        setEmergencyCases(reponseCases || []);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
@@ -55,36 +55,42 @@ export default function data() {
   const columns = [
     { Header: "Patient ID", accessor: "patientId", width: "20%", align: "left" },
     { Header: "Name", accessor: "fullName", width: "20%", align: "left" },
-    { Header: "Gender", accessor: "gender", width: "10%", align: "center" },
-    { Header: "Phone Number", accessor: "phoneNo", width: "15%", align: "center" },
-    { Header: "Registration Date", accessor: "registrationDate", width: "25%", align: "center" },
+    { Header: "Treatment", accessor: "treatment", width: "10%", align: "center" },
+    { Header: "Diagnosis", accessor: "diagnosis", width: "10%", align: "center" },
+    { Header: "Recovery Status", accessor: "recoveryStatus", width: "20%", align: "center" },
+    { Header: "Room", accessor: "room", width: "10%", align: "center" },
     { Header: "Actions", accessor: "actions", width: "10%", align: "center" },
   ];
 
-  const rows = patients.map((patient) => ({
+  const rows = emergencyCases.map((emergencyCase) => ({
     patientId: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.patientId}
+        {emergencyCase.patientId}
       </MDTypography>
     ),
     fullName: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.fullName}
+        {emergencyCase.fullName}
       </MDTypography>
     ),
-    gender: (
+    treatment: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.gender}
+        {emergencyCase.treatment}
       </MDTypography>
     ),
-    phoneNo: (
+    diagnosis: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.phoneNo}
+        {emergencyCase.diagnosis}
       </MDTypography>
     ),
-    registrationDate: (
+    recoveryStatus: (
       <MDTypography variant="caption" fontWeight="medium">
-        {new Date(patient.createdDate).toLocaleDateString()}
+        {emergencyCase.recoveryStatus}
+      </MDTypography>
+    ),
+    room: (
+      <MDTypography variant="caption" fontWeight="medium">
+        {emergencyCase.room}
       </MDTypography>
     ),
     actions: (

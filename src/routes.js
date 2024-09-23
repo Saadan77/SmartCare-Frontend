@@ -11,6 +11,8 @@ import PatientTable from "layouts/dashboard/patientTable";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
+import EmergencyCasesTable from "layouts/dashboard/emergencyTable";
+
 const routes = [
   {
     type: "collapse",
@@ -32,7 +34,7 @@ const routes = [
         key: "emergency-cases",
         icon: <Icon fontSize="small">medication</Icon>,
         route: "/dashboard/emergency-cases",
-        component: <Dashboard />,
+        component: <EmergencyCasesTable />,
       },
     ],
   },
