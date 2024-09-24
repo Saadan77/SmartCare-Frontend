@@ -22,6 +22,7 @@ import {
 import MDButton from "components/MDButton";
 
 import WaitingListTable from "./components/Waiting List";
+import MyAppointmentsTable from "./components/My Appointments";
 
 function ManagePatients() {
   return (
@@ -39,7 +40,7 @@ function ManagePatients() {
         <Paper
           elevation={3}
           sx={{ padding: 2, marginTop: 3, position: "relative" }}
-          className="h-screen"
+          className="h-full"
         >
           <Box>
             <Typography style={{ fontWeight: "bold" }} gutterBottom>
@@ -333,9 +334,14 @@ function ManagePatients() {
               </div>
             </nav>
           </section>
+
           <Grid container spacing={2}>
             <Grid item sm={12}>
               <WaitingListTable />
+            </Grid>
+
+            <Grid item sm={12}>
+              <MyAppointmentsTable />
             </Grid>
           </Grid>
         </Paper>
