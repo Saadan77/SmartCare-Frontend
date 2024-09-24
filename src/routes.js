@@ -2,16 +2,13 @@ import Dashboard from "layouts/dashboard";
 import PatientRegistration from "layouts/PatientRegistration";
 import Billing from "layouts/billing";
 import EmergencyCase from "layouts/emergency";
-import Notifications from "layouts/notifications";
+import ManagePatients from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-import PatientTable from "layouts/dashboard/patientTable";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
-
-import EmergencyCasesTable from "layouts/dashboard/emergencyTable";
 
 const routes = [
   {
@@ -48,11 +45,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Inventory",
-    key: "inventory",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/inventory",
-    component: <Notifications />,
+    name: "Manage Patients",
+    key: "managePatients",
+    icon: <Icon fontSize="small">personal_injury</Icon>,
+    route: "/managePatients",
+    component: <ManagePatients />,
   },
   {
     type: "collapse",

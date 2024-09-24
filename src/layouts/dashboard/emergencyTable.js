@@ -4,9 +4,6 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
-// Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-
 // Dashboard components
 import EmergencyCases from "layouts/dashboard/components/Emergency Case";
 

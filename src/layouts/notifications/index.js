@@ -1,197 +1,347 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDAlert from "components/MDAlert";
-import MDButton from "components/MDButton";
-import MDSnackbar from "components/MDSnackbar";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
 
-function Notifications() {
-  const [successSB, setSuccessSB] = useState(false);
-  const [infoSB, setInfoSB] = useState(false);
-  const [warningSB, setWarningSB] = useState(false);
-  const [errorSB, setErrorSB] = useState(false);
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-  const openSuccessSB = () => setSuccessSB(true);
-  const closeSuccessSB = () => setSuccessSB(false);
-  const openInfoSB = () => setInfoSB(true);
-  const closeInfoSB = () => setInfoSB(false);
-  const openWarningSB = () => setWarningSB(true);
-  const closeWarningSB = () => setWarningSB(false);
-  const openErrorSB = () => setErrorSB(true);
-  const closeErrorSB = () => setErrorSB(false);
+import {
+  TextField,
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  Box,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from "@mui/material";
+import MDButton from "components/MDButton";
 
-  const alertContent = (name) => (
-    <MDTypography variant="body2" color="white">
-      A simple {name} alert with{" "}
-      <MDTypography component="a" href="#" variant="body2" fontWeight="medium" color="white">
-        an example link
-      </MDTypography>
-      . Give it a click if you like.
-    </MDTypography>
-  );
+import WaitingListTable from "./components/Waiting List";
 
-  const renderSuccessSB = (
-    <MDSnackbar
-      color="success"
-      icon="check"
-      title="Material Dashboard"
-      content="Hello, world! This is a notification message"
-      dateTime="11 mins ago"
-      open={successSB}
-      onClose={closeSuccessSB}
-      close={closeSuccessSB}
-      bgWhite
-    />
-  );
-
-  const renderInfoSB = (
-    <MDSnackbar
-      icon="notifications"
-      title="Material Dashboard"
-      content="Hello, world! This is a notification message"
-      dateTime="11 mins ago"
-      open={infoSB}
-      onClose={closeInfoSB}
-      close={closeInfoSB}
-    />
-  );
-
-  const renderWarningSB = (
-    <MDSnackbar
-      color="warning"
-      icon="star"
-      title="Material Dashboard"
-      content="Hello, world! This is a notification message"
-      dateTime="11 mins ago"
-      open={warningSB}
-      onClose={closeWarningSB}
-      close={closeWarningSB}
-      bgWhite
-    />
-  );
-
-  const renderErrorSB = (
-    <MDSnackbar
-      color="error"
-      icon="warning"
-      title="Material Dashboard"
-      content="Hello, world! This is a notification message"
-      dateTime="11 mins ago"
-      open={errorSB}
-      onClose={closeErrorSB}
-      close={closeErrorSB}
-      bgWhite
-    />
-  );
-
+function ManagePatients() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox mt={6} mb={3}>
-        <Grid container spacing={3} justifyContent="center">
-          <Grid item xs={12} lg={8}>
-            <Card>
-              <MDBox p={2}>
-                <MDTypography variant="h5">Alerts</MDTypography>
-              </MDBox>
-              <MDBox pt={2} px={2}>
-                <MDAlert color="primary" dismissible>
-                  {alertContent("primary")}
-                </MDAlert>
-                <MDAlert color="secondary" dismissible>
-                  {alertContent("secondary")}
-                </MDAlert>
-                <MDAlert color="success" dismissible>
-                  {alertContent("success")}
-                </MDAlert>
-                <MDAlert color="error" dismissible>
-                  {alertContent("error")}
-                </MDAlert>
-                <MDAlert color="warning" dismissible>
-                  {alertContent("warning")}
-                </MDAlert>
-                <MDAlert color="info" dismissible>
-                  {alertContent("info")}
-                </MDAlert>
-                <MDAlert color="light" dismissible>
-                  {alertContent("light")}
-                </MDAlert>
-                <MDAlert color="dark" dismissible>
-                  {alertContent("dark")}
-                </MDAlert>
-              </MDBox>
-            </Card>
+      <Container
+        sx={{
+          maxWidth: "100% !important",
+          paddingLeft: "0 !important",
+          paddingRight: "0 !important",
+          marginLeft: "0 !important",
+          marginRight: "0 !important",
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{ padding: 2, marginTop: 3, position: "relative" }}
+          className="h-screen"
+        >
+          <Box>
+            <Typography style={{ fontWeight: "bold" }} gutterBottom>
+              <p className="text-base text-[#42424a] font-semibold mr-2">Manage Patients</p>
+            </Typography>
+          </Box>
+
+          <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex items-end">
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="font-semibold text-xs mb-2">
+                  Oragnization Unit:{" "}
+                  <span className="text-xs text-gray-500">Emergency / Emergency</span>
+                </p>
+              </Box>
+            </Grid>
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* Date From */}
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                  paddingBottom: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center mb-2">
+                    Date From:<span className="text-red-600 text-base mx-2">*</span>
+                  </p>
+                  <DatePicker
+                    renderInput={(params) => (
+                      <TextField name="dob" required {...params} fullWidth variant="outlined" />
+                    )}
+                  />
+                </Box>
+              </Grid>
+            </LocalizationProvider>
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* Date To */}
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                  paddingBottom: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center mb-2">
+                    Date To:<span className="text-red-600 text-base mx-2">*</span>
+                  </p>
+                  <DatePicker
+                    renderInput={(params) => (
+                      <TextField name="dob" required {...params} fullWidth variant="outlined" />
+                    )}
+                  />
+                </Box>
+              </Grid>
+            </LocalizationProvider>
+
+            <Grid item xs={12} sm={3}>
+              <RadioGroup row>
+                <FormControlLabel value="Date Time" control={<Radio />} label="Date Time" />
+                <FormControlLabel value="Priority" control={<Radio />} label="Priority" />
+              </RadioGroup>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="flex flex-row text-xs items-center mb-2">
+                  Doctor:<span className="text-red-600 text-xs mx-2">Dr. Rauf</span>
+                </p>
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">MR No:</p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">First Name:</p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Middle Name:</p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Last Name:</p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <Grid item>
+              <MDButton
+                variant="gradient"
+                style={{
+                  borderRadius: 0,
+                  minHeight: 0,
+                  backgroundColor: "#1694c4",
+                  color: "White",
+                }}
+              >
+                <button type="submit" className="text-xs">
+                  SEARCH
+                </button>
+              </MDButton>
+            </Grid>
+            <Grid item sx={{ paddingLeft: "1px !important" }}>
+              <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+                <span className="text-xs">Clear</span>
+              </MDButton>
+            </Grid>
+            <Grid item sx={{ paddingLeft: "1px !important" }}>
+              <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="info">
+                <span className="text-xs">Cancel</span>
+              </MDButton>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} lg={8}>
-            <Card>
-              <MDBox p={2} lineHeight={0}>
-                <MDTypography variant="h5">Notifications</MDTypography>
-                <MDTypography variant="button" color="text" fontWeight="regular">
-                  Notifications on this page use Toasts from Bootstrap. Read more details here.
-                </MDTypography>
-              </MDBox>
-              <MDBox p={2}>
-                <Grid container spacing={3}>
-                  <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="success" onClick={openSuccessSB} fullWidth>
-                      success notification
-                    </MDButton>
-                    {renderSuccessSB}
+          <section id="nav">
+            <nav className="w-full mb-3">
+              <div>
+                <div className="flex items-center">
+                  <Grid container sx={{ marginTop: 1 }} className="text-center">
+                    {/* Navigation Links */}
+                    <Grid
+                      item
+                      sm={2}
+                      // onClick={() => handleSectionClick("patientDetails")}
+                      // className={`cursor-pointer ${
+                      //   activeSection === "patientDetails" ? "text-[#1694c4]" : ""
+                      // }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="" className={`font-semibold text-xs relative`}>
+                          Waiting List
+                        </a>
+                        {/* <span
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                              activeSection === "patientDetails" ? "scale-x-100" : "scale-x-0"
+                            } transition-transform duration-300`}
+                          ></span> */}
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      // onClick={() => handleSectionClick("emergencyInfo")}
+                      // className={`cursor-pointer ${
+                      //   activeSection === "emergencyInfo" ? "text-[#1694c4]" : ""
+                      // }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="" className={`font-semibold text-xs relative`}>
+                          My Appointments
+                        </a>
+                        {/* <span
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                              activeSection === "emergencyInfo" ? "scale-x-100" : "scale-x-0"
+                            } transition-transform duration-300`}
+                          ></span> */}
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      // onClick={() => handleSectionClick("insuranceDetails")}
+                      // className={`cursor-pointer ${
+                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
+                      // }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="" className={`font-semibold text-xs relative`}>
+                          Referred Patients
+                        </a>
+                        {/* <span
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
+                            } transition-transform duration-300`}
+                          ></span> */}
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      // onClick={() => handleSectionClick("insuranceDetails")}
+                      // className={`cursor-pointer ${
+                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
+                      // }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="" className={`font-semibold text-xs relative`}>
+                          Patient Attended
+                        </a>
+                        {/* <span
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
+                            } transition-transform duration-300`}
+                          ></span> */}
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      // onClick={() => handleSectionClick("insuranceDetails")}
+                      // className={`cursor-pointer ${
+                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
+                      // }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="" className={`font-semibold text-xs relative`}>
+                          Send Back Medicine list
+                        </a>
+                        {/* <span
+                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
+                            } transition-transform duration-300`}
+                          ></span> */}
+                      </div>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
-                      info notification
-                    </MDButton>
-                    {renderInfoSB}
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="warning" onClick={openWarningSB} fullWidth>
-                      warning notification
-                    </MDButton>
-                    {renderWarningSB}
-                  </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
-                    <MDButton variant="gradient" color="error" onClick={openErrorSB} fullWidth>
-                      error notification
-                    </MDButton>
-                    {renderErrorSB}
-                  </Grid>
-                </Grid>
-              </MDBox>
-            </Card>
+                </div>
+              </div>
+            </nav>
+          </section>
+          <Grid container spacing={2}>
+            <Grid item sm={12}>
+              <WaitingListTable />
+            </Grid>
           </Grid>
-        </Grid>
-      </MDBox>
-      <Footer />
+        </Paper>
+      </Container>
     </DashboardLayout>
   );
 }
 
-export default Notifications;
+export default ManagePatients;
