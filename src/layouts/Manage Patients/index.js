@@ -24,7 +24,7 @@ import MDButton from "components/MDButton";
 import WaitingListTable from "./components/Waiting List";
 import MyAppointmentsTable from "./components/My Appointments";
 import ReferredPatientsTable from "./components/Referred Patients";
-import AttendedPatientsTable from "./components/Attented Patient/data";
+import AttendedPatientsTable from "./components/Attended Patient/data";
 import SendBackMedicineListTable from "./components/Send Back Medicine List";
 
 function ManagePatients() {
