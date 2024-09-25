@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -23,8 +23,17 @@ import MDButton from "components/MDButton";
 
 import WaitingListTable from "./components/Waiting List";
 import MyAppointmentsTable from "./components/My Appointments";
+import ReferredPatientsTable from "./components/Referred Patients";
+import AttendedPatientsTable from "./components/Attented Patient/data";
+import SendBackMedicineListTable from "./components/Send Back Medicine List";
 
 function ManagePatients() {
+  const [activeTable, setActiveTable] = useState("waitingList");
+
+  const handleActiveTable = (section) => {
+    setActiveTable(section);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -228,105 +237,108 @@ function ManagePatients() {
             <nav className="w-full mb-3">
               <div>
                 <div className="flex items-center">
-                  <Grid container sx={{ marginTop: 1 }} className="text-center">
+                  <Grid container sx={{ marginTop: 2 }} className="text-center">
                     {/* Navigation Links */}
                     <Grid
                       item
                       sm={2}
-                      // onClick={() => handleSectionClick("patientDetails")}
-                      // className={`cursor-pointer ${
-                      //   activeSection === "patientDetails" ? "text-[#1694c4]" : ""
-                      // }`}
+                      onClick={() => handleActiveTable("waitingList")}
+                      className={`cursor-pointer ${
+                        activeTable === "waitingList" ? "text-[#1694c4]" : ""
+                      }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="" className={`font-semibold text-xs relative`}>
+                        <a href="#waitingList" className={`font-semibold text-xs relative`}>
                           Waiting List
                         </a>
-                        {/* <span
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                              activeSection === "patientDetails" ? "scale-x-100" : "scale-x-0"
-                            } transition-transform duration-300`}
-                          ></span> */}
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTable === "waitingList" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
 
                     <Grid
                       item
                       sm={2}
-                      // onClick={() => handleSectionClick("emergencyInfo")}
-                      // className={`cursor-pointer ${
-                      //   activeSection === "emergencyInfo" ? "text-[#1694c4]" : ""
-                      // }`}
+                      onClick={() => handleActiveTable("myAppointments")}
+                      className={`cursor-pointer ${
+                        activeTable === "myAppointments" ? "text-[#1694c4]" : ""
+                      }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="" className={`font-semibold text-xs relative`}>
+                        <a href="#myAppointments" className={`font-semibold text-xs relative`}>
                           My Appointments
                         </a>
-                        {/* <span
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                              activeSection === "emergencyInfo" ? "scale-x-100" : "scale-x-0"
-                            } transition-transform duration-300`}
-                          ></span> */}
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTable === "myAppointments" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
 
                     <Grid
                       item
                       sm={2}
-                      // onClick={() => handleSectionClick("insuranceDetails")}
-                      // className={`cursor-pointer ${
-                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
-                      // }`}
+                      onClick={() => handleActiveTable("referredPatients")}
+                      className={`cursor-pointer ${
+                        activeTable === "referredPatients" ? "text-[#1694c4]" : ""
+                      }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="" className={`font-semibold text-xs relative`}>
+                        <a href="#referredPatients" className={`font-semibold text-xs relative`}>
                           Referred Patients
                         </a>
-                        {/* <span
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
-                            } transition-transform duration-300`}
-                          ></span> */}
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTable === "referredPatients" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
 
                     <Grid
                       item
                       sm={2}
-                      // onClick={() => handleSectionClick("insuranceDetails")}
-                      // className={`cursor-pointer ${
-                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
-                      // }`}
+                      onClick={() => handleActiveTable("attendedPatients")}
+                      className={`cursor-pointer ${
+                        activeTable === "attendedPatients" ? "text-[#1694c4]" : ""
+                      }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="" className={`font-semibold text-xs relative`}>
+                        <a href="#attendedPatients" className={`font-semibold text-xs relative`}>
                           Patient Attended
                         </a>
-                        {/* <span
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
-                            } transition-transform duration-300`}
-                          ></span> */}
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTable === "attendedPatients" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
 
                     <Grid
                       item
                       sm={2}
-                      // onClick={() => handleSectionClick("insuranceDetails")}
-                      // className={`cursor-pointer ${
-                      //   activeSection === "insuranceDetails" ? "text-[#1694c4]" : ""
-                      // }`}
+                      onClick={() => handleActiveTable("sendBackMedicineList")}
+                      className={`cursor-pointer ${
+                        activeTable === "sendBackMedicineList" ? "text-[#1694c4]" : ""
+                      }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="" className={`font-semibold text-xs relative`}>
+                        <a
+                          href="#sendBackMedicineList"
+                          className={`font-semibold text-xs relative`}
+                        >
                           Send Back Medicine list
                         </a>
-                        {/* <span
-                            className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                              activeSection === "insuranceDetails" ? "scale-x-100" : "scale-x-0"
-                            } transition-transform duration-300`}
-                          ></span> */}
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTable === "sendBackMedicineList" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
                       </div>
                     </Grid>
                   </Grid>
@@ -335,14 +347,46 @@ function ManagePatients() {
             </nav>
           </section>
 
-          <Grid container spacing={2}>
-            <Grid item sm={12}>
-              <WaitingListTable />
-            </Grid>
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+            {activeTable === "waitingList" && (
+              <>
+                <Grid item sm={12}>
+                  <WaitingListTable />
+                </Grid>
+              </>
+            )}
 
-            <Grid item sm={12}>
-              <MyAppointmentsTable />
-            </Grid>
+            {activeTable === "myAppointments" && (
+              <>
+                <Grid item sm={12}>
+                  <MyAppointmentsTable />
+                </Grid>
+              </>
+            )}
+
+            {activeTable === "referredPatients" && (
+              <>
+                <Grid item sm={12}>
+                  <ReferredPatientsTable />
+                </Grid>
+              </>
+            )}
+
+            {activeTable === "attendedPatients" && (
+              <>
+                <Grid item sm={12}>
+                  <AttendedPatientsTable />
+                </Grid>
+              </>
+            )}
+
+            {activeTable === "sendBackMedicineList" && (
+              <>
+                <Grid item sm={12}>
+                  <SendBackMedicineListTable />
+                </Grid>
+              </>
+            )}
           </Grid>
         </Paper>
       </Container>
