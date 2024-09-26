@@ -3,54 +3,77 @@ import MDTypography from "components/MDTypography";
 
 export default function data() {
   const columns = [
-    { Header: "Report Date", accessor: "reportDate", width: "25%", align: "left" },
-    { Header: "Investigation", accessor: "investigation", width: "25%", align: "left" },
-    { Header: "Patient", accessor: "patient", width: "25%", align: "center" },
-    { Header: "MR. No", accessor: "mrNo", width: "25%", align: "center" },
+    { Header: "Sr. No", accessor: "srNo", width: "15%", align: "left" },
+    { Header: "Nnvestigation", accessor: "investigation", width: "60%", align: "left" },
+    { Header: "Frequency", accessor: "frequency", width: "25%", align: "center" },
   ];
 
   const rows = [
     {
-      reportDate: (
+      srNo: (
         <MDTypography variant="caption" fontWeight="medium">
-          2024-09-25, Wed
+          1
         </MDTypography>
       ),
       investigation: (
         <MDTypography variant="caption" fontWeight="medium">
-          Covid
+          X-Ray
         </MDTypography>
       ),
-      patient: (
+      frequency: (
         <MDTypography variant="caption" fontWeight="medium">
-          Smith
-        </MDTypography>
-      ),
-      mrNo: (
-        <MDTypography variant="caption" fontWeight="medium">
-          00001-26-09-2024
+          18
         </MDTypography>
       ),
     },
     {
-      reportDate: (
+      srNo: (
         <MDTypography variant="caption" fontWeight="medium">
-          2024-09-30, Sun
+          2
         </MDTypography>
       ),
       investigation: (
         <MDTypography variant="caption" fontWeight="medium">
-          Fever
+          Blood Sugar Fasting
         </MDTypography>
       ),
-      patient: (
+      frequency: (
         <MDTypography variant="caption" fontWeight="medium">
-          John
+          45
         </MDTypography>
       ),
-      mrNo: (
+    },
+    {
+      srNo: (
         <MDTypography variant="caption" fontWeight="medium">
-          00002-26-09-2024
+          3
+        </MDTypography>
+      ),
+      investigation: (
+        <MDTypography variant="caption" fontWeight="medium">
+          Blood Sugar Random
+        </MDTypography>
+      ),
+      frequency: (
+        <MDTypography variant="caption" fontWeight="medium">
+          30
+        </MDTypography>
+      ),
+    },
+    {
+      srNo: (
+        <MDTypography variant="caption" fontWeight="medium">
+          4
+        </MDTypography>
+      ),
+      investigation: (
+        <MDTypography variant="caption" fontWeight="medium">
+          X-Ray
+        </MDTypography>
+      ),
+      frequency: (
+        <MDTypography variant="caption" fontWeight="medium">
+          20
         </MDTypography>
       ),
     },

@@ -18,12 +18,21 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MyDutyRoster from "./My Duty Roster";
 import MyBillingOrders from "./My Billing Orders";
 import Investigation from "./Investigation";
+import AttendedPatientsGraph from "./Attended Patients Graph";
+import Diagnosis from "./Diagnosis Graph";
+import Medication from "./Medication Graph";
+import InvestigationGraphAccordion from "./Investigation Graph";
+import MyPatients from "./My Patients";
 
 function DoctorPortal() {
   const [expandedAccordions, setExpandedAccordions] = useState({
     dutyRoster: false,
     billingOrders: false,
     investigation: false,
+    attendedPatientsGraph: false,
+    diagnosis: false,
+    medication: false,
+    myPatients: false,
   });
 
   const handleAccordionToggle = (accordionId) => () => {
@@ -57,6 +66,32 @@ function DoctorPortal() {
           </Box>
 
           <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex items-end">
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Accordion
+                expanded={expandedAccordions.myPatients}
+                onChange={handleAccordionToggle("myPatients")}
+              >
+                <AccordionSummary
+                  expandIcon={<Icon>{expandedAccordions.myPatients ? "-" : "+"}</Icon>}
+                  aria-controls="myPatients-content"
+                  id="myPatients-header"
+                >
+                  <Typography variant="h6">My Patients</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <MyPatients />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
             <Grid
               item
               xs={12}
@@ -131,6 +166,110 @@ function DoctorPortal() {
                 </AccordionSummary>
                 <AccordionDetails>
                   <Investigation />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Accordion
+                expanded={expandedAccordions.attendedPatientsGraph}
+                onChange={handleAccordionToggle("attendedPatientsGraph")}
+              >
+                <AccordionSummary
+                  expandIcon={<Icon>{expandedAccordions.attendedPatientsGraph ? "-" : "+"}</Icon>}
+                  aria-controls="attendedPatientsGraph-content"
+                  id="attendedPatientsGraph-header"
+                >
+                  <Typography variant="h6">Attended Patients Graph</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <AttendedPatientsGraph />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Accordion
+                expanded={expandedAccordions.diagnosis}
+                onChange={handleAccordionToggle("diagnosis")}
+              >
+                <AccordionSummary
+                  expandIcon={<Icon>{expandedAccordions.diagnosis ? "-" : "+"}</Icon>}
+                  aria-controls="diagnosis-content"
+                  id="diagnosis-header"
+                >
+                  <Typography variant="h6">Diagnosis Graph</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Diagnosis />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Accordion
+                expanded={expandedAccordions.medication}
+                onChange={handleAccordionToggle("medication")}
+              >
+                <AccordionSummary
+                  expandIcon={<Icon>{expandedAccordions.medication ? "-" : "+"}</Icon>}
+                  aria-controls="medication-content"
+                  id="medication-header"
+                >
+                  <Typography variant="h6">Medication Graph</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Medication />
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Accordion
+                expanded={expandedAccordions.investigationGraph}
+                onChange={handleAccordionToggle("investigationGraph")}
+              >
+                <AccordionSummary
+                  expandIcon={<Icon>{expandedAccordions.investigationGraph ? "-" : "+"}</Icon>}
+                  aria-controls="investigationGraph-content"
+                  id="investigationGraph-header"
+                >
+                  <Typography variant="h6">Investigation Graph</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <InvestigationGraphAccordion />
                 </AccordionDetails>
               </Accordion>
             </Grid>
