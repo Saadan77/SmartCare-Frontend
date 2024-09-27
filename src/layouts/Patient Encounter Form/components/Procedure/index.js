@@ -3,7 +3,7 @@ import MDButton from "components/MDButton";
 import data from "./data";
 import DataTable from "examples/Tables/DataTable";
 
-const Investigation = () => {
+const Procedure = () => {
   const { columns, rows } = data();
 
   return (
@@ -16,10 +16,6 @@ const Investigation = () => {
         <Grid item className="flex items-center">
           <Icon>chevron_right</Icon>
           <p className="text-base text-sky-600">Show favorites</p>
-        </Grid>
-        <Grid item className="flex items-center">
-          <Icon>chevron_right</Icon>
-          <p className="text-base text-sky-600">Attach Investigation</p>
         </Grid>
       </Grid>
 
@@ -34,19 +30,19 @@ const Investigation = () => {
         >
           <div>
             {/* Label */}
-            <p htmlFor="investigationType" className="text-xs mb-2">
-              Investigation Type:
+            <p htmlFor="procedureType" className="text-xs mb-2">
+              Procedure Type:
             </p>
 
             {/* Select Menu */}
             <select
-              id="investigationType"
-              name="investigationType"
-              //   value={patient.investigationType}
+              id="procedureType"
+              name="procedureType"
+              //   value={patient.procedureType}
               //   onChange={handleInputChange}
               required
               //   className={`block w-full h-8 border ${
-              //     errors.investigationType ? "border-red-500" : "border-gray-300"
+              //     errors.procedureType ? "border-red-500" : "border-gray-300"
               //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
               className={`block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
             >
@@ -96,18 +92,18 @@ const Investigation = () => {
           }}
         >
           <p className="flex text-xs items-center">
-            Investigation:<span className="text-red-600 text-base mx-2">*</span>
+            Procedure:<span className="text-red-600 text-base mx-2">*</span>
           </p>
           <TextField
             variant="outlined"
-            name="investigation"
+            name="procedure"
             fullWidth
             readOnly
-            value="Complete Blood Count"
-            // value={emergencyCase.investigation}
+            value="Burn Shave"
+            // value={emergencyCase.procedure}
             // onChange={handleInputChange}
-            // error={!!errors.investigation}
-            // helperText={errors.investigation}
+            // error={!!errors.procedure}
+            // helperText={errors.procedure}
           />
         </Grid>
 
@@ -143,7 +139,61 @@ const Investigation = () => {
           </div>
         </Grid>
 
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={6}
+          sm={3}
+          sx={{
+            paddingTop: "5px !important",
+          }}
+        >
+          <div>
+            {/* Label */}
+            <p htmlFor="frequency" className="flex flex-row text-xs items-center">
+              Frequency:<span className="text-red-600 text-base mx-2">*</span>
+            </p>
+
+            {/* Select Menu */}
+            <select
+              id="frequency"
+              name="frequency"
+              //   value={patient.frequency}
+              //   onChange={handleInputChange}
+              required
+              //   className={`block w-full h-8 border ${
+              //     errors.frequency ? "border-red-500" : "border-gray-300"
+              //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+              className={`block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+            >
+              <option value=""></option>
+            </select>
+            {/* {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender}</p>} */}
+          </div>
+        </Grid>
+
+        <Grid
+          item
+          xs={3}
+          sx={{
+            paddingTop: "5px !important",
+          }}
+        >
+          <p className="flex text-xs items-center">
+            Duration:<span className="text-red-600 text-base mx-2">*</span>
+          </p>
+          <TextField
+            variant="outlined"
+            name="duration"
+            fullWidth
+            readOnly
+            // value={emergencyCase.duration}
+            // onChange={handleInputChange}
+            // error={!!errors.duration}
+            // helperText={errors.duration}
+          />
+        </Grid>
+
+        <Grid item xs={8}>
           <p className="text-xs mb-2">Special Instructions:</p>
           <TextField
             variant="outlined"
@@ -158,7 +208,7 @@ const Investigation = () => {
 
         <Grid item className="flex items-center">
           <Icon>chevron_right</Icon>
-          <p className="text-base text-sky-600">Show Favorite Remarks</p>
+          <p className="text-xs text-sky-600">Show Favorite Remarks</p>
         </Grid>
       </Grid>
 
@@ -187,7 +237,7 @@ const Investigation = () => {
 
       <Box>
         <Typography style={{ fontWeight: "bold" }} gutterBottom>
-          <p className="text-base text-[#42424a] font-semibold mr-2">Selected Diagnosis</p>
+          <p className="text-base text-[#42424a] font-semibold mr-2">Selected Procedures</p>
         </Typography>
       </Box>
 
@@ -206,4 +256,4 @@ const Investigation = () => {
   );
 };
 
-export default Investigation;
+export default Procedure;

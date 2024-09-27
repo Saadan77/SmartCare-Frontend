@@ -20,6 +20,8 @@ import MDButton from "components/MDButton";
 import Vitals from "./components/Vitals";
 import Diagnosis from "./components/Diagnosis";
 import Investigation from "./components/Investigation";
+import Procedure from "./components/Procedure";
+import Medication from "./components/Medication";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -220,18 +222,38 @@ function PatientEncounterFrom() {
                     <Grid
                       item
                       sm={2}
-                      onClick={() => handleActiveTab("medicalProcedure")}
+                      onClick={() => handleActiveTab("procedure")}
                       className={`cursor-pointer ${
-                        activeTab === "medicalProcedure" ? "text-[#1694c4]" : ""
+                        activeTab === "procedure" ? "text-[#1694c4]" : ""
                       }`}
                     >
                       <div className="border border-gray-300 group h-10 relative">
-                        <a href="#medicalProcedure" className={`font-semibold text-xs relative`}>
-                          Medical Procedure
+                        <a href="#procedure" className={`font-semibold text-xs relative`}>
+                          Procedure
                         </a>
                         <span
                           className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
-                            activeTab === "medicalProcedure" ? "scale-x-100" : "scale-x-0"
+                            activeTab === "procedure" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("medication")}
+                      className={`cursor-pointer ${
+                        activeTab === "medication" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#medication" className={`font-semibold text-xs relative`}>
+                          Medication
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "medication" ? "scale-x-100" : "scale-x-0"
                           } transition-transform duration-300`}
                         ></span>
                       </div>
@@ -263,6 +285,22 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <Investigation />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "procedure" && (
+              <>
+                <Grid item sm={12}>
+                  <Procedure />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "medication" && (
+              <>
+                <Grid item sm={12}>
+                  <Medication />
                 </Grid>
               </>
             )}
