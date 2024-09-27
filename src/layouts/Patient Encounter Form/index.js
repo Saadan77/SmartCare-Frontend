@@ -18,6 +18,8 @@ import {
 
 import MDButton from "components/MDButton";
 import Vitals from "./components/Vitals";
+import Diagnosis from "./components/Diagnosis";
+import Investigation from "./components/Investigation";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -245,6 +247,22 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <Vitals />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "diagnosis" && (
+              <>
+                <Grid item sm={12}>
+                  <Diagnosis />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "investigation" && (
+              <>
+                <Grid item sm={12}>
+                  <Investigation />
                 </Grid>
               </>
             )}
