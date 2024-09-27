@@ -10,6 +10,7 @@ import SignUp from "layouts/authentication/sign-up";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import DoctorPortal from "layouts/Doctor Portal";
+import PatientEncounterFrom from "layouts/Patient Encounter Form";
 
 const routes = [
   {
@@ -51,6 +52,14 @@ const routes = [
     icon: <Icon fontSize="small">personal_injury</Icon>,
     route: "/managePatients",
     component: <ManagePatients />,
+  },
+  {
+    type: "collapse",
+    name: "Patient Encouter Form",
+    key: "patientEncouterForm",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/patientEncouterForm",
+    component: <PatientEncounterFrom />,
   },
   {
     type: "collapse",
