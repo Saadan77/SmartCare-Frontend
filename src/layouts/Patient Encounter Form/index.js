@@ -4,19 +4,8 @@ import React, { useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-import {
-  TextField,
-  Container,
-  Typography,
-  Grid,
-  Paper,
-  Box,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-} from "@mui/material";
+import { Container, Typography, Grid, Paper, Box } from "@mui/material";
 
-import MDButton from "components/MDButton";
 import Vitals from "./components/Vitals";
 import Diagnosis from "./components/Diagnosis";
 import Investigation from "./components/Investigation";
@@ -28,6 +17,7 @@ import NextVisit from "./components/Next Visit - Follow Up";
 import Admit from "./components/Admit";
 import ResusRecord from "./components/Resus Record";
 import GlasgowComaScale from "./components/Glasgow Coma Scale";
+import OperationTheater from "./components/OT";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -420,6 +410,26 @@ function PatientEncounterFrom() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("operationTheater")}
+                      className={`cursor-pointer ${
+                        activeTab === "operationTheater" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#operationTheater" className={`font-semibold text-xs relative`}>
+                          OT
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "operationTheater" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -517,6 +527,14 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <GlasgowComaScale />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "operationTheater" && (
+              <>
+                <Grid item sm={12}>
+                  <OperationTheater />
                 </Grid>
               </>
             )}

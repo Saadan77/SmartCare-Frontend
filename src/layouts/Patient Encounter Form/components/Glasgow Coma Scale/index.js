@@ -7,7 +7,7 @@ const GlasgowComaScale = () => {
   const { columns, rows } = data();
   return (
     <div>
-      <Grid container spacing={2} sx={{ marginTop: 1 }}>
+      <Grid container spacing={2} sx={{ marginTop: 1 }} className="flex items-end">
         <Grid
           item
           xs={6}
