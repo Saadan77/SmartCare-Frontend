@@ -27,6 +27,7 @@ import AddLeave from "./components/Add Leave";
 import NextVisit from "./components/Next Visit - Follow Up";
 import Admit from "./components/Admit";
 import ResusRecord from "./components/Resus Record";
+import GlasgowComaScale from "./components/Glasgow Coma Scale";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -399,6 +400,26 @@ function PatientEncounterFrom() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("glasgowComaScale")}
+                      className={`cursor-pointer ${
+                        activeTab === "glasgowComaScale" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#glasgowComaScale" className={`font-semibold text-xs relative`}>
+                          Glasgow Coma Scale
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "glasgowComaScale" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -488,6 +509,14 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <ResusRecord />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "glasgowComaScale" && (
+              <>
+                <Grid item sm={12}>
+                  <GlasgowComaScale />
                 </Grid>
               </>
             )}
