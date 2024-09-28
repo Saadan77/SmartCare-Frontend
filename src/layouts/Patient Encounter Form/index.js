@@ -25,6 +25,7 @@ import Medication from "./components/Medication";
 import Advice from "./components/Advice";
 import AddLeave from "./components/Add Leave";
 import NextVisit from "./components/Next Visit - Follow Up";
+import Admit from "./components/Admit";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -339,6 +340,24 @@ function PatientEncounterFrom() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("admit")}
+                      className={`cursor-pointer ${activeTab === "admit" ? "text-[#1694c4]" : ""}`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#admit" className={`font-semibold text-xs relative`}>
+                          Admit
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "admit" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -406,6 +425,14 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <NextVisit />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "admit" && (
+              <>
+                <Grid item sm={12}>
+                  <Admit />
                 </Grid>
               </>
             )}
