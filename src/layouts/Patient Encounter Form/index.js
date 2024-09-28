@@ -22,6 +22,9 @@ import Diagnosis from "./components/Diagnosis";
 import Investigation from "./components/Investigation";
 import Procedure from "./components/Procedure";
 import Medication from "./components/Medication";
+import Advice from "./components/Advice";
+import AddLeave from "./components/Add Leave";
+import NextVisit from "./components/Next Visit - Follow Up";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -258,6 +261,84 @@ function PatientEncounterFrom() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("advice")}
+                      className={`cursor-pointer ${activeTab === "advice" ? "text-[#1694c4]" : ""}`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#advice" className={`font-semibold text-xs relative`}>
+                          Advice
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "advice" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("addLeave")}
+                      className={`cursor-pointer ${
+                        activeTab === "addLeave" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#addLeave" className={`font-semibold text-xs relative`}>
+                          Add Leave
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "addLeave" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("Referral")}
+                      className={`cursor-pointer ${
+                        activeTab === "Referral" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#Referral" className={`font-semibold text-xs relative`}>
+                          Referral
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "Referral" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("nextVisit")}
+                      className={`cursor-pointer ${
+                        activeTab === "nextVisit" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#nextVisit" className={`font-semibold text-xs relative`}>
+                          Next Visit/ Follow Up
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "nextVisit" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -301,6 +382,30 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <Medication />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "advice" && (
+              <>
+                <Grid item sm={12}>
+                  <Advice />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "addLeave" && (
+              <>
+                <Grid item sm={12}>
+                  <AddLeave />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "nextVisit" && (
+              <>
+                <Grid item sm={12}>
+                  <NextVisit />
                 </Grid>
               </>
             )}

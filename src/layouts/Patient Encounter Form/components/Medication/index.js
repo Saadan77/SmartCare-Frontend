@@ -338,7 +338,15 @@ const Medication = () => {
       </Box>
 
       <Grid container spacing={2} sx={{ marginTop: 1 }}>
-        <Grid item sm={12}></Grid>
+        <Grid item sm={12}>
+          <DataTable
+            table={{ columns, rows }}
+            showTotalEntries={true}
+            isSorted={true}
+            noEndBorder
+            entriesPerPage={false}
+          />
+        </Grid>
       </Grid>
     </div>
   );
