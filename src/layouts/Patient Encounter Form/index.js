@@ -26,6 +26,7 @@ import Advice from "./components/Advice";
 import AddLeave from "./components/Add Leave";
 import NextVisit from "./components/Next Visit - Follow Up";
 import Admit from "./components/Admit";
+import ResusRecord from "./components/Resus Record";
 
 function PatientEncounterFrom() {
   const [activeTab, setActiveTab] = useState("examination");
@@ -358,6 +359,46 @@ function PatientEncounterFrom() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("disposal")}
+                      className={`cursor-pointer ${
+                        activeTab === "disposal" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#disposal" className={`font-semibold text-xs relative`}>
+                          Disposal
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "disposal" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("resusRecord")}
+                      className={`cursor-pointer ${
+                        activeTab === "resusRecord" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a href="#resusRecord" className={`font-semibold text-xs relative`}>
+                          Resus Record
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "resusRecord" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -433,6 +474,20 @@ function PatientEncounterFrom() {
               <>
                 <Grid item sm={12}>
                   <Admit />
+                </Grid>
+              </>
+            )}
+
+            {activeTab === "disposal" && (
+              <>
+                <Grid item sm={12}></Grid>
+              </>
+            )}
+
+            {activeTab === "resusRecord" && (
+              <>
+                <Grid item sm={12}>
+                  <ResusRecord />
                 </Grid>
               </>
             )}
