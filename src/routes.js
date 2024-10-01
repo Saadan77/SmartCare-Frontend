@@ -14,6 +14,7 @@ import PatientEncounterFrom from "layouts/Patient Encounter Form";
 import MedicineChargeFile from "layouts/Medicine Charge File";
 import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
+import DutyRoster from "layouts/Duty Roster";
 
 const routes = [
   {
@@ -95,6 +96,14 @@ const routes = [
     icon: <Icon fontSize="small">medication</Icon>,
     route: "/issueMedicine",
     component: <IssueMedicine />,
+  },
+  {
+    type: "collapse",
+    name: "Duty Roster",
+    key: "dutyRoster",
+    icon: <Icon fontSize="small">work_outline</Icon>,
+    route: "/dutyRoster",
+    component: <DutyRoster />,
   },
   {
     type: "collapse",
