@@ -34,7 +34,7 @@ export default function data() {
     {
       patientName: (
         <MDTypography variant="caption" fontWeight="medium">
-          John Smiht
+          John Smith
         </MDTypography>
       ),
       mrNo: (

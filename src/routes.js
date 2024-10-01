@@ -13,6 +13,7 @@ import DoctorPortal from "layouts/Doctor Portal";
 import PatientEncounterFrom from "layouts/Patient Encounter Form";
 import MedicineChargeFile from "layouts/Medicine Charge File";
 import ReceivePatient from "layouts/Receive Patients";
+import IssueMedicine from "layouts/Issue Medicine - IPD";
 
 const routes = [
   {
@@ -82,10 +83,18 @@ const routes = [
   {
     type: "collapse",
     name: "Receive Patient",
-    key: "ReceivePatient",
+    key: "receivePatient",
     icon: <Icon fontSize="small">healing</Icon>,
     route: "/receivePatient",
     component: <ReceivePatient />,
+  },
+  {
+    type: "collapse",
+    name: "Issue Medicine",
+    key: "issueMedicine",
+    icon: <Icon fontSize="small">medication</Icon>,
+    route: "/issueMedicine",
+    component: <IssueMedicine />,
   },
   {
     type: "collapse",
