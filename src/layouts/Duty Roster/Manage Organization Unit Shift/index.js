@@ -9,8 +9,6 @@ import {
   FormControl,
 } from "@mui/material";
 
-import React, { useState } from "react";
-
 // import data from "./data";
 import DataTable from "examples/Tables/DataTable";
 import data from "./data";

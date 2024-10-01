@@ -9,6 +9,7 @@ import { Container, Typography, Grid, Paper, Box } from "@mui/material";
 import ManageShiftType from "./Manage Shift Type";
 import MDButton from "components/MDButton";
 import ManageOrganizationUnitShift from "./Manage Organization Unit Shift";
+import ManageEmployeeDutyRoster from "./Manage Employee Duty Roster";
 
 function DutyRoster() {
   const [activeTab, setActiveTab] = useState("manageShiftType");
@@ -84,6 +85,29 @@ function DutyRoster() {
                         ></span>
                       </div>
                     </Grid>
+
+                    <Grid
+                      item
+                      sm={2}
+                      onClick={() => handleActiveTab("manageEmployeeDutyRoster")}
+                      className={`cursor-pointer ${
+                        activeTab === "manageEmployeeDutyRoster" ? "text-[#1694c4]" : ""
+                      }`}
+                    >
+                      <div className="border border-gray-300 group h-10 relative">
+                        <a
+                          href="#manageEmployeeDutyRoster"
+                          className={`font-semibold text-xs relative`}
+                        >
+                          Manage Employee Duty Roster
+                        </a>
+                        <span
+                          className={`absolute bottom-0 left-0 w-full h-0.5 bg-[#1694c4] transform ${
+                            activeTab === "manageEmployeeDutyRoster" ? "scale-x-100" : "scale-x-0"
+                          } transition-transform duration-300`}
+                        ></span>
+                      </div>
+                    </Grid>
                   </Grid>
                 </div>
               </div>
@@ -91,23 +115,25 @@ function DutyRoster() {
           </section>
 
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
-            {activeTab === "manageShiftType" && (
-              <>
-                <Grid item xs={12}>
+            <Grid item xs={12}>
+              {activeTab === "manageShiftType" && (
+                <>
                   <ManageShiftType />
-                </Grid>
-              </>
-            )}
-          </Grid>
+                </>
+              )}
 
-          <Grid container spacing={2} sx={{ marginTop: 2 }}>
-            {activeTab === "manageOrganizationUnitShift" && (
-              <>
-                <Grid item xs={12}>
+              {activeTab === "manageOrganizationUnitShift" && (
+                <>
                   <ManageOrganizationUnitShift />
-                </Grid>
-              </>
-            )}
+                </>
+              )}
+
+              {activeTab === "manageEmployeeDutyRoster" && (
+                <>
+                  <ManageEmployeeDutyRoster />
+                </>
+              )}
+            </Grid>
           </Grid>
 
           <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex justify-end">
