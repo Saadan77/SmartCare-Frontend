@@ -43,7 +43,7 @@ function DutyRoster() {
                     {/* Navigation Links */}
                     <Grid
                       item
-                      sm={2}
+                      xs={4}
                       onClick={() => handleActiveTab("manageShiftType")}
                       className={`cursor-pointer ${
                         activeTab === "manageShiftType" ? "text-[#1694c4]" : ""
@@ -63,7 +63,7 @@ function DutyRoster() {
 
                     <Grid
                       item
-                      sm={2}
+                      xs={4}
                       onClick={() => handleActiveTab("manageOrganizationUnitShift")}
                       className={`cursor-pointer ${
                         activeTab === "manageOrganizationUnitShift" ? "text-[#1694c4]" : ""
@@ -88,7 +88,7 @@ function DutyRoster() {
 
                     <Grid
                       item
-                      sm={2}
+                      xs={4}
                       onClick={() => handleActiveTab("manageEmployeeDutyRoster")}
                       className={`cursor-pointer ${
                         activeTab === "manageEmployeeDutyRoster" ? "text-[#1694c4]" : ""
