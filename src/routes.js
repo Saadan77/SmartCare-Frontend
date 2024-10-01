@@ -11,6 +11,8 @@ import SignUp from "layouts/authentication/sign-up";
 import Icon from "@mui/material/Icon";
 import DoctorPortal from "layouts/Doctor Portal";
 import PatientEncounterFrom from "layouts/Patient Encounter Form";
+import MedicineChargeFile from "layouts/Medicine Charge File";
+import ReceivePatient from "layouts/Receive Patients";
 
 const routes = [
   {
@@ -68,6 +70,22 @@ const routes = [
     icon: <Icon fontSize="small">contact_emergency</Icon>,
     route: "/doctorPortal",
     component: <DoctorPortal />,
+  },
+  {
+    type: "collapse",
+    name: "Medicine Charge File",
+    key: "medicineChargeFile",
+    icon: <Icon fontSize="small">bloodtype</Icon>,
+    route: "/medicineChargeFile",
+    component: <MedicineChargeFile />,
+  },
+  {
+    type: "collapse",
+    name: "Receive Patient",
+    key: "ReceivePatient",
+    icon: <Icon fontSize="small">healing</Icon>,
+    route: "/receivePatient",
+    component: <ReceivePatient />,
   },
   {
     type: "collapse",
