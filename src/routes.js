@@ -16,6 +16,7 @@ import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
 import ItemExpirationReport from "layouts/Item Expiration Report";
+import ItemStockReport from "layouts/Item Stock Report";
 
 const routes = [
   {
@@ -113,6 +114,14 @@ const routes = [
     icon: <Icon fontSize="small">delete_outline</Icon>,
     route: "/itemExpirationReport",
     component: <ItemExpirationReport />,
+  },
+  {
+    type: "collapse",
+    name: "Item Stock Report",
+    key: "itemStockReport",
+    icon: <Icon fontSize="small">inventory</Icon>,
+    route: "/itemStockReport",
+    component: <ItemStockReport />,
   },
   {
     type: "collapse",

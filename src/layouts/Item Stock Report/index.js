@@ -12,7 +12,7 @@ import MDButton from "components/MDButton";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-const ItemExpirationReport = () => {
+const ItemStockReport = () => {
   const { columns, rows } = data();
 
   return (
@@ -34,7 +34,7 @@ const ItemExpirationReport = () => {
         >
           <Box>
             <Typography style={{ fontWeight: "bold" }} gutterBottom>
-              <p className="text-base text-[#42424a] font-semibold mr-2">Item Expiration Report</p>
+              <p className="text-base text-[#42424a] font-semibold mr-2">Item Stock Report</p>
             </Typography>
           </Box>
 
@@ -238,7 +238,7 @@ const ItemExpirationReport = () => {
 
           <Box>
             <Typography style={{ fontWeight: "bold" }} gutterBottom>
-              <p className="text-base text-[#42424a] font-semibold mr-2">Search Results</p>
+              <p className="text-base text-[#42424a] font-semibold mr-2">Search Record</p>
             </Typography>
           </Box>
 
@@ -259,4 +259,4 @@ const ItemExpirationReport = () => {
   );
 };
 
-export default ItemExpirationReport;
+export default ItemStockReport;
