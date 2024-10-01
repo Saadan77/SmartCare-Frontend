@@ -15,6 +15,7 @@ import MedicineChargeFile from "layouts/Medicine Charge File";
 import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
+import ItemExpirationReport from "layouts/Item Expiration Report";
 
 const routes = [
   {
@@ -104,6 +105,14 @@ const routes = [
     icon: <Icon fontSize="small">work_outline</Icon>,
     route: "/dutyRoster",
     component: <DutyRoster />,
+  },
+  {
+    type: "collapse",
+    name: "Item Expiration Report",
+    key: "itemExpirationReport",
+    icon: <Icon fontSize="small">delete_outline</Icon>,
+    route: "/itemExpirationReport",
+    component: <ItemExpirationReport />,
   },
   {
     type: "collapse",
