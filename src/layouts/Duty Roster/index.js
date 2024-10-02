@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-import { Container, Typography, Grid, Paper, Box } from "@mui/material";
+import { Container, Grid, Paper } from "@mui/material";
 
 import ManageShiftType from "./Manage Shift Type";
 import MDButton from "components/MDButton";

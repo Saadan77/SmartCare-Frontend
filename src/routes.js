@@ -15,8 +15,7 @@ import MedicineChargeFile from "layouts/Medicine Charge File";
 import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
-import ItemExpirationReport from "layouts/Item Expiration Report";
-import ItemStockReport from "layouts/Item Stock Report";
+import Report from "layouts/Report";
 
 const routes = [
   {
@@ -109,19 +108,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Item Expiration Report",
-    key: "itemExpirationReport",
-    icon: <Icon fontSize="small">delete_outline</Icon>,
-    route: "/itemExpirationReport",
-    component: <ItemExpirationReport />,
-  },
-  {
-    type: "collapse",
-    name: "Item Stock Report",
-    key: "itemStockReport",
-    icon: <Icon fontSize="small">inventory</Icon>,
-    route: "/itemStockReport",
-    component: <ItemStockReport />,
+    name: "Report",
+    key: "report",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/report",
+    component: <Report />,
   },
   {
     type: "collapse",
