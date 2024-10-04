@@ -9,6 +9,7 @@ import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+
 import DoctorPortal from "layouts/Doctor Portal";
 import PatientEncounterFrom from "layouts/Patient Encounter Form";
 import MedicineChargeFile from "layouts/Medicine Charge File";
@@ -16,6 +17,7 @@ import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
 import Report from "layouts/Report";
+import PharmacySetup from "layouts/Pharmacy Setup";
 
 const routes = [
   {
@@ -113,6 +115,14 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/report",
     component: <Report />,
+  },
+  {
+    type: "collapse",
+    name: "Pharmacy Setup",
+    key: "pharmacySetup",
+    icon: <Icon fontSize="small">medication_liquid</Icon>,
+    route: "/pharmacySetup",
+    component: <PharmacySetup />,
   },
   {
     type: "collapse",
