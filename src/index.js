@@ -24,6 +24,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 import { TokenProvider } from "layouts/authentication/sign-in/token";
+import { PatientProvider } from "services/Patient";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -34,7 +35,9 @@ root.render(
       <BrowserRouter>
         <MaterialUIControllerProvider>
           <TokenProvider>
-            <App />
+            <PatientProvider>
+              <App />
+            </PatientProvider>
           </TokenProvider>
         </MaterialUIControllerProvider>
       </BrowserRouter>

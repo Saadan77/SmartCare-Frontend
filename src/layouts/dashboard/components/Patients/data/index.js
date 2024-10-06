@@ -1,29 +1,40 @@
-// @mui material components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
-import { useToken } from "layouts/authentication/sign-in/token";
-import { fetchPatients, deletePatient } from "services/Patient";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Icon } from "@mui/material";
+import { usePatientContext, deletePatient } from "services/Patient";
 
 export default function data() {
-  const { token } = useToken();
+  const { patients, setPatients } = usePatientContext();
 
-  const [patients, setPatients] = useState([]);
+  const [menu, setMenu] = useState({ anchor: null, patientId: null });
 
-  const [menu, setMenu] = useState(null);
+  const openMenu = (event, patientId) => {
+    setMenu({ anchor: event.currentTarget, patientId });
+  };
 
-  const openMenu = ({ currentTarget }) => setMenu(currentTarget);
-  const closeMenu = () => setMenu(null);
+  const closeMenu = () => {
+    setMenu({ anchor: null, patientId: null });
+  };
+
+  const handleDelete = async (patientId) => {
+    try {
+      await deletePatient(patientId, token);
+      setPatients((prevPatients) =>
+        prevPatients.filter((patient) => patient.patientId !== patientId)
+      );
+      closeMenu();
+    } catch (error) {
+      console.error("Error deleting patient:", error);
+    }
+  };
 
   const renderMenu = (
     <Menu
       id="simple-menu"
-      anchorEl={menu}
+      anchorEl={menu.anchor}
       anchorOrigin={{
         vertical: "top",
         horizontal: "left",
@@ -32,13 +43,12 @@ export default function data() {
         vertical: "top",
         horizontal: "right",
       }}
-      open={Boolean(menu)}
+      open={Boolean(menu.anchor)}
       onClose={closeMenu}
     >
       <MenuItem
         onClick={() => {
-          handleDelete(menu?.dataset?.patientId);
-          closeMenu();
+          handleDelete(menu.patientId);
         }}
       >
         Delete
@@ -46,27 +56,6 @@ export default function data() {
       <MenuItem onClick={closeMenu}>Edit</MenuItem>
     </Menu>
   );
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const reponsePatients = await fetchPatients(token);
-        setPatients(reponsePatients || []);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      }
-    };
-    fetchData();
-  }, [token]);
-
-  const handleDelete = async (patientId) => {
-    try {
-      await deletePatient(patientId, token);
-      setPatients(patients.filter((patient) => patient.patientId !== patientId));
-    } catch (error) {
-      console.error("Error deleting patient:", error);
-    }
-  };
 
   const columns = [
     { Header: "Patient ID", accessor: "patientId", width: "20%", align: "left" },
@@ -106,7 +95,11 @@ export default function data() {
     actions: (
       <MDBox display="flex" justifyContent="space-between" alignItems="center">
         <MDBox color="text" px={2}>
-          <Icon sx={{ cursor: "pointer", fontWeight: "bold" }} fontSize="small" onClick={openMenu}>
+          <Icon
+            sx={{ cursor: "pointer", fontWeight: "bold" }}
+            fontSize="small"
+            onClick={(event) => openMenu(event, patient.patientId)}
+          >
             more_vert
           </Icon>
         </MDBox>

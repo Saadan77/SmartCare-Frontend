@@ -36,10 +36,12 @@ import { useNavigate } from "react-router-dom";
 import MDBox from "components/MDBox";
 import PatientTable from "layouts/dashboard/patientTable";
 
-function PatientRegistration() {
-  const { token } = useToken();
+import { usePatientContext } from "services/Patient";
 
-  const [patients, setPatients] = useState([]);
+function PatientRegistration() {
+  const { newPatientId } = usePatientContext();
+
+  const { token } = useToken();
 
   const navigate = useNavigate();
 
@@ -73,39 +75,45 @@ function PatientRegistration() {
     photoId: "",
   });
 
-  const formatDate = (date) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
-  };
+  // const formatDate = (date) => {
+  //   const day = date.getDate().toString().padStart(2, "0");
+  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  //   const year = date.getFullYear();
+  //   return `${day}-${month}-${year}`;
+  // };
 
-  const today = formatDate(new Date());
+  // const today = formatDate(new Date());
 
-  const getPatientCountForToday = (patients) => {
-    return (
-      patients.filter((patient) => {
-        const registrationDate = new Date(patient.createdDate);
-        return formatDate(registrationDate) === today;
-      }).length + 1
-    );
-  };
+  // const getPatientCountForToday = (patients) => {
+  //   return (
+  //     patients.filter((patient) => {
+  //       const registrationDate = new Date(patient.createdDate);
+  //       return formatDate(registrationDate) === today;
+  //     }).length + 1
+  //   );
+  // };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responsePatients = await fetchPatients(token);
-        setPatients(responsePatients || []);
+    if (newPatientId) {
+      setPatient((prev) => ({ ...prev, patientId: newPatientId }));
+    }
+  }, [newPatientId]);
 
-        const count = getPatientCountForToday(responsePatients || []);
-        const newPatientId = `${count.toString().padStart(5, "0")}-${formatDate(new Date())}`;
-        setPatient((prev) => ({ ...prev, patientId: newPatientId }));
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-      }
-    };
-    fetchData();
-  }, [token]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const responsePatients = await fetchPatients(token);
+  //       setPatients(responsePatients || []);
+
+  //       const count = getPatientCountForToday(responsePatients || []);
+  //       const newPatientId = `${count.toString().padStart(5, "0")}-${formatDate(new Date())}`;
+  //       setPatient((prev) => ({ ...prev, patientId: newPatientId }));
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error.message);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [token]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
