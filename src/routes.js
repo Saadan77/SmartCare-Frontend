@@ -18,6 +18,7 @@ import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
 import Report from "layouts/Report";
 import PharmacySetup from "layouts/Pharmacy Setup";
+import SearchPatients from "layouts/Search Patients";
 
 const routes = [
   {
@@ -27,6 +28,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Search Patients",
+    key: "searchPatients",
+    icon: <Icon fontSize="small">searchPatients</Icon>,
+    route: "/searchPatients",
+    component: <SearchPatients />,
   },
   {
     type: "collapse",

@@ -66,7 +66,7 @@ export const PatientProvider = ({ children }) => {
     };
 
     fetchPatients();
-  }, []);
+  }, [token]);
 
   return (
     <PatientContext.Provider value={{ patients, newPatientId, setPatients }}>
