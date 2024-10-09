@@ -20,6 +20,7 @@ import Report from "layouts/Report";
 import PharmacySetup from "layouts/Pharmacy Setup";
 import SearchPatients from "layouts/Search Patients";
 import VisitConfirmation from "layouts/Visit Confirmation";
+import PatientAppointment from "layouts/Patient Appointment";
 
 const routes = [
   {
@@ -45,6 +46,14 @@ const routes = [
     icon: <Icon fontSize="small">fact_check</Icon>,
     route: "/visitConfirmation",
     component: <VisitConfirmation />,
+  },
+  {
+    type: "collapse",
+    name: "Patient Appointment",
+    key: "patientAppointment",
+    icon: <Icon fontSize="small">book_online</Icon>,
+    route: "/patientAppointment",
+    component: <PatientAppointment />,
   },
   {
     type: "collapse",
