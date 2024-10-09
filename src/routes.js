@@ -19,6 +19,7 @@ import DutyRoster from "layouts/Duty Roster";
 import Report from "layouts/Report";
 import PharmacySetup from "layouts/Pharmacy Setup";
 import SearchPatients from "layouts/Search Patients";
+import VisitConfirmation from "layouts/Visit Confirmation";
 
 const routes = [
   {
@@ -33,9 +34,17 @@ const routes = [
     type: "collapse",
     name: "Search Patients",
     key: "searchPatients",
-    icon: <Icon fontSize="small">searchPatients</Icon>,
+    icon: <Icon fontSize="small">search</Icon>,
     route: "/searchPatients",
     component: <SearchPatients />,
+  },
+  {
+    type: "collapse",
+    name: "Visit Confirmation",
+    key: "visitConfirmation",
+    icon: <Icon fontSize="small">fact_check</Icon>,
+    route: "/visitConfirmation",
+    component: <VisitConfirmation />,
   },
   {
     type: "collapse",
