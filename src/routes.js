@@ -21,6 +21,7 @@ import PharmacySetup from "layouts/Pharmacy Setup";
 import SearchPatients from "layouts/Search Patients";
 import VisitConfirmation from "layouts/Visit Confirmation";
 import PatientAppointment from "layouts/Patient Appointment";
+import AddPatient from "layouts/Add Patients";
 
 const routes = [
   {
@@ -30,6 +31,14 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+  },
+  {
+    type: "collapse",
+    name: "Add Patient",
+    key: "addPatient",
+    icon: <Icon fontSize="small">person_add</Icon>,
+    route: "/addPatient",
+    component: <AddPatient />,
   },
   {
     type: "collapse",

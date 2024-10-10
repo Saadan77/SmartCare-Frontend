@@ -202,12 +202,12 @@ function PatientAppointment() {
           </Grid>
 
           <Box>
-            <Typography sx={{ marginTop: 1 }} style={{ fontWeight: "bold" }} gutterBottom>
+            <Typography sx={{ marginTop: 2 }} style={{ fontWeight: "bold" }} gutterBottom>
               <p className="text-base text-[#42424a] font-semibold mr-2">Patients</p>
             </Typography>
           </Box>
 
-          <Grid container spacing={2} sx={{ marginTop: 1 }}>
+          <Grid container spacing={2}>
             <Grid item sm={12}>
               <DataTable
                 table={{ columns: patientsColumns, rows: patientsRows }}
