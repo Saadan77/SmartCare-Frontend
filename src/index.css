@@ -1,31 +1,492 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-.css-mvs481 {
-  padding: 0.25rem !important;
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
 }
 
-.css-jd7pm9-MuiListItemText-root span {
-  font-weight: 400 !important;
+/* .container {
+  width: 80%;
+  margin: 20px auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.css-1x3v3vy {
-  background: #1694c4 !important;
+.custom-heading {
+  background-color: #004080;
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
-.css-1xr7jc4-MuiInputBase-input-MuiOutlinedInput-input {
-  height: 0.5rem !important;
+.patient-info {
+  margin-bottom: 20px;
 }
 
-.MuiOutlinedInput-root {
-  border-radius: 4px !important;
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
 }
 
-.MuiOutlinedInput-input {
-  height: 0.5rem !important;
+.info-row span {
+  flex: 1;
+  text-align: left;
 }
 
-.css-19o5iax-MuiGrid-root {
-  padding-top: 5px !important;
+.info-row span:not(:last-child) {
+  margin-right: 10px;
 }
+
+a {
+  color: #ed1329;
+  text-decoration: underline;
+}
+
+.nav-tabs {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.nav-tabs button {
+  background-color: #e7e7e7;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 5px;
+  transition: background-color 0.2s;
+  color: black;
+}
+
+.nav-tabs button.active {
+  background-color: grey;
+  color: white;
+}
+
+.nav-tabs .red {
+  background-color: #eb5262;
+}
+
+.nav-tabs .red.active {
+  background-color: grey;
+  color: white;
+}
+
+.nav-tabs button:hover {
+  background-color: #ddd;
+}
+
+/* Vitals Section */
+/* .vitals-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.vitals-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.vitals-tabs {
+  display: flex;
+  background-color: #004080;
+  margin-bottom: 20px;
+}
+
+.vital-button {
+  background-color: #add8e6;
+  float: left;
+  outline: none;
+  border: none;
+  color: black;
+  padding: 10px 15px;
+  margin: 0;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.vital-button:hover {
+  background-color: #87ceeb;
+}
+
+.vitals-tabs button.active {
+  background-color: #28a745;
+  color: white;
+}
+
+.vital-item {
+  display: flex;
+  align-items: center;
+  width: calc(50% - 20px); 
+  margin-bottom: 10px;
+}
+
+.vital-item label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.vital-item input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #004080;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #003060;
+}
+
+form .buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+form button[type="submit"],
+form button[type="reset"] {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.vitals-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.vitals-table th,
+.vitals-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.vitals-table th {
+  background-color: #666666;
+  color: white;
+}
+
+.vitals-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.vitals-table tr:hover {
+  background-color: #ddd;
+}
+
+form label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+form input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+form button {
+  padding: 10px;
+  background-color: #004080;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #003366;
+}
+
+.previous-vital-history {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.date-range {
+  display: flex;
+  gap: 20px;
+}
+
+.date-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+input[type="date"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 150px;
+}
+
+input[type="date"]:focus {
+  border-color: #007bff;
+  outline: none;
+} */
+
+/* Ward Bed Section */
+/* .bed-shifting-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.bed-shifting-section h3,
+.bed-shifting-section h5 {
+  background-color: #004080;
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.bed-shifting-section .form-label {
+  font-weight: bold;
+  color: #495057;
+}
+
+.bed-shifting-section .form-control {
+  margin-bottom: 15px;
+}
+
+.bed-shifting-section .btn-primary {
+  background-color: #004080;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.bed-shifting-section .btn-primary:hover {
+  background-color: #003060;
+}
+
+.bed-shifting-section .table {
+  margin-top: 20px;
+}
+
+.bed-shifting-section .table th,
+.bed-shifting-section .table td {
+  text-align: center;
+}
+
+.bed-shifting-section .table th {
+  background-color: #666666;
+  color: white;
+}
+
+.bed-shifting-section .table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Investigation Sheet Section */
+/* .investigation-sheet {
+  margin: 20px;
+  padding: 20px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  text-align: left;
+  border: 1px solid #dddddd;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border: 1px solid #dddddd;
+}
+
+.styled-table thead tr {
+  background-color: #666666;
+  color: #ffffff;
+  text-align: left;
+  border-bottom: 2px solid #dddddd;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #e9f5f3;
+}
+
+.styled-table button {
+  background-color: #8fb9e3;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.styled-table button:hover {
+  background-color: #1a67b4;
+}  */
+
+/* Medication Admin Section */
+/* .med-admin-container {
+  margin: 20px;
+  padding: 20px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.radio-group label {
+  font-size: 16px;
+}
+
+.date-time-picker {
+  margin-bottom: 20px;
+}
+
+.date-time-picker input {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.medication-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.medication-table th,
+.medication-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.medication-table th {
+  background-color: #787878;
+  color: white;
+}
+
+/* Physician Order Section */
+/* .physician-container {
+  margin: 20px;
+}
+
+.physician-order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.physician-order-table th,
+.physician-order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.physician-order-table th {
+  background-color: #7b7777;
+  color: white;
+} */
+
+/* Consultation Secton */
+/* .consultation-section {
+  margin: 20px;
+}
+
+.consultation-table,
+.consultation-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+.consultation-table th,
+.consultation-table td,
+.consultation-history-table th,
+.consultation-history-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.consultation-table th,
+.consultation-history-table th {
+  background-color: #706f6f;
+  font-weight: bold;
+  color: white;
+}
+
+.consultation-table tr:nth-child(even),
+.consultation-history-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.consultation-table tr:hover,
+.consultation-history-table tr:hover {
+  background-color: #e8f0fe;
+}
+
+/* Checkbox Styles */
+/*input[type="checkbox"] {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* Empty State Message */
+/*td[colspan="5"] {
+  text-align: center;
+  font-weight: bold;
+  color: #999;
+  padding: 20px;
+}  */

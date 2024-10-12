@@ -22,14 +22,14 @@ import colors from "assets/theme-dark/base/colors";
 import breakpoints from "assets/theme-dark/base/breakpoints";
 import typography from "assets/theme-dark/base/typography";
 import boxShadows from "assets/theme-dark/base/boxShadows";
-import borders from "assets/theme-dark/base/borders";
+import borders from "../theme/base/borders";
 import globals from "assets/theme-dark/base/globals";
 
 // Material Dashboard 2 React helper functions
 import boxShadow from "assets/theme-dark/functions/boxShadow";
 import hexToRgb from "assets/theme-dark/functions/hexToRgb";
-import linearGradient from "assets/theme-dark/functions/linearGradient";
-import pxToRem from "assets/theme-dark/functions/pxToRem";
+import linearGradient from "./functions/linearGradient";
+import pxToRem from "./functions/pxToRem";
 import rgba from "assets/theme-dark/functions/rgba";
 
 // Material Dashboard 2 React components base styles for @mui material components

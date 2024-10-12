@@ -1,30 +1,23 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
+import linearGradient from "../../assets/theme/functions/linearGradient";
 
 export default styled(Box)(({ theme, ownerState }) => {
-  const { palette, functions, borders, boxShadows } = theme;
-  const { variant, bgColor, color, opacity, borderRadius, shadow, coloredShadow } = ownerState;
+  const { palette, functions, borders = {}, boxShadows = {} } = theme; // Added fallback for borders and boxShadows
+  const {
+    variant,
+    bgColor,
+    color,
+    opacity,
+    borderRadius,
+    shadow,
+    coloredShadow,
+  } = ownerState;
 
   const { gradients, grey, white } = palette;
-  const { linearGradient } = functions;
-  const { borderRadius: radius } = borders;
-  const { colored } = boxShadows;
+  const { borderRadius: radius = {} } = borders; // Fallback in case borders is empty or undefined
+  const { colored = {} } = boxShadows; // Fallback for boxShadows
 
   const greyColors = {
     "grey-100": grey[100],
@@ -84,7 +77,9 @@ export default styled(Box)(({ theme, ownerState }) => {
       ? linearGradient(gradients[bgColor].main, gradients[bgColor].state)
       : white.main;
   } else if (validColors.find((el) => el === bgColor)) {
-    backgroundValue = palette[bgColor] ? palette[bgColor].main : greyColors[bgColor];
+    backgroundValue = palette[bgColor]
+      ? palette[bgColor].main
+      : greyColors[bgColor];
   } else {
     backgroundValue = bgColor;
   }
@@ -100,14 +95,14 @@ export default styled(Box)(({ theme, ownerState }) => {
   let borderRadiusValue = borderRadius;
 
   if (validBorderRadius.find((el) => el === borderRadius)) {
-    borderRadiusValue = radius[borderRadius];
+    borderRadiusValue = radius[borderRadius] || 0; // Default to 0 if borderRadius is undefined
   }
 
   // boxShadow value
   let boxShadowValue = "none";
 
   if (validBoxShadows.find((el) => el === shadow)) {
-    boxShadowValue = boxShadows[shadow];
+    boxShadowValue = boxShadows[shadow] || "none"; // Fallback to "none" if shadow is undefined
   } else if (coloredShadow) {
     boxShadowValue = colored[coloredShadow] ? colored[coloredShadow] : "none";
   }

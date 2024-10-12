@@ -12,17 +12,22 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
 // @mui material components
 import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
+import pxToRem from "../../assets/theme/functions/pxToRem";
 
 export default styled(TextField)(({ theme, ownerState }) => {
-  const { palette, functions } = theme;
+  const { palette } = theme;
   const { error, success, disabled } = ownerState;
 
-  const { grey, transparent, error: colorError, success: colorSuccess } = palette;
-  const { pxToRem } = functions;
+  // Destructure colors with fallbacks
+  const {
+    grey,
+    transparent = { main: "transparent" },
+    error: colorError = { main: "#F44336" },
+    success: colorSuccess = { main: "#4CAF50" },
+  } = palette;
 
   // styles for the input with error={true}
   const errorStyles = () => ({
@@ -63,7 +68,7 @@ export default styled(TextField)(({ theme, ownerState }) => {
   });
 
   return {
-    backgroundColor: disabled ? `${grey[200]} !important` : transparent.main,
+    backgroundColor: disabled ? grey[200] : transparent.main,
     pointerEvents: disabled ? "none" : "auto",
     ...(error && errorStyles()),
     ...(success && successStyles()),

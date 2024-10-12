@@ -28,8 +28,8 @@ import globals from "assets/theme-dark/base/globals";
 // Material Dashboard 2 React helper functions
 import boxShadow from "assets/theme-dark/functions/boxShadow";
 import hexToRgb from "assets/theme-dark/functions/hexToRgb";
-import linearGradient from "assets/theme-dark/functions/linearGradient";
-import pxToRem from "assets/theme-dark/functions/pxToRem";
+import linearGradient from "./functions/linearGradient";
+import pxToRem from "./functions/pxToRem";
 import rgba from "assets/theme-dark/functions/rgba";
 
 // Material Dashboard 2 React components base styles for @mui material components

@@ -27,8 +27,8 @@ import globals from "assets/theme/base/globals";
 // Material Dashboard 2 React helper functions
 import boxShadow from "assets/theme/functions/boxShadow";
 import hexToRgb from "assets/theme/functions/hexToRgb";
-import linearGradient from "assets/theme/functions/linearGradient";
-import pxToRem from "assets/theme/functions/pxToRem";
+import linearGradient from "./functions/linearGradient";
+import pxToRem from "./functions/linearGradient";
 import rgba from "assets/theme/functions/rgba";
 
 // Material Dashboard 2 React components base styles for @mui material components

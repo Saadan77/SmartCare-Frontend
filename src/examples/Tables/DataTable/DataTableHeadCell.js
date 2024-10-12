@@ -5,12 +5,18 @@ import PropTypes from "prop-types";
 import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
+import MDBox from "../../../components/MDBox";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController } from "context";
+import { useMaterialUIController } from "../../../context";
 
-function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
+function DataTableHeadCell({
+  width = "auto", // Default width
+  children,
+  sorted = "none", // Default sorted value
+  align = "left", // Default align value
+  ...rest
+}) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -20,8 +26,10 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
       width={width}
       py={1.5}
       px={3}
-      sx={({ palette: { light }, borders: { borderWidth } }) => ({
-        borderBottom: `${borderWidth[1]} solid ${light.main}`,
+      sx={({ palette, borders }) => ({
+        borderBottom: `${
+          borders?.borderWidth ? borders.borderWidth[1] : "1px"
+        } solid ${palette.light?.main || "#000"}`, // Fallback to black if light.main is undefined
       })}
     >
       <MDBox
@@ -30,12 +38,12 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
         textAlign={align}
         color={darkMode ? "white" : "secondary"}
         opacity={0.7}
-        sx={({ typography: { size, fontWeightBold } }) => ({
-          fontSize: size.xxs,
-          fontWeight: fontWeightBold,
+        sx={({ typography }) => ({
+          fontSize: typography.xxs || "10px", // Fallback to 10px if xxs is undefined
+          fontWeight: typography.fontWeightBold, // Use default if fontWeightBold is not defined
           textTransform: "uppercase",
-          cursor: sorted && "pointer",
-          userSelect: sorted && "none",
+          cursor: sorted ? "pointer" : "default",
+          userSelect: sorted ? "none" : "text",
         })}
       >
         {children}
@@ -45,23 +53,22 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
             top={0}
             right={align !== "right" ? "16px" : 0}
             left={align === "right" ? "-5px" : "unset"}
-            sx={({ typography: { size } }) => ({
-              fontSize: size.lg,
-            })}
+            sx={{ display: "flex", alignItems: "center" }} // Center the icons vertically
           >
+            {/* Up Arrow for Ascending */}
             <MDBox
-              position="absolute"
-              top={-6}
-              color={sorted === "asce" ? "text" : "secondary"}
-              opacity={sorted === "asce" ? 1 : 0.5}
+              color={sorted === "asce" ? "text.primary" : "secondary"}
+              opacity={sorted === "asce" ? 1 : 0.5} // Adjust opacity for clarity
+              sx={{ fontSize: "20px" }} // Clear and large sorting icon
             >
               <Icon>arrow_drop_up</Icon>
             </MDBox>
+
+            {/* Down Arrow for Descending */}
             <MDBox
-              position="absolute"
-              top={0}
-              color={sorted === "desc" ? "text" : "secondary"}
-              opacity={sorted === "desc" ? 1 : 0.5}
+              color={sorted === "desc" ? "text.primary" : "secondary"}
+              opacity={sorted === "desc" ? 1 : 0.5} // Adjust opacity for clarity
+              sx={{ fontSize: "20px" }} // Clear and large sorting icon
             >
               <Icon>arrow_drop_down</Icon>
             </MDBox>
@@ -71,13 +78,6 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
     </MDBox>
   );
 }
-
-// Setting default values for the props of DataTableHeadCell
-DataTableHeadCell.defaultProps = {
-  width: "auto",
-  sorted: "none",
-  align: "left",
-};
 
 // Typechecking props for the DataTableHeadCell
 DataTableHeadCell.propTypes = {
