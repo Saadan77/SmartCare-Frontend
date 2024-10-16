@@ -42,39 +42,41 @@ import { usePatientContext } from "services/Patient";
 function AddPatient() {
   // const { newPatientId } = usePatientContext();
 
-  const { token } = useToken();
+  // const { token } = useToken();
 
   // const navigate = useNavigate();
 
-  // const [patient, setPatient] = useState({
-  //   patientId: "",
-  //   fullName: "",
-  //   gender: "",
-  //   maritalStatus: "",
-  //   dob: "",
-  //   age: "",
-  //   nationality: "",
-  //   address: "",
-  //   city: "",
-  //   area: "",
-  //   phoneNo: "",
-  //   alternatePhoneNumber: "",
-  //   email: "",
-  //   emergencyContactName: "",
-  //   relationship: "",
-  //   emergencyContactNo: "",
-  //   alternateEmergencyContactNo: "",
-  //   insurance: "",
-  //   insuranceProvider: "",
-  //   insurancePolicyNumber: "",
-  //   insuranceGroupNo: "",
-  //   policyHolderName: "",
-  //   policyHolderRelationship: "",
-  //   nationalIdNo: "",
-  //   passportNo: "",
-  //   driverLicenseNo: "",
-  //   photoId: "",
-  // });
+  const [patient, setPatient] = useState({
+    gender: "",
+    dob: "",
+    age: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    maritalStatus: "",
+    bloodGroup: "",
+    cnicNo: "",
+    nationality: "",
+    email: "",
+    mobile: "",
+    referenceMobile: "",
+    organization: "",
+    patientId: "",
+    country: "",
+    province: "",
+    district: "",
+    city: "",
+    address: "",
+    relationship: "",
+    kinFirstName: "",
+    kinMiddleName: "",
+    kinLastName: "",
+    kinCountry: "",
+    kinProvince: "",
+    kinDistrict: "",
+    kinCity: "",
+    kinAddress: "",
+  });
 
   // useEffect(() => {
   //   if (newPatientId) {
@@ -82,29 +84,46 @@ function AddPatient() {
   //   }
   // }, [newPatientId]);
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPatient({
-  //     ...patient,
-  //     [name]: value,
-  //   });
+  const [errors, setErrors] = useState({});
 
-  //   if (value) {
-  //     setErrors((prevErrors) => ({
-  //       ...prevErrors,
-  //       [name]: "",
-  //     }));
-  //   }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPatient({
+      ...patient,
+      [name]: value,
+    });
 
-  //   if (name === "fullName") {
-  //     const regex = /^[a-zA-Z\s]*$/;
-  //     if (!regex.test(value)) {
-  //       setErrors({ ...errors, fullName: "Only alphabets are allowed" });
-  //     } else {
-  //       setErrors({ ...errors, fullName: "" });
-  //     }
-  //   }
-  // };
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
+
+    if (name === "firstName") {
+      const regex = /^[a-zA-Z\s]*$/;
+      if (!regex.test(value)) {
+        setErrors({
+          ...errors,
+          firstName: "Only alphabets are allowed",
+        });
+      } else {
+        setErrors({ ...errors, firstName: "" });
+      }
+    }
+
+    if (name === "lastName") {
+      const regex = /^[a-zA-Z\s]*$/;
+      if (!regex.test(value)) {
+        setErrors({
+          ...errors,
+          lastName: "Only alphabets are allowed",
+        });
+      } else {
+        setErrors({ ...errors, lastName: "" });
+      }
+    }
+  };
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -225,41 +244,61 @@ function AddPatient() {
   // );
 
   const [activeSection, setActiveSection] = useState("patientInformation");
-  // const [errors, setErrors] = useState({});
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
   };
 
   const handleNextSection = () => {
-    // const newErrors = {};
-    // if (!patient.fullName) {
-    //   newErrors.fullName = "Full Name is required";
-    // }
-    // if (!patient.dob) {
-    //   newErrors.dob = "Date of birth is required";
-    // }
-    // if (!patient.age) {
-    //   newErrors.age = "Age is required";
-    // }
-    // if (!patient.gender) {
-    //   newErrors.gender = "Gender is required";
-    // }
-    // if (!patient.maritalStatus) {
-    //   newErrors.maritalStatus = "Maritial status is required";
-    // }
-    // if (!patient.phoneNo) {
-    //   newErrors.phoneNo = "Phone number is required";
-    // }
-
-    // if (Object.keys(newErrors).length > 0) {
-    //   setErrors(newErrors);
-    // } else {
-    //   setErrors({});
-    if (activeSection === "patientInformation") {
-      setActiveSection("currentAddress");
-    } else if (activeSection === "currentAddress") {
-      setActiveSection("nextOfKinInformation");
+    const newErrors = {};
+    if (!patient.firstName) {
+      newErrors.firstName = "First Name is required";
+    }
+    if (!patient.lastName) {
+      newErrors.lastName = "Last Name is required";
+    }
+    if (!patient.dob) {
+      newErrors.dob = "Date of birth is required";
+    }
+    if (!patient.age) {
+      newErrors.age = "Age is required";
+    }
+    if (!patient.gender) {
+      newErrors.gender = "Gender is required";
+    }
+    if (!patient.maritalStatus) {
+      newErrors.maritalStatus = "Maritial status is required";
+    }
+    if (!patient.phoneNo) {
+      newErrors.phoneNo = "Phone number is required";
+    }
+    if (!patient.bloodGroup) {
+      newErrors.bloodGroup = "Blood Group is required";
+    }
+    if (!patient.country) {
+      newErrors.country = "Country is required";
+    }
+    if (!patient.province) {
+      newErrors.province = "Province is required";
+    }
+    if (!patient.district) {
+      newErrors.district = "District is required";
+    }
+    if (!patient.city) {
+      newErrors.city = "City is required";
+    }
+    if (!patient.address) {
+      newErrors.address = "Address is required";
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+    } else {
+      setErrors({});
+      if (activeSection === "patientInformation") {
+        setActiveSection("currentAddress");
+      } else if (activeSection === "currentAddress") {
+        setActiveSection("nextOfKinInformation");
+      }
     }
   };
 
@@ -271,44 +310,44 @@ function AddPatient() {
     }
   };
 
-  // const [countryCode, setCountryCode] = useState("");
+  const [countryCode, setCountryCode] = useState("");
 
-  // const handlePhoneChange = (value, country) => {
-  //   const numericValue = value.replace(/\D/g, "");
-  //   const isNumeric = /^\d+$/.test(numericValue);
+  const handlePhoneChange = (value, country) => {
+    const numericValue = value.replace(/\D/g, "");
+    const isNumeric = /^\d+$/.test(numericValue);
 
-  //   if (isNumeric) {
-  //     setPatient({ ...patient, phoneNo: value });
-  //     setCountryCode(country.dialCode);
-  //     setErrors({ ...errors, phoneNo: "" });
-  //   } else {
-  //     setErrors({ ...errors, phoneNo: "Only numbers are allowed" });
-  //   }
-  // };
+    if (isNumeric) {
+      setPatient({ ...patient, mobile: value });
+      setCountryCode(country.dialCode);
+      setErrors({ ...errors, mobile: "" });
+    } else {
+      setErrors({ ...errors, mobile: "Only numbers are allowed" });
+    }
+  };
 
-  // const handleDateChange = (newDate) => {
-  //   if (newDate) {
-  //     const calculatedAge = dayjs().diff(newDate, "year");
+  const handleDateChange = (newDate) => {
+    if (newDate) {
+      const calculatedAge = dayjs().diff(newDate, "year");
 
-  //     setPatient((prevPatient) => ({
-  //       ...prevPatient,
-  //       dob: newDate,
-  //       age: calculatedAge,
-  //     }));
+      setPatient((prevPatient) => ({
+        ...prevPatient,
+        dob: newDate,
+        age: calculatedAge,
+      }));
 
-  //     setErrors((prevErrors) => ({
-  //       ...prevErrors,
-  //       dob: "",
-  //       age: "",
-  //     }));
-  //   } else {
-  //     setPatient((prevPatient) => ({
-  //       ...prevPatient,
-  //       dob: "",
-  //       age: "",
-  //     }));
-  //   }
-  // };
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        dob: "",
+        age: "",
+      }));
+    } else {
+      setPatient((prevPatient) => ({
+        ...prevPatient,
+        dob: "",
+        age: "",
+      }));
+    }
+  };
 
   const [activeView, setActiveView] = useState("registrationForm");
 
@@ -497,14 +536,12 @@ function AddPatient() {
                           <select
                             id="gender"
                             name="gender"
-                            //   value={patient.gender}
-                            //   onChange={handleInputChange}
-                            //   required
-                            className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                            //   className={`block w-full h-8 border ${
-                            //     errors.gender ? "border-red-500" : "border-gray-300"
-                            //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                            value={patient.gender}
+                            onChange={handleInputChange}
+                            required
+                            className={`block w-full h-8 border ${
+                              errors.gender ? "border-red-500" : "border-gray-300"
+                            } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                           >
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
@@ -512,9 +549,9 @@ function AddPatient() {
                             <option value="Transgender">Transgender</option>
                             <option value="Other">Other</option>
                           </select>
-                          {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                          {errors.gender && (
+                            <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
+                          )}
                         </div>
                       </Grid>
 
@@ -538,19 +575,19 @@ function AddPatient() {
                                 <TextField
                                   name="dob"
                                   required
-                                  //   value={patient.dob}
+                                  value={patient.dob}
                                   onChange={handleInputChange}
                                   {...params}
                                   fullWidth
                                   variant="outlined"
-                                  //   error={!!errors.dob}
-                                  //   helperText={errors.dob}
+                                  error={!!errors.dob}
+                                  helperText={errors.dob}
                                 />
                               )}
                             />
-                            {/* {errors.dob && (
+                            {errors.dob && (
                               <p className="text-red-500 text-xs mt-1">{errors.dob}</p>
-                            )} */}
+                            )}
                           </Box>
                         </Grid>
 
@@ -572,10 +609,10 @@ function AddPatient() {
                               fullWidth
                               required
                               name="age"
-                              //   onChange={handleInputChange}
-                              //   value={patient.age}
-                              //   error={!!errors.age}
-                              //   helperText={errors.age}
+                              onChange={handleInputChange}
+                              value={patient.age}
+                              error={!!errors.age}
+                              helperText={errors.age}
                               InputProps={{
                                 readOnly: true,
                               }}
@@ -600,11 +637,11 @@ function AddPatient() {
                             variant="outlined"
                             fullWidth
                             name="firstName"
-                            // required
-                            // value={patient.fullName}
-                            // onChange={handleInputChange}
-                            // error={!!errors.fullName}
-                            // helperText={errors.fullName}
+                            required
+                            value={patient.firstName}
+                            onChange={handleInputChange}
+                            error={!!errors.firstName}
+                            helperText={errors.firstName}
                           />
                         </Box>
                       </Grid>
@@ -622,12 +659,10 @@ function AddPatient() {
                           <TextField
                             variant="outlined"
                             fullWidth
-                            name="Middle Name"
-                            // required
-                            // value={patient.fullName}
-                            // onChange={handleInputChange}
-                            // error={!!errors.fullName}
-                            // helperText={errors.fullName}
+                            name="middleName"
+                            required
+                            value={patient.middleName}
+                            onChange={handleInputChange}
                           />
                         </Box>
                       </Grid>
@@ -647,12 +682,12 @@ function AddPatient() {
                           <TextField
                             variant="outlined"
                             fullWidth
-                            name="LastName"
-                            // required
-                            // value={patient.fullName}
-                            // onChange={handleInputChange}
-                            // error={!!errors.fullName}
-                            // helperText={errors.fullName}
+                            name="lastName"
+                            required
+                            value={patient.lastName}
+                            onChange={handleInputChange}
+                            error={!!errors.lastName}
+                            helperText={errors.lastName}
                           />
                         </Box>
                       </Grid>
@@ -677,13 +712,11 @@ function AddPatient() {
                             id="maritalStatus"
                             name="maritalStatus"
                             required
-                            className={`block w-full h-8 border "border-gray-300"
-                              rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                            // value={patient.maritalStatus}
-                            // onChange={handleInputChange}
-                            // className={`block w-full h-8 border ${
-                            //   errors.maritalStatus ? "border-red-500" : "border-gray-300"
-                            // } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                            value={patient.maritalStatus}
+                            onChange={handleInputChange}
+                            className={`block w-full h-8 border ${
+                              errors.maritalStatus ? "border-red-500" : "border-gray-300"
+                            } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                           >
                             <option value="">Select Marriage Status</option>
                             <option value="Single">Single</option>
@@ -691,9 +724,9 @@ function AddPatient() {
                             <option value="Divorced">Divorced</option>
                             <option value="Widowed">Widowed</option>
                           </select>
-                          {/* {errors.maritalStatus && (
+                          {errors.maritalStatus && (
                             <p className="text-red-500 text-xs mt-1">{errors.maritalStatus}</p>
-                          )} */}
+                          )}
                         </div>
                       </Grid>
 
@@ -715,20 +748,19 @@ function AddPatient() {
                           <select
                             id="bloodGroup"
                             name="bloodGroup"
-                            //   value={patient.bloodGroup}
-                            //   onChange={handleInputChange}
-                            //   required
-                            className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                            //   className={`block w-full h-8 border ${
-                            //     errors.bloodGroup ? "border-red-500" : "border-gray-300"
-                            //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                            value={patient.bloodGroup}
+                            onChange={handleInputChange}
+                            required
+                            className={`block w-full h-8 border ${
+                              errors.bloodGroup ? "border-red-500" : "border-gray-300"
+                            } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                           >
                             <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
                           </select>
-                          {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                          {errors.bloodGroup && (
+                            <p className="text-red-500 text-xs mt-1">{errors.bloodGroup}</p>
+                          )}
                         </div>
                       </Grid>
 
@@ -746,8 +778,8 @@ function AddPatient() {
                             variant="outlined"
                             fullWidth
                             name="cnic"
-                            // value={patient.cnic}
-                            // onChange={handleInputChange}
+                            value={patient.cnic}
+                            onChange={handleInputChange}
                           />
                         </Box>
                       </Grid>
@@ -766,8 +798,8 @@ function AddPatient() {
                             variant="outlined"
                             fullWidth
                             name="nationality"
-                            // value={patient.nationality}
-                            // onChange={handleInputChange}
+                            value={patient.nationality}
+                            onChange={handleInputChange}
                           />
                         </Box>
                       </Grid>
@@ -785,9 +817,9 @@ function AddPatient() {
                           <TextField
                             variant="outlined"
                             fullWidth
-                            name="Email"
-                            // value={patient.Email}
-                            // onChange={handleInputChange}
+                            name="email"
+                            value={patient.email}
+                            onChange={handleInputChange}
                           />
                         </Box>
                       </Grid>
@@ -802,13 +834,29 @@ function AddPatient() {
                       >
                         <Box>
                           <p className="text-xs mb-2">Mobile:</p>
-                          <TextField
-                            variant="outlined"
-                            fullWidth
-                            name="Mobile"
-                            // value={patient.Mobile}
-                            // onChange={handleInputChange}
+                          <PhoneInput
+                            country={"pk"}
+                            value={patient.mobile}
+                            onChange={handlePhoneChange}
+                            inputProps={{
+                              name: "mobile",
+                              required: true,
+                              autoFocus: true,
+                            }}
+                            containerStyle={{
+                              height: "30px",
+                            }}
+                            inputStyle={{
+                              height: "30px",
+                              width: "260px",
+                            }}
+                            enableAreaCodes={true}
+                            countryCodeEditable={false}
+                            specialLabel=""
                           />
+                          {errors.mobile && (
+                            <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
+                          )}
                         </Box>
                       </Grid>
 
@@ -822,13 +870,29 @@ function AddPatient() {
                       >
                         <Box>
                           <p className="text-xs mb-2">Reference Mobile:</p>
-                          <TextField
-                            variant="outlined"
-                            fullWidth
-                            name="ReferenceMobile"
-                            // value={patient.ReferenceMobile}
-                            // onChange={handleInputChange}
+                          <PhoneInput
+                            country={"pk"}
+                            value={patient.referenceMobile}
+                            onChange={handlePhoneChange}
+                            inputProps={{
+                              name: "referenceMobile",
+                              required: true,
+                              autoFocus: true,
+                            }}
+                            containerStyle={{
+                              height: "30px",
+                            }}
+                            inputStyle={{
+                              height: "30px",
+                              width: "260px",
+                            }}
+                            enableAreaCodes={true}
+                            countryCodeEditable={false}
+                            specialLabel=""
                           />
+                          {errors.referenceMobile && (
+                            <p className="text-red-500 text-xs mt-1">{errors.referenceMobile}</p>
+                          )}
                         </Box>
                       </Grid>
 
@@ -846,8 +910,8 @@ function AddPatient() {
                             variant="outlined"
                             fullWidth
                             name="Organization"
-                            // value={patient.Organization}
-                            // onChange={handleInputChange}
+                            value={patient.Organization}
+                            onChange={handleInputChange}
                           />
                         </Box>
                       </Grid>
@@ -987,27 +1051,26 @@ function AddPatient() {
                             }}
                           >
                             <Box>
-                              <p htmlFor="Country" className="flex flex-row text-xs items-center">
+                              <p htmlFor="country" className="flex flex-row text-xs items-center">
                                 Country:<span className="text-red-600 text-base mx-2">*</span>
                               </p>
                               {/* Select Menu */}
                               <select
-                                id="Country"
-                                name="Country"
-                                //   value={patient.Country}
-                                //   onChange={handleInputChange}
-                                //   required
-                                className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                                //   className={`block w-full h-8 border ${
-                                //     errors.Country ? "border-red-500" : "border-gray-300"
-                                //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                                id="country"
+                                name="country"
+                                value={patient.country}
+                                onChange={handleInputChange}
+                                required
+                                className={`block w-full h-8 border ${
+                                  errors.country ? "border-red-500" : "border-gray-300"
+                                } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                               >
+                                <option value="">Select Country</option>
                                 <option value="Pakistan">Pakistan</option>
                               </select>
-                              {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                              {errors.country && (
+                                <p className="text-red-500 text-xs mt-1">{errors.country}</p>
+                              )}
                             </Box>
                           </Grid>
 
@@ -1020,27 +1083,26 @@ function AddPatient() {
                             }}
                           >
                             <Box>
-                              <p htmlFor="Province" className="flex flex-row text-xs items-center">
+                              <p htmlFor="province" className="flex flex-row text-xs items-center">
                                 Province:<span className="text-red-600 text-base mx-2">*</span>
                               </p>
                               {/* Select Menu */}
                               <select
-                                id="Province"
-                                name="Province"
-                                //   value={patient.Province}
-                                //   onChange={handleInputChange}
-                                //   required
-                                className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                                //   className={`block w-full h-8 border ${
-                                //     errors.Province ? "border-red-500" : "border-gray-300"
-                                //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                                id="province"
+                                name="province"
+                                value={patient.province}
+                                onChange={handleInputChange}
+                                required
+                                className={`block w-full h-8 border ${
+                                  errors.province ? "border-red-500" : "border-gray-300"
+                                } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                               >
+                                <option value="">Select Province</option>
                                 <option value="Sindh">Sindh</option>
                               </select>
-                              {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                              {errors.province && (
+                                <p className="text-red-500 text-xs mt-1">{errors.province}</p>
+                              )}
                             </Box>
                           </Grid>
 
@@ -1053,27 +1115,26 @@ function AddPatient() {
                             }}
                           >
                             <Box>
-                              <p htmlFor="District" className="flex flex-row text-xs items-center">
+                              <p htmlFor="district" className="flex flex-row text-xs items-center">
                                 District:<span className="text-red-600 text-base mx-2">*</span>
                               </p>
                               {/* Select Menu */}
                               <select
-                                id="District"
-                                name="District"
-                                //   value={patient.District}
-                                //   onChange={handleInputChange}
-                                //   required
-                                className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                                //   className={`block w-full h-8 border ${
-                                //     errors.District ? "border-red-500" : "border-gray-300"
-                                //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                                id="district"
+                                name="district"
+                                value={patient.district}
+                                onChange={handleInputChange}
+                                required
+                                className={`block w-full h-8 border ${
+                                  errors.district ? "border-red-500" : "border-gray-300"
+                                } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                               >
+                                <option value="">Select District</option>
                                 <option value="Islamabad">Islamabad</option>
                               </select>
-                              {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                              {errors.district && (
+                                <p className="text-red-500 text-xs mt-1">{errors.district}</p>
+                              )}
                             </Box>
                           </Grid>
 
@@ -1086,27 +1147,26 @@ function AddPatient() {
                             }}
                           >
                             <Box>
-                              <p htmlFor="City" className="flex flex-row text-xs items-center">
+                              <p htmlFor="city" className="flex flex-row text-xs items-center">
                                 City:<span className="text-red-600 text-base mx-2">*</span>
                               </p>
                               {/* Select Menu */}
                               <select
-                                id="City"
-                                name="City"
-                                //   value={patient.City}
-                                //   onChange={handleInputChange}
-                                //   required
-                                className={`block w-full h-8 border "border-gray-300"
-                          rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
-                                //   className={`block w-full h-8 border ${
-                                //     errors.City ? "border-red-500" : "border-gray-300"
-                                //   } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+                                id="city"
+                                name="city"
+                                value={patient.city}
+                                onChange={handleInputChange}
+                                required
+                                className={`block w-full h-8 border ${
+                                  errors.city ? "border-red-500" : "border-gray-300"
+                                } rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
                               >
+                                <option value="">Select City</option>
                                 <option value="Islamabad">Islamabad</option>
                               </select>
-                              {/* {errors.gender && (
-                          <p className="text-red-500 text-xs mt-1">{errors.gender}</p>
-                        )} */}
+                              {errors.city && (
+                                <p className="text-red-500 text-xs mt-1">{errors.city}</p>
+                              )}
                             </Box>
                           </Grid>
 
@@ -1119,15 +1179,18 @@ function AddPatient() {
                             }}
                           >
                             <Box>
-                              <p htmlFor="Address" className="flex flex-row text-xs items-center">
+                              <p htmlFor="address" className="flex flex-row text-xs items-center">
                                 Address:<span className="text-red-600 text-base mx-2">*</span>
                               </p>
                               <TextField
                                 variant="outlined"
-                                name="Address"
-                                // value={patient.Address}
-                                // onChange={handleInputChange}
+                                name="address"
                                 fullWidth
+                                required
+                                value={patient.address}
+                                onChange={handleInputChange}
+                                error={!!errors.address}
+                                helperText={errors.address}
                               />
                             </Box>
                           </Grid>
@@ -1186,18 +1249,6 @@ function AddPatient() {
 
                 {activeSection === "nextOfKinInformation" && (
                   <>
-                    <Box
-                      sx={{
-                        marginTop: 2,
-                      }}
-                    >
-                      <Typography style={{ fontWeight: "bold" }} gutterBottom>
-                        <p className="text-base text-[#42424a] font-semibold mr-2">
-                          Next Of Kin Information
-                        </p>
-                      </Typography>
-                    </Box>
-
                     <Grid container>
                       <Grid item xs={6}>
                         <Box
@@ -1366,13 +1417,29 @@ function AddPatient() {
                           >
                             <Box>
                               <p className="text-xs mb-2">Mobile:</p>
-                              <TextField
-                                variant="outlined"
-                                fullWidth
-                                name="KinMobile"
+                              <PhoneInput
+                                country={"pk"}
                                 // value={patient.KinMobile}
-                                // onChange={handleInputChange}
+                                onChange={handlePhoneChange}
+                                inputProps={{
+                                  name: "KinMobile",
+                                  required: true,
+                                  autoFocus: true,
+                                }}
+                                containerStyle={{
+                                  height: "31.98px",
+                                }}
+                                inputStyle={{
+                                  height: "31.98px",
+                                  width: "168.8px",
+                                }}
+                                enableAreaCodes={true}
+                                countryCodeEditable={false}
+                                specialLabel=""
                               />
+                              {/* {errors.KinMobile && (
+                                <p className="text-red-500 text-xs mt-1">{errors.KinMobile}</p>
+                              )} */}
                             </Box>
                           </Grid>
                         </Grid>
