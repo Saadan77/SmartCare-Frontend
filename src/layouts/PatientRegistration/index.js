@@ -9,7 +9,7 @@ import {
   RadioGroup,
   Radio,
 } from "@mui/material";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -39,7 +39,7 @@ import PatientTable from "layouts/dashboard/patientTable";
 import { usePatientContext } from "services/Patient";
 
 function PatientRegistration() {
-  const { newPatientId } = usePatientContext();
+  // const { newPatientId } = usePatientContext();
 
   const { token } = useToken();
 
@@ -93,11 +93,11 @@ function PatientRegistration() {
   //   );
   // };
 
-  useEffect(() => {
-    if (newPatientId) {
-      setPatient((prev) => ({ ...prev, patientId: newPatientId }));
-    }
-  }, [newPatientId]);
+  // useEffect(() => {
+  //   if (newPatientId) {
+  //     setPatient((prev) => ({ ...prev, patientId: newPatientId }));
+  //   }
+  // }, [newPatientId]);
 
   // useEffect(() => {
   //   const fetchData = async () => {

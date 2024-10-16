@@ -1,13 +1,23 @@
+import { useContext, useState } from "react";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
 import { Icon } from "@mui/material";
-import { usePatientContext, deletePatient } from "services/Patient";
+import { PatientContext } from "context/Patient Context";
 
 export default function data() {
-  const { patients, setPatients } = usePatientContext();
+  const { patients, loading, error } = useContext(PatientContext);
+
+  if (loading) return <p>Loading patients...</p>;
+  if (error) return <p>Error fetching patients: {error.message}</p>;
+
+  console.log(patients);
+
+  // Check if patients array exists and has data
+  if (!patients || patients.length === 0) {
+    return { columns, rows: [] }; // If no patients, return empty rows
+  }
 
   const [menu, setMenu] = useState({ anchor: null, patientId: null });
 
@@ -17,18 +27,6 @@ export default function data() {
 
   const closeMenu = () => {
     setMenu({ anchor: null, patientId: null });
-  };
-
-  const handleDelete = async (patientId) => {
-    try {
-      await deletePatient(patientId, token);
-      setPatients((prevPatients) =>
-        prevPatients.filter((patient) => patient.patientId !== patientId)
-      );
-      closeMenu();
-    } catch (error) {
-      console.error("Error deleting patient:", error);
-    }
   };
 
   const renderMenu = (
@@ -46,13 +44,7 @@ export default function data() {
       open={Boolean(menu.anchor)}
       onClose={closeMenu}
     >
-      <MenuItem
-        onClick={() => {
-          handleDelete(menu.patientId);
-        }}
-      >
-        Delete
-      </MenuItem>
+      <MenuItem>Delete</MenuItem>
       <MenuItem onClick={closeMenu}>Edit</MenuItem>
     </Menu>
   );
@@ -69,27 +61,27 @@ export default function data() {
   const rows = patients.map((patient) => ({
     patientId: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.patientId}
+        {patient["Patient Id"]}
       </MDTypography>
     ),
     fullName: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.fullName}
+        {`${patient["First Name"]} ${patient["Middle Name"]} ${patient["Last Name"]}`}
       </MDTypography>
     ),
     gender: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.gender}
+        {patient["Gender"]}
       </MDTypography>
     ),
     phoneNo: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.phoneNo}
+        {patient["Mobile"]}
       </MDTypography>
     ),
     registrationDate: (
       <MDTypography variant="caption" fontWeight="medium">
-        {new Date(patient.createdDate).toLocaleDateString()}
+        {new Date(patient["Date of Birth"]).toLocaleDateString()}
       </MDTypography>
     ),
     actions: (
@@ -98,7 +90,7 @@ export default function data() {
           <Icon
             sx={{ cursor: "pointer", fontWeight: "bold" }}
             fontSize="small"
-            onClick={(event) => openMenu(event, patient.patientId)}
+            onClick={(event) => openMenu(event, patient["Patient Id"])}
           >
             more_vert
           </Icon>

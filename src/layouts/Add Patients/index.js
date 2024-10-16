@@ -40,7 +40,7 @@ import PatientTable from "layouts/dashboard/patientTable";
 import { usePatientContext } from "services/Patient";
 
 function AddPatient() {
-  const { newPatientId } = usePatientContext();
+  // const { newPatientId } = usePatientContext();
 
   const { token } = useToken();
 
@@ -76,11 +76,11 @@ function AddPatient() {
   //   photoId: "",
   // });
 
-  useEffect(() => {
-    if (newPatientId) {
-      setPatient((prev) => ({ ...prev, patientId: newPatientId }));
-    }
-  }, [newPatientId]);
+  // useEffect(() => {
+  //   if (newPatientId) {
+  //     setPatient((prev) => ({ ...prev, patientId: newPatientId }));
+  //   }
+  // }, [newPatientId]);
 
   // const handleInputChange = (e) => {
   //   const { name, value } = e.target;
@@ -618,9 +618,7 @@ function AddPatient() {
                         }}
                       >
                         <Box>
-                          <p className="flex flex-row text-xs items-center">
-                            Middle Name:<span className="text-red-600 text-base mx-2">*</span>
-                          </p>
+                          <p className="text-xs mb-2">Middle Name:</p>
                           <TextField
                             variant="outlined"
                             fullWidth
@@ -670,8 +668,8 @@ function AddPatient() {
                       >
                         <div>
                           {/* Label */}
-                          <p htmlFor="maritalStatus" className="flex flex-row text-xs items-center">
-                            Maritial Status:<span className="text-red-600 text-base mx-2">*</span>
+                          <p htmlFor="maritalStatus" className="text-xs mb-2">
+                            Maritial Status:
                           </p>
 
                           {/* Select Menu */}
