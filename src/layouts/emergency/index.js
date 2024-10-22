@@ -36,7 +36,6 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
 
 import { createEmergencyCase } from "services/EmergencyCase";
-import { useToken } from "layouts/authentication/sign-in/token";
 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -49,8 +48,6 @@ function EmergencyCase() {
   const handleVisitChange = (event) => {
     setShowPatientInfo(event.target.value);
   };
-
-  const { token } = useToken();
 
   const [emergencyCase, setEmergencyCase] = useState({
     patientId: "",

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useToken } from "layouts/authentication/sign-in/token";
 import PropTypes from "prop-types";
 
 const PatientContext = createContext();
@@ -10,7 +9,6 @@ export const usePatientContext = () => useContext(PatientContext);
 export const PatientProvider = ({ children }) => {
   const [patients, setPatients] = useState([]);
   const [newPatientId, setNewPatientId] = useState(null);
-  const { token } = useToken();
 
   const formatDate = (date) => {
     const day = date.getDate().toString().padStart(2, "0");

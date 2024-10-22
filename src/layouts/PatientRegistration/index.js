@@ -19,7 +19,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDButton from "components/MDButton";
 import { createPatient, fetchPatients } from "services/Patient";
-import { useToken } from "layouts/authentication/sign-in/token";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,12 +35,8 @@ import { useNavigate } from "react-router-dom";
 import MDBox from "components/MDBox";
 import PatientTable from "layouts/dashboard/patientTable";
 
-import { usePatientContext } from "services/Patient";
-
 function PatientRegistration() {
   // const { newPatientId } = usePatientContext();
-
-  const { token } = useToken();
 
   const navigate = useNavigate();
 

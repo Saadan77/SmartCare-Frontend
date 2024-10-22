@@ -9,12 +9,8 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-import { login } from "./login";
-import { useToken } from "./token";
 
 function Basic() {
-  const { setToken } = useToken();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("admin");
@@ -31,10 +27,6 @@ function Basic() {
     e.preventDefault();
 
     try {
-      const accessToken = await login(email, password);
-      setToken(accessToken);
-      setError("");
-      console.log(accessToken);
       navigate("/dashboard");
     } catch (err) {
       setError("Credentials do not match");

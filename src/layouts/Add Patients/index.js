@@ -19,8 +19,6 @@ import dayjs from "dayjs";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDButton from "components/MDButton";
-import { createPatient, fetchPatients } from "services/Patient";
-import { useToken } from "layouts/authentication/sign-in/token";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -34,16 +32,8 @@ import "react-phone-input-2/lib/style.css";
 import Webcam from "react-webcam";
 
 import { useNavigate } from "react-router-dom";
-import MDBox from "components/MDBox";
-import PatientTable from "layouts/dashboard/patientTable";
-
-import { usePatientContext } from "services/Patient";
 
 function AddPatient() {
-  // const { newPatientId } = usePatientContext();
-
-  // const { token } = useToken();
-
   // const navigate = useNavigate();
 
   const [patient, setPatient] = useState({

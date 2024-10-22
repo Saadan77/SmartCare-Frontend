@@ -22,8 +22,35 @@ import SearchPatients from "layouts/Search Patients";
 import VisitConfirmation from "layouts/Visit Confirmation";
 import PatientAppointment from "layouts/Patient Appointment";
 import AddPatient from "layouts/Add Patients";
+import AddClient from "layouts/Add Client";
+import AppointmentCategory from "layouts/Appointment Category";
+import AddAppointment from "layouts/Add Appointment";
 
 const routes = [
+  {
+    type: "collapse",
+    name: "Add Client",
+    key: "addClient",
+    icon: <Icon fontSize="small">group_add</Icon>,
+    route: "/addClient",
+    component: <AddClient />,
+  },
+  {
+    type: "collapse",
+    name: "Appointment Category",
+    key: "appointmentCategory",
+    icon: <Icon fontSize="small">crib</Icon>,
+    route: "/appointmentCategory",
+    component: <AppointmentCategory />,
+  },
+  {
+    type: "collapse",
+    name: "Add Appointment",
+    key: "addAppointment",
+    icon: <Icon fontSize="small">single_bed</Icon>,
+    route: "/addAppointment",
+    component: <AddAppointment />,
+  },
   {
     type: "collapse",
     name: "Dashboard",

@@ -5,14 +5,11 @@ import MDTypography from "components/MDTypography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-import { useToken } from "layouts/authentication/sign-in/token";
 import { useState, useEffect } from "react";
 import { Icon } from "@mui/material";
 import { fetchEmergencyCases } from "services/EmergencyCase";
 
 export default function data() {
-  const { token } = useToken();
-
   const [emergencyCases, setEmergencyCases] = useState([]);
 
   const [menu, setMenu] = useState(null);
