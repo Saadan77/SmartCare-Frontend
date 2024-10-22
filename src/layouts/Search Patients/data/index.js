@@ -1,45 +1,46 @@
 import MDTypography from "components/MDTypography";
 import { Icon } from "@mui/material";
-import { usePatientContext } from "services/Patient";
 import MDButton from "components/MDButton";
+import { PatientContext } from "context/Patient Context";
+import React, { useContext } from "react";
 
 export default function data() {
-  const { patients, setPatients } = usePatientContext();
+  const { patients } = useContext(PatientContext);
 
   const columns = [
-    { Header: "MR No.", accessor: "mrNo", width: "10%", align: "left" },
-    { Header: "Patient Name", accessor: "patientName", width: "20%", align: "left" },
+    { Header: "Patient ID", accessor: "patientId", width: "10%", align: "left" },
+    { Header: "Name", accessor: "patientName", width: "20%", align: "left" },
     { Header: "Gender", accessor: "gender", width: "10%", align: "center" },
     { Header: "Phone Number", accessor: "phoneNo", width: "20%", align: "center" },
-    { Header: "National ID Number/SSN", accessor: "cnic", width: "10%", align: "center" },
+    { Header: "CNIC No", accessor: "cnic", width: "10%", align: "center" },
     { Header: "Appointment", accessor: "appointment", width: "20%", align: "center" },
     { Header: "Visit", accessor: "visit", width: "10%", align: "center" },
   ];
 
   const rows = patients.map((patient) => ({
-    mrNo: (
+    patientId: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.patientId}
+        {patient["Patient Id"]}
       </MDTypography>
     ),
     patientName: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.fullName}
+        {`${patient["First Name"]} ${patient["Middle Name"]} ${patient["Last Name"]}`}
       </MDTypography>
     ),
     gender: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.gender}
+        {patient["Gender"]}
       </MDTypography>
     ),
     phoneNo: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.phoneNo}
+        {patient["Mobile"]}
       </MDTypography>
     ),
     cnic: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.nationalIdNo}
+        {`${patient["CNIC No"]}`}
       </MDTypography>
     ),
     appointment: (

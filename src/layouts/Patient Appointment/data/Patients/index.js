@@ -1,11 +1,13 @@
+import React, { useContext } from "react";
+
 import MDTypography from "components/MDTypography";
-import { usePatientContext } from "services/Patient";
+import { PatientContext } from "context/Patient Context";
 
 export default function patientsData() {
-  const { patients, setPatients } = usePatientContext();
+  const { patients } = useContext(PatientContext);
 
   const columns = [
-    { Header: "MR No.", accessor: "mrNo", width: "20%", align: "left" },
+    { Header: "Patient ID", accessor: "patientId", width: "10%", align: "left" },
     { Header: "Patient Name", accessor: "patientName", width: "20%", align: "left" },
     { Header: "dependantOn", accessor: "dependantOn", width: "20%", align: "center" },
     { Header: "Gender", accessor: "gender", width: "20%", align: "center" },
@@ -13,25 +15,25 @@ export default function patientsData() {
   ];
 
   const rows = patients.map((patient) => ({
-    mrNo: (
+    patientId: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.patientId}
+        {patient["Patient Id"]}
       </MDTypography>
     ),
     patientName: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.fullName}
+        {`${patient["First Name"]} ${patient["Middle Name"]} ${patient["Last Name"]}`}
       </MDTypography>
     ),
     dependantOn: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
     gender: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.gender}
+        {patient["Gender"]}
       </MDTypography>
     ),
     age: (
       <MDTypography variant="caption" fontWeight="medium">
-        {patient.age}
+        {patient["Age"]}
       </MDTypography>
     ),
   }));
