@@ -26,6 +26,7 @@ import AddClient from "layouts/Add Client";
 import AppointmentCategory from "layouts/Appointment Category";
 import AddAppointment from "layouts/Add Appointment";
 import FeeStructure from "layouts/Fee Structure";
+import DischargeSummary from "layouts/Discharge Summary";
 
 const routes = [
   {
@@ -163,6 +164,14 @@ const routes = [
     icon: <Icon fontSize="small">medication</Icon>,
     route: "/issueMedicine",
     component: <IssueMedicine />,
+  },
+  {
+    type: "collapse",
+    name: "Discharge Summary",
+    key: "dischargeSummary",
+    icon: <Icon fontSize="small">bedtime</Icon>,
+    route: "/dischargeSummary",
+    component: <DischargeSummary />,
   },
   {
     type: "collapse",
