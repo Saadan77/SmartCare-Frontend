@@ -25,6 +25,7 @@ import AddPatient from "layouts/Add Patients";
 import AddClient from "layouts/Add Client";
 import AppointmentCategory from "layouts/Appointment Category";
 import AddAppointment from "layouts/Add Appointment";
+import FeeStructure from "layouts/Fee Structure";
 
 const routes = [
   {
@@ -189,11 +190,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "User",
-    key: "user",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/user",
-    component: <Profile />,
+    name: "Fee Structuer",
+    key: "feeStructuer",
+    icon: <Icon fontSize="small">payments</Icon>,
+    route: "/feeStructuer",
+    component: <FeeStructure />,
   },
   {
     type: "collapse",
