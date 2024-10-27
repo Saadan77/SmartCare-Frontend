@@ -27,6 +27,9 @@ import AppointmentCategory from "layouts/Appointment Category";
 import AddAppointment from "layouts/Add Appointment";
 import FeeStructure from "layouts/Fee Structure";
 import DischargeSummary from "layouts/Discharge Summary";
+import ManageFavourites from "layouts/Manage Favourites";
+import AddFavourite from "layouts/Add Favorite";
+import EditFavourites from "layouts/Edit Favourites";
 
 const routes = [
   {
@@ -196,6 +199,30 @@ const routes = [
     icon: <Icon fontSize="small">medication_liquid</Icon>,
     route: "/pharmacySetup",
     component: <PharmacySetup />,
+  },
+  {
+    type: "collapse",
+    name: "Manage Favourites",
+    key: "manageFavourites",
+    icon: <Icon fontSize="small">bookmark_border</Icon>,
+    route: "/manageFavourites",
+    component: <ManageFavourites />,
+  },
+  {
+    type: "collapse",
+    name: "Add Favourite",
+    key: "addFavourite",
+    icon: <Icon fontSize="small">bookmark</Icon>,
+    route: "/addFavourite",
+    component: <AddFavourite />,
+  },
+  {
+    type: "collapse",
+    name: "Edit Favourite",
+    key: "editFavourite",
+    icon: <Icon fontSize="small">edit</Icon>,
+    route: "/editFavourite",
+    component: <EditFavourites />,
   },
   {
     type: "collapse",
