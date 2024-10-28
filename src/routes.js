@@ -25,6 +25,11 @@ import AddPatient from "layouts/Add Patients";
 import AddClient from "layouts/Add Client";
 import AppointmentCategory from "layouts/Appointment Category";
 import AddAppointment from "layouts/Add Appointment";
+import FeeStructure from "layouts/Fee Structure";
+import DischargeSummary from "layouts/Discharge Summary";
+import ManageFavourites from "layouts/Manage Favourites";
+import AddFavourite from "layouts/Add Favorite";
+import EditFavourites from "layouts/Edit Favourites";
 
 const routes = [
   {
@@ -165,6 +170,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Discharge Summary",
+    key: "dischargeSummary",
+    icon: <Icon fontSize="small">bedtime</Icon>,
+    route: "/dischargeSummary",
+    component: <DischargeSummary />,
+  },
+  {
+    type: "collapse",
     name: "Duty Roster",
     key: "dutyRoster",
     icon: <Icon fontSize="small">work_outline</Icon>,
@@ -189,11 +202,35 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "User",
-    key: "user",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/user",
-    component: <Profile />,
+    name: "Manage Favourites",
+    key: "manageFavourites",
+    icon: <Icon fontSize="small">bookmark_border</Icon>,
+    route: "/manageFavourites",
+    component: <ManageFavourites />,
+  },
+  {
+    type: "collapse",
+    name: "Add Favourite",
+    key: "addFavourite",
+    icon: <Icon fontSize="small">bookmark</Icon>,
+    route: "/addFavourite",
+    component: <AddFavourite />,
+  },
+  {
+    type: "collapse",
+    name: "Edit Favourite",
+    key: "editFavourite",
+    icon: <Icon fontSize="small">edit</Icon>,
+    route: "/editFavourite",
+    component: <EditFavourites />,
+  },
+  {
+    type: "collapse",
+    name: "Fee Structuer",
+    key: "feeStructuer",
+    icon: <Icon fontSize="small">payments</Icon>,
+    route: "/feeStructuer",
+    component: <FeeStructure />,
   },
   {
     type: "collapse",
