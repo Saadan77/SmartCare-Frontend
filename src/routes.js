@@ -30,6 +30,7 @@ import DischargeSummary from "layouts/Discharge Summary";
 import ManageFavourites from "layouts/Manage Favourites";
 import AddFavourite from "layouts/Add Favorite";
 import EditFavourites from "layouts/Edit Favourites";
+import Organization from "layouts/Organization";
 
 const routes = [
   {
@@ -199,6 +200,14 @@ const routes = [
     icon: <Icon fontSize="small">medication_liquid</Icon>,
     route: "/pharmacySetup",
     component: <PharmacySetup />,
+  },
+  {
+    type: "collapse",
+    name: "Organization",
+    ket: "organization",
+    icon: <Icon fontSize="small">medication_liquid</Icon>,
+    route: "/organization",
+    component: <Organization />,
   },
   {
     type: "collapse",
