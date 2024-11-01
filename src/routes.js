@@ -1,15 +1,13 @@
+// @mui icons
+import Icon from "@mui/material/Icon";
+
 import Dashboard from "layouts/dashboard";
 import PatientRegistration from "layouts/PatientRegistration";
 import Billing from "layouts/billing";
 import EmergencyCase from "layouts/emergency";
 import ManagePatients from "layouts/Manage Patients";
-import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
-
-// @mui icons
-import Icon from "@mui/material/Icon";
-
 import DoctorPortal from "layouts/Doctor Portal";
 import PatientEncounterFrom from "layouts/Patient Encounter Form";
 import MedicineChargeFile from "layouts/Medicine Charge File";
