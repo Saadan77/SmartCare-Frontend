@@ -49,16 +49,16 @@ const AddDepartment = () => {
         </Grid>
       </Grid>
 
-      <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex justify-end">
+      <Grid container sx={{ marginTop: 1 }} spacing={1} className="flex justify-end">
         <Grid item>
-          <MDButton variant="gradient" style={{ backgroundColor: "#1694c4", color: "White" }}>
+          <MDButton variant="gradient" style={{ backgroundColor: "#1694c4", color: "White", borderRadius: 0, minHeight: 0}}>
             <button type="submit" className="text-xs">SAVE</button>
           </MDButton>
         </Grid>
 
         <Grid item>
           <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-            <span className="text-xs">Cancel</span>
+            <button className="text-xs">CANCEL</button>
           </MDButton>
         </Grid>
       </Grid>

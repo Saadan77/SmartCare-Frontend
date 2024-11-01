@@ -53,15 +53,15 @@ const AddWard = () => {
 
       </Grid>
 
-      <Grid container spacing={2} sx={{ marginTop: 1 }} className="flex justify-end">
+      <Grid container spacing={3} sx={{ marginTop: 1 }} className="flex justify-end gap-1">
         <Grid item>
-          <MDButton variant="gradient" style={{ backgroundColor: "#1694c4", color: "White" }}>
+          <MDButton variant="gradient" style={{ backgroundColor: "#1694c4", color: "White", borderRadius: 0, minHeight: 0 }}>
             <button type="submit" className="text-xs">SAVE</button>
           </MDButton>
         </Grid>
         <Grid item sx={{ paddingLeft: "1px !important" }}>
-          <MDButton variant="gradient" color="light">
-            <span className="text-xs">Cancel</span>
+          <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+            <span className="text-xs">CANCEL</span>
           </MDButton>
         </Grid>
       </Grid>

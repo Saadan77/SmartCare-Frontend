@@ -76,7 +76,11 @@ const AddBed = () => {
             name="bedNumber"
             size="small"
             sx={{
-              height: '40px', // Set a fixed height for input
+              height: '40px', // Set a fixed height for dropdown
+              '& .MuiInputBase-root': {
+                height: '100%',
+                paddingRight: '0px',
+              }
             }}
           />
         </Grid>

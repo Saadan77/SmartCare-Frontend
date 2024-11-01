@@ -1,34 +1,25 @@
 /* eslint-disable prettier/prettier */
 /* prettier-ignore-end-of-line */
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
 import { Container, Grid, Paper } from "@mui/material";
+import AddEmployee from './components/AddEmployee';
+import SearchEmployee from './components/SearchEmployee';
+import UpdateEmployee from './components/UpdateEmployee';
 
-import AddHospital from "./components/Add Hospital"; 
-import AddDepartment from "./components/Add Department"; 
-import AddSubDepartment from "./components/Add Sub Department"; 
-import AddWard from "./components/Add Ward"; 
-import AddRoom from "./components/Add Room"; 
-import AddBed from "./components/Add Bed";
-// import ManageOrganization from "./components/Manage Organization";
-// import ManageStandardOrganization from "./components/Manage Standard Organization";
-// import UpdateOrganization from "./components/Update Organization";
-
-function Organization() {
-  const [activeTab, setActiveTab] = useState("addHospital");
-
-  const handleActiveTab = (tab) => {
-    setActiveTab(tab);
-  };
-
+function Employee() {
+    const [activeTab, setActiveTab] = useState("addEmployee");
+    const handleActiveTab = (tab) => {
+        setActiveTab(tab);
+      };
   return (
     <DashboardLayout>
-      <DashboardNavbar />
-      <Container
+        <DashboardNavbar />
+        <Container
         sx={{
           maxWidth: "100% !important",
           paddingLeft: "0 !important",
@@ -37,15 +28,15 @@ function Organization() {
           marginRight: "0 !important",
         }}
       >
-        <Paper
+         <Paper
           elevation={3}
           sx={{ padding: 2, marginTop: 3, position: "relative" }}
           className="h-full"
         >
-          <nav className="w-full mb-3">
+            <nav className="w-full mb-3">
             <Grid container sx={{ marginTop: 2 }} className="text-center">
               {/* Navigation Links */}
-              {["addHospital", "addDepartment", "addSubDepartment", "addWard", "addRoom", "addBed"].map((tab, index) => (
+              {["addEmployee", "searchEmployee", "updateEmployee"].map((tab, index) => (
                 <Grid item xs={2} key={index} onClick={() => handleActiveTab(tab)} className={`cursor-pointer ${activeTab === tab ? "text-[#1694c4]" : ""}`}>
                   <div className="border border-gray-300 group h-10 relative">
                     <button className={`font-semibold text-xs relative`}>
@@ -63,21 +54,15 @@ function Organization() {
           </nav>
           <Grid container spacing={2} sx={{ marginTop: 2 }}>
             <Grid item xs={12}>
-              {/* {activeTab === "manageOrganization" && <ManageOrganization />}
-              {activeTab === "manageStandardOrganization" && <ManageStandardOrganization />}
-              {activeTab === "updateOrganization" && <UpdateOrganization />} */}
-              {activeTab === "addHospital" && <AddHospital />}
-              {activeTab === "addDepartment" && <AddDepartment />}
-              {activeTab === "addSubDepartment" && <AddSubDepartment />}
-              {activeTab === "addWard" && <AddWard />}
-              {activeTab === "addRoom" && <AddRoom />}
-              {activeTab === "addBed" && <AddBed />}
+              {activeTab === "addEmployee" && <AddEmployee/>}
+              {activeTab === "searchEmployee" && <SearchEmployee />}
+              {activeTab === "updateEmployee" && <UpdateEmployee />} 
             </Grid>
           </Grid>
         </Paper>
       </Container>
     </DashboardLayout>
-  );
+  )
 }
 
-export default Organization;
+export default Employee

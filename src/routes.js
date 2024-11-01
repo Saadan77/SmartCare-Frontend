@@ -31,6 +31,7 @@ import ManageFavourites from "layouts/Manage Favourites";
 import AddFavourite from "layouts/Add Favorite";
 import EditFavourites from "layouts/Edit Favourites";
 import Organization from "layouts/Organization";
+import Employee from "layouts/Employee";
 
 const routes = [
   {
@@ -204,10 +205,18 @@ const routes = [
   {
     type: "collapse",
     name: "Organization",
-    ket: "organization",
+    key: "organization",
     icon: <Icon fontSize="small">medication_liquid</Icon>,
     route: "/organization",
     component: <Organization />,
+  },
+  {
+    type: "collapse",
+    name: "Employee",
+    key: "employee",
+    icon: <Icon fontSize="small">medication_liquid</Icon>,
+    route: "/employee",
+    component: <Employee />,
   },
   {
     type: "collapse",
