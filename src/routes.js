@@ -30,6 +30,7 @@ import AddFavourite from "layouts/Add Favorite";
 import EditFavourites from "layouts/Edit Favourites";
 import Organization from "layouts/Organization";
 import Employee from "layouts/Employee";
+import ServiceSetup from "layouts/Service Setup";
 
 const routes = [
   {
@@ -215,6 +216,14 @@ const routes = [
     icon: <Icon fontSize="small">medication_liquid</Icon>,
     route: "/employee",
     component: <Employee />,
+  },
+  {
+    type: "collapse",
+    name: "Service Setup",
+    key: "serviceSetup",
+    icon: <Icon fontSize="small">medication_liquid</Icon>,
+    route: "/serviceSetup",
+    component: <ServiceSetup />,
   },
   {
     type: "collapse",
