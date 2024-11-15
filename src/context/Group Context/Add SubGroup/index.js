@@ -25,8 +25,12 @@ export const SubGroupProvider = ({ children }) => {
     fetchGroups();
   }, []);
 
+  const addNewSubGroup = (newSubGroup) => {
+    setSubGroups((prevSubGroups) => [...prevSubGroups, newSubGroup]);
+  };
+
   return (
-    <AddSubGroupContext.Provider value={{ subGroups, loading, error }}>
+    <AddSubGroupContext.Provider value={{ subGroups, loading, error, addNewSubGroup }}>
       {children}
     </AddSubGroupContext.Provider>
   );

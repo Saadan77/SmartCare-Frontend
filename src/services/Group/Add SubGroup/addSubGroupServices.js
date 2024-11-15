@@ -12,3 +12,14 @@ export const getSubGroups = async () => {
     throw error;
   }
 };
+
+// Add a new group
+export const addSubGroup = async (subGroupData) => {
+  try {
+    const response = await axios.post(API_URL, subGroupData);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding sub group:", error);
+    throw error;
+  }
+};
