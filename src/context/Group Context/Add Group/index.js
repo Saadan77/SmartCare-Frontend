@@ -30,7 +30,7 @@ export const GroupProvider = ({ children }) => {
   };
 
   return (
-    <AddGroupContext.Provider value={{ groups, loading, error, addNewGroup }}>
+    <AddGroupContext.Provider value={{ groups, setGroups, loading, error, addNewGroup }}>
       {children}
     </AddGroupContext.Provider>
   );
