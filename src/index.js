@@ -9,6 +9,9 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 // Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 import { PatientProvider } from "context/Patient Context";
+import { GroupProvider } from "context/Group Context/Add Group";
+import { SubGroupProvider } from "context/Group Context/Add SubGroup";
+import { ServiceProvider } from "context/Group Context/Add Service";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -19,7 +22,13 @@ root.render(
       <BrowserRouter>
         <MaterialUIControllerProvider>
           <PatientProvider>
-            <App />
+            <GroupProvider>
+              <SubGroupProvider>
+                <ServiceProvider>
+                  <App />
+                </ServiceProvider>
+              </SubGroupProvider>
+            </GroupProvider>
           </PatientProvider>
         </MaterialUIControllerProvider>
       </BrowserRouter>

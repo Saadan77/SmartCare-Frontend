@@ -36,7 +36,7 @@ function ServiceSetup() {
             <Grid container sx={{ marginTop: 2 }} className="text-center">
               {/* Navigation Links */}
               {["addGroup", "addSubGroup", "addServices"].map((tab, index) => (
-                <Grid item xs={2} key={index} onClick={() => handleActiveTab(tab)} className={`cursor-pointer ${activeTab === tab ? "text-[#1694c4]" : ""}`}>
+                <Grid item xs={4} key={index} onClick={() => handleActiveTab(tab)} className={`cursor-pointer ${activeTab === tab ? "text-[#1694c4]" : ""}`}>
                   <div className="border border-gray-300 group h-10 relative">
                     <button className={`font-semibold text-xs relative`}>
                       {tab
