@@ -37,7 +37,7 @@ function Employee() {
             <Grid container sx={{ marginTop: 2 }} className="text-center">
               {/* Navigation Links */}
               {["addEmployee", "searchEmployee", "updateEmployee"].map((tab, index) => (
-                <Grid item xs={2} key={index} onClick={() => handleActiveTab(tab)} className={`cursor-pointer ${activeTab === tab ? "text-[#1694c4]" : ""}`}>
+                <Grid item xs={4} key={index} onClick={() => handleActiveTab(tab)} className={`cursor-pointer ${activeTab === tab ? "text-[#1694c4]" : ""}`}>
                   <div className="border border-gray-300 group h-10 relative">
                     <button className={`font-semibold text-xs relative`}>
                       {tab
@@ -52,7 +52,7 @@ function Employee() {
               ))}
             </Grid>
           </nav>
-          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               {activeTab === "addEmployee" && <AddEmployee/>}
               {activeTab === "searchEmployee" && <SearchEmployee />}

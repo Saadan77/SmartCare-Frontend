@@ -1,27 +1,225 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from "react";
-import {
-  Typography,
-  Box,
-  Grid,
-  TextField,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  Paper,
-} from "@mui/material";
+import React, { useContext, useState } from "react";
+import InputMask from "react-input-mask";
+import PropTypes from "prop-types";
+
+import { Typography, Box, Grid, TextField, Checkbox, FormControlLabel } from "@mui/material";
 import MDButton from "components/MDButton";
+
+import { AddEmployeeContext } from "context/Employee/Add Employee/addEmployeeContext";
+import { addEmployee } from "services/Employee/Add Employee/addEmployeeService";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const AddEmployee = () => {
   const [sameAsCurrentAddress, setSameAsCurrentAddress] = useState(false);
+
+  const { addNewEmployee } = useContext(AddEmployeeContext);
+
+  const [errors, setErrors] = useState({});
 
   const handleCheckboxChange = (event) => {
     setSameAsCurrentAddress(event.target.checked);
   };
 
+  const [employee, setEmployee] = useState({
+    title: "",
+    employeeNo: "",
+    gender: "1",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    relationship: "",
+    relationshipFirstName: "",
+    relationshipMiddleName: "",
+    relationshipLastName: "",
+    dateOfBirth: "",
+    maritalStatus: "1",
+    bloodGroup: "",
+    cnic: "",
+    nationality: "",
+    phoneOffice: "",
+    phoneResidence: "",
+    email: "",
+    mobile: "",
+    fax: "",
+    uniqueKeyType: "",
+    uniqueKey: "",
+    currentCountry: "",
+    currentProvince: "",
+    currentDistrict: "",
+    currentCity: "",
+    currentAddress: "",
+    permanentCountry: "",
+    permanentProvince: "",
+    permanentDistrict: "",
+    permanentCity: "",
+    permanentAddress: "",
+    createdBy: 1,
+    isDeleted: 0,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setEmployee({
+      ...employee,
+      [name]: value,
+    });
+
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
+
+    if (name === "firstName" || name === "middleName" || name === "lastName") {
+      const regex = /^[a-zA-Z\s]*$/;
+      if (!regex.test(value)) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: "Only alphabets are allowed",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: "",
+        }));
+      }
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!employee.firstName.trim()) {
+      newErrors.firstName = "First Name is required.";
+    }
+
+    if (!employee.relationshipFirstName.trim()) {
+      newErrors.relationshipFirstName = "Relationship First Name is required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fill all required fields."); // Show error toast
+      return;
+    }
+
+    try {
+      const employeeData = {
+        title: employee.title,
+        employeeNo: employee.employeeNo,
+        gender: employee.gender,
+        firstName: employee.firstName,
+        middleName: employee.middleName,
+        lastName: employee.lastName,
+        relationship: employee.relationship,
+        relationshipFirstName: employee.relationshipFirstName,
+        relationshipMiddleName: employee.relationshipMiddleName,
+        relationshipLastName: employee.relationshipLastName,
+        dateOfBirth: employee.dateOfBirth,
+        maritalStatus: employee.maritalStatus,
+        bloodGroup: employee.bloodGroup,
+        cnic: employee.cnic,
+        nationality: employee.nationality,
+        phoneOffice: employee.phoneOffice,
+        phoneResidence: employee.phoneResidence,
+        email: employee.email,
+        mobile: employee.mobile,
+        fax: employee.fax,
+        uniqueKeyType: employee.uniqueKeyType,
+        uniqueKey: employee.uniqueKey,
+        currentCountry: employee.currentCountry,
+        currentProvince: employee.currentProvince,
+        currentDistrict: employee.currentDistrict,
+        currentCity: employee.currentCity,
+        currentAddress: employee.currentAddress,
+        permanentCountry: employee.permanentCountry,
+        permanentProvince: employee.permanentProvince,
+        permanentDistrict: employee.permanentDistrict,
+        permanentCity: employee.permanentCity,
+        permanentAddress: employee.permanentAddress,
+        createdBy: employee.createdBy,
+        isDeleted: employee.isDeleted,
+      };
+
+      const savedEmployee = await addEmployee(employeeData);
+      addNewEmployee(savedEmployee);
+      toast.success("Employee added successfully");
+
+      setEmployee({
+        title: "",
+        employeeNo: "",
+        gender: "1",
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        relationship: "",
+        relationshipFirstName: "",
+        relationshipMiddleName: "",
+        relationshipLastName: "",
+        dateOfBirth: "",
+        maritalStatus: "1",
+        bloodGroup: "",
+        cnic: "",
+        nationality: "",
+        phoneOffice: "",
+        phoneResidence: "",
+        email: "",
+        mobile: "",
+        fax: "",
+        uniqueKeyType: "",
+        uniqueKey: "",
+        currentCountry: "",
+        currentProvince: "",
+        currentDistrict: "",
+        currentCity: "",
+        currentAddress: "",
+        permanentCountry: "",
+        permanentProvince: "",
+        permanentDistrict: "",
+        permanentCity: "",
+        permanentAddress: "",
+        createdBy: 1,
+        isDeleted: 0,
+      });
+    } catch (error) {
+      console.error("Error creating employee:", error.message);
+      toast.error("Failed to register employee.");
+    }
+  };
+
+  const [countryCode, setCountryCode] = useState("");
+
+  const handlePhoneChange = (value, country) => {
+    const numericValue = value.replace(/\D/g, "");
+    const isNumeric = /^\d+$/.test(numericValue);
+
+    if (isNumeric) {
+      setEmployee({ ...employee, mobile: value });
+      setCountryCode(country.dialCode);
+      setErrors({ ...errors, mobile: "" });
+    } else {
+      setErrors({ ...errors, mobile: "Only numbers are allowed" });
+    }
+  };
+
   return (
     <div>
+      <ToastContainer />
+
       {/* Header */}
       <Typography variant="h6" fontWeight="bold" gutterBottom>
         Add Employee
@@ -30,354 +228,478 @@ const AddEmployee = () => {
       {/* Employee Personal Information Section */}
       <Box sx={{ backgroundColor: "#1769aa", padding: 1, color: "white", mb: 2 }}>
         <Typography variant="subtitle1" className="text-white">
-         Employee Personal Information
+          Employee Personal Information
         </Typography>
       </Box>
 
-      <Grid container spacing={2} sx={{marginBottom: "40px"}}>
+      <Grid container spacing={2} sx={{ marginBottom: "40px" }}>
         <Grid item xs={3}>
-          <p className="text-xs">Title:</p>
-          <TextField
-            variant="outlined"
-            fullWidth
+          <p className="text-xs mb-2">Title:</p>
+          {/* Select Menu */}
+          <select
+            id="title"
             name="title"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
+            value={employee.title}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
-            <MenuItem value="Doctor">Doctor</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            <option value="Doctor">Doctor</option>
+            <option value="Nurse">Nurse</option>
+          </select>
         </Grid>
+
         <Grid item xs={3}>
-          <p className="text-xs">Employee No.:</p>
-          <TextField variant="outlined" fullWidth name="employeeNo" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Gender:</p>
+          <p className="text-xs mb-2">Employee No.:</p>
           <TextField
             variant="outlined"
             fullWidth
+            name="employeeNo"
+            onChange={handleInputChange}
+            value={employee.employeeNo}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Gender:</p>
+          {/* Select Menu */}
+          <select
+            id="gender"
             name="gender"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
+            value={employee.gender}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
-            <MenuItem value="Male">Male</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
         </Grid>
         <Grid item xs={3}>
-          <p className="text-xs">First Name:</p>
-          <TextField variant="outlined" fullWidth name="firstName" />
+          <p className="flex flex-row text-xs items-center">
+            First Name:<span className="text-red-600 text-base mx-2">*</span>
+          </p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="firstName"
+            value={employee.firstName}
+            onChange={handleInputChange}
+            error={!!errors.firstName}
+            helperText={errors.firstName}
+          />
         </Grid>
 
         {/* Additional fields in a similar layout */}
         <Grid item xs={3}>
-          <p className="text-xs">Middle Name:</p>
-          <TextField variant="outlined" fullWidth name="middleName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Last Name:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Relationship:</p>
+          <p className="text-xs mb-2">Middle Name:</p>
           <TextField
             variant="outlined"
             fullWidth
-            name="gender"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
-          >
-            <MenuItem value="Male">Son of</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            name="middleName"
+            value={employee.middleName}
+            onChange={handleInputChange}
+          />
         </Grid>
+
         <Grid item xs={3}>
-          <p className="text-xs">First Name:</p>
-          <TextField variant="outlined" fullWidth name="firstName" />
+          <p className="text-xs mb-2">Last Name:</p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="lastName"
+            value={employee.lastName}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Relationship:</p>
+          {/* Select Menu */}
+          <select
+            id="relationship"
+            name="relationship"
+            value={employee.relationship}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option value="1">Son of</option>
+            <option value="2">Daughter Of</option>
+          </select>
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="flex flex-row text-xs items-center">
+            Relationship First Name:<span className="text-red-600 text-base mx-2">*</span>
+          </p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="relationshipFirstName"
+            onChange={handleInputChange}
+            value={employee.relationshipFirstName}
+            error={!!errors.relationshipFirstName}
+            helperText={errors.relationshipFirstName}
+          />
         </Grid>
 
         {/* Additional fields in a similar layout */}
         <Grid item xs={3}>
-          <p className="text-xs">Middle Name:</p>
-          <TextField variant="outlined" fullWidth name="middleName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Last Name:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-            <p className="text-xs">Age:</p>
-            <Grid container spacing={1}>
-              <Grid item xs={4}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="age.years"
-                  placeholder="Y(s)"
-                  size="small"
-                  sx={{
-                    '& .MuiInputBase-root': {
-                      height: '34px',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="age.months"
-                  placeholder="M(s)"
-                  size="small"
-                  sx={{
-                    '& .MuiInputBase-root': {
-                      height: '34px',
-                    }
-                  }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="age.days"
-                  placeholder="D(s)"
-                  size="small"
-                  sx={{
-                    '& .MuiInputBase-root': {
-                      height: '34px',
-                    }
-                  }}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Date of Birth:</p>
-          <TextField variant="outlined" fullWidth name="dob" type="date" InputLabelProps={{ shrink: true }} />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Marital Status:</p>
+          <p className="text-xs mb-2">Relationship Middle Name:</p>
           <TextField
             variant="outlined"
             fullWidth
-            name="maritalStatus"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
-          >
-            <MenuItem value="Married">Married</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            name="relationshipMiddleName"
+            value={employee.relationshipMiddleName}
+            onChange={handleInputChange}
+          />
         </Grid>
+
         <Grid item xs={3}>
-          <p className="text-xs">Blood Group:</p>
+          <p className="text-xs mb-2">Relationship Last Name:</p>
           <TextField
             variant="outlined"
             fullWidth
-            name="maritalStatus"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
-          >
-            <MenuItem value="Married">Married</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            name="relationshipLastName"
+            onChange={handleInputChange}
+            value={employee.relationshipLastName}
+          />
         </Grid>
+
         <Grid item xs={3}>
-          <p className="text-xs">CNIC:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Nationality:</p>
+          <p className="text-xs mb-2">Date of Birth:</p>
           <TextField
             variant="outlined"
             fullWidth
+            name="dateOfBirth"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={employee.dateOfBirth}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Marital Status:</p>
+          {/* Select Menu */}
+          <select
+            id="maritalStatus"
             name="maritalStatus"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
-            }}
+            value={employee.maritalStatus}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
-            <MenuItem value="Married">Pakistani</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            <option value="1">Married</option>
+            <option value="2">Single</option>
+          </select>
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Blood Group:</p>
+          {/* Select Menu */}
+          <select
+            id="bloodGroup"
+            name="bloodGroup"
+            value={employee.bloodGroup}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option value="A+">A+</option>
+            <option value="B+">B+</option>
+          </select>
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">CNIC:</p>
+          <InputMask
+            mask="99999-9999999-9"
+            value={employee.cnic}
+            onChange={handleInputChange}
+            maskChar={null} // This will not show any placeholder character
+          >
+            {(inputProps) => (
+              <TextField
+                {...inputProps}
+                variant="outlined"
+                fullWidth
+                name="cnic"
+                placeholder="12345-1234567-1"
+              />
+            )}
+          </InputMask>
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Nationality:</p>
+          {/* Select Menu */}
+          <select
+            id="nationality"
+            name="nationality"
+            value={employee.nationality}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          >
+            <option value="Pakistani">Pakistani</option>
+          </select>
         </Grid>
         <Grid item xs={3}>
-          <p className="text-xs">Phone (Off):</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Phone (Res):</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Email:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Mobile:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Fax:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
-        </Grid>
-        <Grid item xs={3}>
-          <p className="text-xs">Unique Key Type:</p>
+          <p className="text-xs mb-2">Phone (Off):</p>
           <TextField
             variant="outlined"
             fullWidth
-            name="maritalStatus"
-            select
-            sx={{
-              '& .MuiInputBase-root': {
-                height: '34px',
-                paddingRight: '0px',
-              },
+            name="phoneOffice"
+            value={employee.phoneOffice}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Phone (Res):</p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="phoneResidence"
+            value={employee.phoneResidence}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Email:</p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="email"
+            value={employee.email}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Mobile:</p>
+          <PhoneInput
+            country={"pk"}
+            value={employee.mobile}
+            onChange={handlePhoneChange}
+            inputProps={{
+              name: "mobile",
+              required: true,
+              autoFocus: true,
             }}
+            containerStyle={{
+              height: "30px",
+            }}
+            inputStyle={{
+              height: "30px",
+              width: "250px",
+            }}
+            enableAreaCodes={true}
+            countryCodeEditable={false}
+            specialLabel=""
+          />
+          {errors.phoneNo && <p className="text-red-500 text-xs mt-1">{errors.phoneNo}</p>}
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Fax:</p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="fax"
+            value={employee.fax}
+            onChange={handleInputChange}
+          />
+        </Grid>
+
+        <Grid item xs={3}>
+          <p className="text-xs mb-2">Unique Key Type:</p>
+          {/* Select Menu */}
+          <select
+            id="uniqueKey"
+            name="uniqueKey"
+            value={employee.uniqueKey}
+            onChange={handleInputChange}
+            className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           >
-            <MenuItem value="Married">CNIC</MenuItem>
-            {/* Add other options as needed */}
-          </TextField>
+            <option value="CNIC">CNIC</option>
+          </select>
         </Grid>
         <Grid item xs={3}>
-          <p className="text-xs">Unique Key:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
+          <p className="text-xs mb-2">Unique Key:</p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="uniqueKey"
+            value={employee.uniqueKey}
+            onChange={handleInputChange}
+          />
         </Grid>
-       
       </Grid>
 
       <Grid container spacing={2} alignItems="flex-start">
-  {/* Current Address Section */}
-  <Grid item xs={6}>
-    <Box sx={{ backgroundColor: "#1769aa", padding: 1, color: "white", mb: 2 }}>
-      <Typography variant="subtitle1" className="text-white">
-        Current Address
-      </Typography>
-    </Box>
-    <Grid container spacing={2} sx={{marginTop: "57px"}}>
-      <Grid item xs={6}>
-        <p className="text-xs">Country:</p>
-        <TextField
-          variant="outlined"
-          fullWidth
-          name="country"
-          select
-          sx={{
-            '& .MuiInputBase-root': {
-              height: '34px',
-              paddingRight: '0px',
-            },
-          }}
-        >
-          <MenuItem value="Pakistan">Pakistan</MenuItem>
-        </TextField>
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">Province:</p>
-        <TextField variant="outlined" fullWidth name="province" />
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">District:</p>
-        <TextField variant="outlined" fullWidth name="district" />
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">City:</p>
-        <TextField variant="outlined" fullWidth name="city" />
-      </Grid>
-      <Grid item xs={12}>
-        <p className="text-xs">Address:</p>
-        <TextField variant="outlined" fullWidth name="address" multiline rows={2} />
-      </Grid>
-    </Grid>
-  </Grid>
+        {/* Current Address Section */}
+        <Grid item xs={6}>
+          <Box sx={{ backgroundColor: "#1769aa", padding: 1, color: "white", mb: 2 }}>
+            <Typography variant="subtitle1" className="text-white">
+              Current Address
+            </Typography>
+          </Box>
+          <Grid container spacing={2} sx={{ marginTop: "57px" }}>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">Country:</p>
+              {/* Select Menu */}
+              <select
+                id="currentCountry"
+                name="currentCountry"
+                value={employee.currentCountry}
+                onChange={handleInputChange}
+                className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option value="">Select a country</option>
+                <option value="Pakistan">Pakistan</option>
+              </select>
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">Province:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="currentProvince"
+                onChange={handleInputChange}
+                value={employee.currentProvince}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">District:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="currentDistrict"
+                onChange={handleInputChange}
+                value={employee.currentDistrict}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">City:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="currentCity"
+                onChange={handleInputChange}
+                value={employee.currentCity}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <p className="text-xs mb-2">Address:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="currentAddress"
+                multiline
+                rows={2}
+                onChange={handleInputChange}
+                value={employee.currentAddress}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-  {/* Permanent Address Section */}
-  <Grid item xs={6}>
-    <Box sx={{ backgroundColor: "#1769aa", padding: 1, color: "white", mb: 2 }}>
-      <Typography variant="subtitle1" className="text-white">
-        Permanent Address
-      </Typography>
-    </Box>
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={12}>
-        <FormControlLabel
-          control={<Checkbox checked={sameAsCurrentAddress} onChange={handleCheckboxChange} />}
-          label="Same as Current Address"
-        />
+        {/* Permanent Address Section */}
+        <Grid item xs={6}>
+          <Box sx={{ backgroundColor: "#1769aa", padding: 1, color: "white", mb: 2 }}>
+            <Typography variant="subtitle1" className="text-white">
+              Permanent Address
+            </Typography>
+          </Box>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={sameAsCurrentAddress} onChange={handleCheckboxChange} />
+                }
+                label="Same as Current Address"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">Country:</p>
+              {/* Select Menu */}
+              <select
+                id="permanentCountry"
+                name="permanentCountry"
+                value={sameAsCurrentAddress ? employee.currentCountry : employee.permanentCountry}
+                onChange={handleInputChange}
+                className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              >
+                <option value="">Select a country</option>
+                <option value="Pakistan">Pakistan</option>
+              </select>
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">Province:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="permanentProvince"
+                disabled={sameAsCurrentAddress}
+                onChange={handleInputChange}
+                value={sameAsCurrentAddress ? employee.currentProvince : employee.permanentProvince}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">District:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="permanentDistrict"
+                disabled={sameAsCurrentAddress}
+                onChange={handleInputChange}
+                value={sameAsCurrentAddress ? employee.currentDistrict : employee.permanentDistrict}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <p className="text-xs mb-2">City:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="permanentCity"
+                disabled={sameAsCurrentAddress}
+                onChange={handleInputChange}
+                value={sameAsCurrentAddress ? employee.currentCity : employee.permanentCity}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <p className="text-xs mb-2">Address:</p>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="permanentAddress"
+                multiline
+                rows={2}
+                disabled={sameAsCurrentAddress}
+                onChange={handleInputChange}
+                value={sameAsCurrentAddress ? employee.currentAddress : employee.permanentAddress}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">Country:</p>
-        <TextField
-          variant="outlined"
-          fullWidth
-          name="permCountry"
-          select
-          disabled={sameAsCurrentAddress}
-          sx={{
-            '& .MuiInputBase-root': {
-              height: '34px',
-              paddingRight: '0px',
-            },
-          }}
-        >
-          <MenuItem value="Pakistan">Pakistan</MenuItem>
-        </TextField>
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">Province:</p>
-        <TextField variant="outlined" fullWidth name="permProvince" disabled={sameAsCurrentAddress} />
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">District:</p>
-        <TextField variant="outlined" fullWidth name="permDistrict" disabled={sameAsCurrentAddress} />
-      </Grid>
-      <Grid item xs={6}>
-        <p className="text-xs">City:</p>
-        <TextField variant="outlined" fullWidth name="permCity" disabled={sameAsCurrentAddress} />
-      </Grid>
-      <Grid item xs={12}>
-        <p className="text-xs">Address:</p>
-        <TextField variant="outlined" fullWidth name="permAddress" multiline rows={2} disabled={sameAsCurrentAddress} />
-      </Grid>
-    </Grid>
-  </Grid>
-</Grid>
-
 
       {/* Buttons */}
-      <Grid container  sx={{ marginTop: 3, backgroundColor: "#11171d" }} className="place-content-center justify-center p-2 gap-2">
-      <Grid item>
-          <MDButton variant="gradient" style={{ borderRadius: 0, minHeight: 0, backgroundColor: "#1694c4", color: "White" }}>
-            <button type="submit" className="text-xs">Save</button>
+      <Grid
+        container
+        sx={{ marginTop: 3, backgroundColor: "#11171d" }}
+        className="place-content-center justify-center p-2 gap-2"
+      >
+        <Grid item>
+          <MDButton
+            variant="gradient"
+            style={{
+              borderRadius: 0,
+              minHeight: 0,
+              backgroundColor: "#1694c4",
+              color: "White",
+            }}
+            onClick={handleSave}
+          >
+            Save
           </MDButton>
         </Grid>
         <Grid item sx={{ paddingLeft: "1px !important" }}>
@@ -386,13 +708,25 @@ const AddEmployee = () => {
           </MDButton>
         </Grid>
         <Grid item>
-          <MDButton variant="gradient" style={{ borderRadius: 0, minHeight: 0, backgroundColor: "#1694c4", color: "White" }}>
-            <button type="submit" className="text-xs">Save & Assign Appointment</button>
+          <MDButton
+            variant="gradient"
+            style={{ borderRadius: 0, minHeight: 0, backgroundColor: "#1694c4", color: "White" }}
+          >
+            <button type="submit" className="text-xs">
+              Save & Assign Appointment
+            </button>
           </MDButton>
         </Grid>
       </Grid>
     </div>
   );
+};
+
+AddEmployee.propTypes = {
+  employee: PropTypes.shape({
+    cnic: PropTypes.string.isRequired,
+  }).isRequired,
+  handleInputChange: PropTypes.func.isRequired,
 };
 
 export default AddEmployee;

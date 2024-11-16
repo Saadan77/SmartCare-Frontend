@@ -34,14 +34,7 @@ function AddClient() {
   });
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target; // Destructure from e.target first
-
-    if (!name) {
-      console.error("Invalid input event, missing 'name':", e.target);
-      return;
-    }
-
-    console.log("Input change detected:", { name, value }); // Log after destructure
+    const { name, value } = e.target;
 
     setClient({
       ...client,
@@ -93,7 +86,7 @@ function AddClient() {
         createdBy: 1,
       });
     } catch (error) {
-      console.error("Error creating client:", error.message);
+      console.error("Add Client: Error creating client:", error.message);
       toast.error("Failed to register client.");
     }
   };

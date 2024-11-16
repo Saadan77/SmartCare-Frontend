@@ -13,6 +13,8 @@ import { GroupProvider } from "context/Group Context/Add Group";
 import { SubGroupProvider } from "context/Group Context/Add SubGroup";
 import { ServiceProvider } from "context/Group Context/Add Service";
 import { ClientProvider } from "context/Add Client/addClientContext";
+import { AddEmployeeContext } from "context/Employee/Add Employee/addEmployeeContext";
+import { EmployeeProvider } from "context/Employee/Add Employee/addEmployeeContext";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -27,7 +29,9 @@ root.render(
               <SubGroupProvider>
                 <ServiceProvider>
                   <ClientProvider>
-                    <App />
+                    <EmployeeProvider>
+                      <App />
+                    </EmployeeProvider>
                   </ClientProvider>
                 </ServiceProvider>
               </SubGroupProvider>
