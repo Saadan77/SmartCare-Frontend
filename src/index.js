@@ -12,6 +12,7 @@ import { PatientProvider } from "context/Patient Context";
 import { GroupProvider } from "context/Group Context/Add Group";
 import { SubGroupProvider } from "context/Group Context/Add SubGroup";
 import { ServiceProvider } from "context/Group Context/Add Service";
+import { ClientProvider } from "context/Add Client/addClientContext";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -25,7 +26,9 @@ root.render(
             <GroupProvider>
               <SubGroupProvider>
                 <ServiceProvider>
-                  <App />
+                  <ClientProvider>
+                    <App />
+                  </ClientProvider>
                 </ServiceProvider>
               </SubGroupProvider>
             </GroupProvider>
