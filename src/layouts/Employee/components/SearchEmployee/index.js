@@ -1,28 +1,56 @@
 /* eslint-disable prettier/prettier */
 /* prettier-ignore-end-of-line */
 import React, { useState } from "react";
-import {
-  Typography,
-  Box,
-  Grid,
-  TextField,
-  MenuItem,
-  RadioGroup,
-  Radio,
-  FormControlLabel,
-  Paper,
-} from "@mui/material";
+import { Typography, Box, Grid, TextField, MenuItem } from "@mui/material";
+
 import MDButton from "components/MDButton";
+
 import data from "./data/index";
 import leftTable from "./leftTable";
 import rightTable from "./rightTable";
 import DataTable from "examples/Tables/DataTable";
 
+import { searchEmployee } from "services/Employee/Search Employee/searchEmployeeService";
+
 function SearchEmployee() {
-  const { columns, rows } = data();
   const { LColumns, LRows } = leftTable();
   const { RColumns, RRows } = rightTable();
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
+
+  const [searchParams, setSearchParams] = useState({
+    employeeNo: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    gender: "",
+    cnic: "",
+    dateOfBirth: "",
+  });
+
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams({
+      ...searchParams,
+      [name]: value,
+    });
+  };
+
+  const handleSearch = async () => {
+    try {
+      const employees = await searchEmployee(searchParams);
+      setResults(employees);
+      setError("");
+      console.log("Results: ", employees);
+    } catch (err) {
+      setError("Failed to search employees. Please try again.");
+      setResults([]);
+    }
+  };
+
+  const { columns, rows } = data(results);
 
   return (
     <div>
@@ -41,20 +69,48 @@ function SearchEmployee() {
       <Grid container spacing={2} sx={{ marginBottom: "40px" }}>
         <Grid item xs={3}>
           <p className="text-xs">Employee No.:</p>
-          <TextField variant="outlined" fullWidth name="employeeNo" />
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="employeeNo"
+            value={searchParams.employeeNo}
+            onChange={handleInputChange}
+          />
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">First Name:</p>
-          <TextField variant="outlined" fullWidth name="firstName" />
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="firstName"
+            onChange={handleInputChange}
+            value={searchParams.firstName}
+          />
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">Middle Name:</p>
-          <TextField variant="outlined" fullWidth name="middleName" />
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="middleName"
+            onChange={handleInputChange}
+            value={searchParams.middleName}
+          />
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">Last Name:</p>
-          <TextField variant="outlined" fullWidth name="lastName" />
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="lastName"
+            onChange={handleInputChange}
+            value={searchParams.lastName}
+          />
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">Gender:</p>
           <TextField
@@ -68,17 +124,27 @@ function SearchEmployee() {
             {/* Add other options as needed */}
           </TextField>
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">CNIC:</p>
-          <TextField variant="outlined" fullWidth name="cnic" />
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="cnic"
+            onChange={handleInputChange}
+            value={searchParams.cnic}
+          />
         </Grid>
+
         <Grid item xs={3}>
           <p className="text-xs">Date of Birth:</p>
           <TextField
             variant="outlined"
             fullWidth
-            name="dob"
+            name="dateOfBirth"
             type="date"
+            value={searchParams.dateOfBirth}
+            onChange={handleInputChange}
             InputLabelProps={{ shrink: true }}
           />
         </Grid>
@@ -98,12 +164,12 @@ function SearchEmployee() {
                   backgroundColor: "#1694c4",
                   color: "White",
                 }}
+                onClick={handleSearch}
               >
-                <button type="submit" className="text-xs">
-                  Search
-                </button>
+                Search
               </MDButton>
             </Grid>
+
             <Grid item>
               <MDButton
                 variant="gradient"
@@ -119,6 +185,7 @@ function SearchEmployee() {
                 </button>
               </MDButton>
             </Grid>
+
             <Grid item>
               <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
                 <span className="text-xs">Cancel</span>
