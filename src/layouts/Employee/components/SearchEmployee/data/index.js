@@ -1,7 +1,8 @@
 // @mui material components
+import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 
-export default function data(results) {
+export default function data(results, setSelectedEmployee, setActiveTab) {
   const columns = [
     { Header: "Employee Name", accessor: "employeeName", width: "35%", align: "left" },
     { Header: "Employee No.", accessor: "employeeNo", width: "10%", align: "left" },
@@ -56,9 +57,16 @@ export default function data(results) {
       </MDTypography>
     ),
     update: (
-      <MDTypography variant="caption" fontWeight="medium">
-        {employee.Update}
-      </MDTypography>
+      <MDButton
+        variant="gradient"
+        style={{ borderRadius: 0, backgroundColor: "#1694c4", color: "White" }}
+        onClick={() => {
+          setSelectedEmployee(employee);
+          setActiveTab("updateEmployee");
+        }}
+      >
+        Update
+      </MDButton>
     ),
   }));
 

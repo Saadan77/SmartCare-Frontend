@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { Typography, Box, Grid, TextField, MenuItem } from "@mui/material";
 
+import PropTypes from "prop-types";
+
 import MDButton from "components/MDButton";
 
 import data from "./data/index";
@@ -12,7 +14,7 @@ import DataTable from "examples/Tables/DataTable";
 
 import { searchEmployee } from "services/Employee/Search Employee/searchEmployeeService";
 
-function SearchEmployee() {
+function SearchEmployee({ setSelectedEmployee, setActiveTab }) {
   const { LColumns, LRows } = leftTable();
   const { RColumns, RRows } = rightTable();
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
@@ -50,7 +52,7 @@ function SearchEmployee() {
     }
   };
 
-  const { columns, rows } = data(results);
+  const { columns, rows } = data(results, setSelectedEmployee, setActiveTab);
 
   return (
     <div>
@@ -301,5 +303,10 @@ function SearchEmployee() {
     </div>
   );
 }
+
+SearchEmployee.propTypes = {
+  setSelectedEmployee: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired,
+};
 
 export default SearchEmployee;
