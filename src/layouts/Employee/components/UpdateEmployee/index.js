@@ -187,8 +187,8 @@ function UpdateEmployee({ employee }) {
         <Grid item xs={3}>
           <p className="text-xs">Login Status:</p>
           <RadioGroup row name="status" value={updateParams.status} onChange={handleInputChange}>
-            <FormControlLabel value="active" control={<Radio />} label="Active" />
-            <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+            <FormControlLabel value="0" control={<Radio />} label="Active" />
+            <FormControlLabel value="1" control={<Radio />} label="Inactive" />
           </RadioGroup>
         </Grid>
       </Grid>

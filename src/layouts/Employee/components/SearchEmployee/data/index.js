@@ -38,7 +38,7 @@ export default function data(results, setSelectedEmployee, setActiveTab) {
     ),
     login: (
       <MDTypography variant="caption" fontWeight="medium">
-        {employee.Login}
+        {employee.LoginStatus === 0 ? "Active" : "Inactive"}
       </MDTypography>
     ),
     appointment: (
