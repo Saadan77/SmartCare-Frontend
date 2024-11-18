@@ -1,119 +1,158 @@
-/* eslint-disable prettier/prettier */
-/* prettier-ignore-end-of-line */
-// Material Dashboard 2 React example components
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import React, { useState, useContext } from "react";
 
 import data from "./data";
 
-import { TextField, Container, Typography, Grid, Paper, Box } from "@mui/material";
+import { TextField, Typography, Grid, Box } from "@mui/material";
 
 import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
 
+import { addStandardOrganization } from "services/Organizations/Manage Standard Organization/manageStandardOrganizationService";
+import { StandardOrganizationsContext } from "context/Organizations/Manage Standard Organization/manageStandardOrganizationContext";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function ManageStandardOrganization() {
+  const [errors, setErrors] = useState({});
+
+  const [organizationData, setOrganizationData] = useState({
+    standardOrganizationName: "",
+    description: "",
+    createdBy: 1,
+  });
+
+  const { addNewStandardOrganization } = useContext(StandardOrganizationsContext);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setOrganizationData({
+      ...organizationData,
+      [name]: value,
+    });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!organizationData.standardOrganizationName.trim()) {
+      newErrors.standardOrganizationName = "Organization Name is required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fill all required fields."); // Show error toast
+      return;
+    }
+
+    try {
+      const OrganizationData = {
+        Name: organizationData.standardOrganizationName,
+        Description: organizationData.description,
+        CreatedBy: organizationData.createdBy,
+      };
+
+      const savedOrganization = await addStandardOrganization(OrganizationData);
+      addNewStandardOrganization(savedOrganization);
+      toast.success("Organization added successfully");
+
+      setOrganizationData({
+        standardOrganizationName: "",
+        description: "",
+        createdBy: 1,
+      });
+    } catch (error) {
+      console.error("Error creating Organization:", error.message);
+      toast.error("Failed to register Organization.");
+    }
+  };
+
   const { columns, rows } = data();
   return (
     <div>
-          <Box>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
-              Manage Standard Organization
-          </Typography>
-          </Box>
+      <ToastContainer></ToastContainer>
 
-          <Grid
-            container
-            sx={{ marginTop: 1 }}
-            spacing={2}
-            className="flex flex-col lg:flex-row items-center lg:gap-32"
+      <Box>
+        <Typography variant="h6" sx={{ fontWeight: "bold" }} gutterBottom>
+          Manage Standard Organization
+        </Typography>
+      </Box>
+
+      <Grid container sx={{ marginTop: 1 }} spacing={2}>
+        <Grid
+          item
+          xs={6}
+          sm={3}
+          sx={{
+            paddingTop: "5px !important",
+          }}
+        >
+          <p className="flex flex-row text-xs items-center">
+            Standard Organization:<span className="text-red-600 text-base mx-2">*</span>
+          </p>
+          <TextField
+            variant="outlined"
+            fullWidth
+            name="standardOrganizationName"
+            value={organizationData.standardOrganizationName}
+            onChange={handleInputChange}
+            error={!!errors.standardOrganizationName}
+            helperText={errors.standardOrganizationName}
+          />
+        </Grid>
+        <Grid item xs={6} sm={6} sx={{ paddingTop: "5px !important" }}>
+          <p className="text-xs mb-2">Description:</p>
+          <TextField
+            name="description"
+            multiline
+            rows={4}
+            variant="outlined"
+            placeholder="Specify Description"
+            fullWidth
+            value={organizationData.description}
+            onChange={handleInputChange}
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2} sx={{ marginTop: 1 }}>
+        <Grid item sm={12}>
+          <DataTable
+            table={{ columns, rows }}
+            showTotalEntries={true}
+            isSorted={true}
+            noEndBorder
+            entriesPerPage={false}
+          />
+        </Grid>
+      </Grid>
+
+      <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex justify-end">
+        <Grid item>
+          <MDButton
+            variant="gradient"
+            style={{
+              borderRadius: 0,
+              minHeight: 0,
+              backgroundColor: "#1694c4",
+              color: "White",
+            }}
+            onClick={handleSave}
           >
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              lg={3}
-              sx={{ paddingTop: "5px !important", paddingBottom: "5px !important" }}
-            >
-              <label htmlFor="organization" className="text-xs mb-2 block">
-                Standard Organization
-              </label>
-              <select
-                id="organization"
-                name="organization"
-                className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              >
-                <option value=""></option>
-              </select>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              lg={3}
-              sx={{ paddingTop: "5px !important", paddingBottom: "5px !important" }}
-            >
-              <label htmlFor="description" className="text-xs mb-2 block">
-                Description
-              </label>
-              <TextField
-                id="description"
-                name="description"
-                multiline
-                rows={4}
-                variant="outlined"
-                placeholder="Specify Description"
-                fullWidth
-                sx={{
-                  "& .MuiInputBase-input": {
-                    paddingTop: "12px",
-                    paddingBottom: "12px",
-                  },
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={2} sx={{ marginTop: 1 }}>
-            <Grid item sm={12}>
-              <DataTable
-                table={{ columns, rows }}
-                showTotalEntries={true}
-                isSorted={true}
-                noEndBorder
-                entriesPerPage={false}
-              />
-            </Grid>
-          </Grid>
-
-          <Grid container sx={{ marginTop: 1 }} spacing={2} className="flex justify-end">
-            <Grid item>
-              <MDButton
-                variant="gradient"
-                style={{
-                  borderRadius: 0,
-                  minHeight: 0,
-                  backgroundColor: "#1694c4",
-                  color: "White",
-                }}
-              >
-                <button type="submit" className="text-xs">
-                  SAVE
-                </button>
-              </MDButton>
-            </Grid>
-            <Grid item sx={{ paddingLeft: "1px !important", marginRight: "5px !important" }}>
-              <MDButton
-                sx={{ borderRadius: 0, minHeight: 0, backgroundColor: "#1694c4", color: "White" }}
-                variant="gradient"
-              >
-                <span className="text-xs">Update</span>
-              </MDButton>
-            </Grid>
-            <Grid item sx={{ paddingLeft: "1px !important" }}>
-              <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
-                <span className="text-xs">Cancel</span>
-              </MDButton>
-            </Grid>
-          </Grid>
-        </div>
+            SAVE
+          </MDButton>
+        </Grid>
+        <Grid item sx={{ paddingLeft: "1px !important" }}>
+          <MDButton sx={{ borderRadius: 0, minHeight: 0 }} variant="gradient" color="light">
+            <span className="text-xs">Cancel</span>
+          </MDButton>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
