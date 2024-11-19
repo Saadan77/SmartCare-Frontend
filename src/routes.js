@@ -43,6 +43,14 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Organization",
+    key: "organization",
+    icon: <Icon fontSize="small">medication_liquid</Icon>,
+    route: "/organization",
+    component: <Organization />,
+  },
+  {
+    type: "collapse",
     name: "Appointment Category",
     key: "appointmentCategory",
     icon: <Icon fontSize="small">crib</Icon>,
@@ -200,14 +208,6 @@ const routes = [
     icon: <Icon fontSize="small">medication_liquid</Icon>,
     route: "/pharmacySetup",
     component: <PharmacySetup />,
-  },
-  {
-    type: "collapse",
-    name: "Organization",
-    key: "organization",
-    icon: <Icon fontSize="small">medication_liquid</Icon>,
-    route: "/organization",
-    component: <Organization />,
   },
   {
     type: "collapse",

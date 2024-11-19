@@ -1,5 +1,6 @@
-/* eslint-disable prettier/prettier */
-import MDTypography from "components/MDTypography"; // Assuming MDTypography is a custom typography component
+import MDButton from "components/MDButton";
+import MDTypography from "components/MDTypography";
+
 import React from "react";
 
 export default function organizationData() {
@@ -10,15 +11,19 @@ export default function organizationData() {
 
   const ORows = [
     {
-      organizationUnit: <MDTypography variant="caption" fontWeight="medium">Lahore Hospital</MDTypography>,
-      expand: (
-        <button className="bg-blue-500 text-white rounded px-2 py-1">Expand</button>
+      organizationUnit: (
+        <MDTypography variant="caption" fontWeight="medium">
+          IAC
+        </MDTypography>
       ),
-    },
-    {
-      organizationUnit: <MDTypography variant="caption" fontWeight="medium">IAC</MDTypography>,
       expand: (
-        <button className="bg-blue-500 text-white rounded px-2 py-1">Expand</button>
+        <MDButton
+          variant="gradient"
+          fontWeight="medium"
+          style={{ borderRadius: 0, minHeight: 0, backgroundColor: "#1694c4", color: "White" }}
+        >
+          Expand
+        </MDButton>
       ),
     },
   ];
