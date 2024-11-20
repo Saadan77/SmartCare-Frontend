@@ -6,9 +6,118 @@ import { TextField, Typography, Grid, Box } from "@mui/material";
 import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
 
+import React, { useContext, useState, useEffect } from "react";
+
+import { StandardOrganizationsContext } from "context/Organizations/Manage Standard Organization/manageStandardOrganizationContext.js";
+import { getOrganizationTypes } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+import { getOrganizationNatures } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+import { getOrganizationRegions } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+import { getOrganizationSpeciality } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+import { getOrganizationCategory } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+
 export default function ManageOrganization() {
+  const { StandardOrganizations } = useContext(StandardOrganizationsContext);
+
+  const [OrganizationTypes, setOrganizationTypes] = useState([]);
+  const [OrganizationNatures, setOrganizationNatures] = useState([]);
+  const [Speciality, setSpeciality] = useState([]);
+  const [Regions, setRegions] = useState([]);
+  // const [Category, setCategory] = useState([]);
+
+  const [organization, setOrganization] = useState({
+    OrganizationUnitID: "",
+    OrganizationTypeID: "",
+    OrganizationNatureID: "",
+    RegionID: "",
+    // CategoryID: "",
+    SpecialtyID: "",
+    // ParentOrganizationID: "",
+    // DiscountPercentage: 0,
+    DisplayName: "",
+    Phone1: "",
+    Phone2: "",
+    Fax: "",
+    Email: "",
+    TravelingTimeDays: 0,
+    TravelingTimeHours: 0,
+    Country: "",
+    Province: "",
+    District: "",
+    City: "",
+    // Address: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setOrganization((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Organization Data Submitted:", organization);
+    // Add API call or further logic here
+  };
+
+  useEffect(() => {
+    const fetchOrganizationTypes = async () => {
+      try {
+        const data = await getOrganizationTypes();
+        setOrganizationTypes(data);
+        console.log("Organization types: ", data);
+      } catch (err) {
+        console.log("Error fetching organization types: ", err);
+      }
+    };
+
+    const fetchOrganizationNature = async () => {
+      try {
+        const data = await getOrganizationNatures();
+        setOrganizationNatures(data);
+      } catch (err) {
+        console.log("Error fetching Organization Nature: ", err);
+      }
+    };
+
+    const fetchSpeciality = async () => {
+      try {
+        const data = await getOrganizationSpeciality();
+        setSpeciality(data);
+      } catch (err) {
+        console.log("Error fetching Organization Speciality: ", err);
+      }
+    };
+
+    const fetchRegions = async () => {
+      try {
+        const data = await getOrganizationRegions();
+        setRegions(data);
+      } catch (err) {
+        console.log("Error fetching Organization Regions: ", err);
+      }
+    };
+
+    // const fetchCategory = async () => {
+    //   try {
+    //     const data = await getOrganizationCategory();
+    //     setCategory(data);
+    //   } catch (err) {
+    //     console.log("Error fetching Organization Category: ", err);
+    //   }
+    // };
+
+    fetchOrganizationTypes();
+    fetchOrganizationNature();
+    fetchSpeciality();
+    fetchRegions();
+    // fetchCategory();
+  }, []);
+
   const { columns, rows } = data();
   const { OColumns, ORows } = organizationData();
+
   return (
     <div>
       <Box className="flex flex-row items-center gap-4 mb-4">
@@ -27,7 +136,7 @@ export default function ManageOrganization() {
         </button>
       </Box>
 
-      <div className="w-full bg-blue-900 text-white px-2 py-1 mb-4">
+      <div className="w-full text-white px-2 py-1 mb-4 bg-[#1769aa]">
         <h4>Organization Unit</h4>
       </div>
 
@@ -49,12 +158,20 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationUnit"
-              // value={client.OrganizationUnit}
-              // onChange={handleInputChange}
+              name="OrganizationUnitID"
+              value={organization.OrganizationUnitID}
+              onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
-              <option value=""></option>
+              <option value="">Select Organization Unit</option>
+              {StandardOrganizations.map((StandardOrganization) => (
+                <option
+                  key={StandardOrganization["StandardOrganizationID"]}
+                  value={StandardOrganization["StandardOrganizationID"]}
+                >
+                  {StandardOrganization["Name"]}
+                </option>
+              ))}
             </select>
           </div>
         </Grid>
@@ -76,12 +193,20 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationType"
-              // value={client.OrganizationType}
-              // onChange={handleInputChange}
+              name="OrganizationTypeID"
+              value={organization.OrganizationTypeID}
+              onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
-              <option value=""></option>
+              <option value="">Select Organization Type</option>
+              {OrganizationTypes.map((OrganizationType) => (
+                <option
+                  key={OrganizationType["SetupLookupParentID"]}
+                  value={OrganizationType["SetupLookupParentID"]}
+                >
+                  {OrganizationType["LookupValue"]}
+                </option>
+              ))}
             </select>
           </div>
         </Grid>
@@ -103,12 +228,55 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationNature"
-              // value={client.OrganizationNature}
-              // onChange={handleInputChange}
+              name="OrganizationNatureID"
+              value={organization.OrganizationNatureID}
+              onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
-              <option value=""></option>
+              <option value="">Select Organization Nature</option>
+              {OrganizationNatures.map((OrganizationNature) => (
+                <option
+                  key={OrganizationNature["SetupLookupParentID"]}
+                  value={OrganizationNature["SetupLookupParentID"]}
+                >
+                  {OrganizationNature["LookupValue"]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </Grid>
+
+        <Grid
+          item
+          xs={6}
+          sm={3}
+          sx={{
+            paddingTop: "5px !important",
+            paddingBottom: "5px !important",
+          }}
+        >
+          <div>
+            {/* Label */}
+            <p className="flex flex-row text-xs items-center">
+              Speciality:<span className="text-red-600 text-base mx-2">*</span>
+            </p>
+
+            {/* Select Menu */}
+            <select
+              name="SpecialtyID"
+              value={organization.SpecialtyID}
+              onChange={handleInputChange}
+              className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            >
+              <option value="">Select Speciality</option>
+              {Speciality.map((Specialities) => (
+                <option
+                  key={Specialities["SetupLookupParentID"]}
+                  value={Specialities["SetupLookupParentID"]}
+                >
+                  {Specialities["LookupValue"]}
+                </option>
+              ))}
             </select>
           </div>
         </Grid>
@@ -128,12 +296,17 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="Region"
-              // value={client.Region}
-              // onChange={handleInputChange}
+              name="RegionID"
+              value={organization.RegionID}
+              onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
-              <option value=""></option>
+              <option value="">Select Region</option>
+              {Regions.map((Region) => (
+                <option key={Region["SetupLookupParentID"]} value={Region["SetupLookupParentID"]}>
+                  {Region["LookupValue"]}
+                </option>
+              ))}
             </select>
           </div>
         </Grid>
@@ -154,7 +327,7 @@ export default function ManageOrganization() {
             {/* Select Menu */}
             <select
               name="Category"
-              // value={client.Category}
+              // value={organization.OrganizationUnitID}
               // onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
@@ -162,30 +335,9 @@ export default function ManageOrganization() {
             </select>
           </div>
         </Grid>
-
-        <Grid
-          item
-          xs={6}
-          sm={3}
-          sx={{
-            paddingTop: "5px !important",
-            paddingBottom: "5px !important",
-          }}
-        >
-          <Box>
-            <p className="text-xs mb-2">Discount %:</p>
-            <TextField
-              variant="outlined"
-              fullWidth
-              name="Discount"
-              // value={client.Discount}
-              // onChange={handleInputChange}
-            />
-          </Box>
-        </Grid>
       </Grid>
 
-      <div className="w-full bg-blue-900 text-white px-2 py-1 mt-4 mb-4">
+      <div className="w-full bg-[#1769aa] text-white px-2 py-1 mt-4 mb-4">
         <h4>Parent Unit</h4>
       </div>
 
@@ -270,8 +422,8 @@ export default function ManageOrganization() {
                 variant="outlined"
                 fullWidth
                 name="DisplayName"
-                // onChange={handleInputChange}
-                // value={employee.DisplayName}
+                value={organization.DisplayName}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -280,8 +432,8 @@ export default function ManageOrganization() {
                 variant="outlined"
                 fullWidth
                 name="Phone1"
-                // onChange={handleInputChange}
-                // value={employee.Phone1}
+                value={organization.Phone1}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -290,8 +442,8 @@ export default function ManageOrganization() {
                 variant="outlined"
                 fullWidth
                 name="Phone2"
-                // onChange={handleInputChange}
-                // value={employee.Phone2}
+                value={organization.Phone2}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -300,8 +452,8 @@ export default function ManageOrganization() {
                 variant="outlined"
                 fullWidth
                 name="Fax"
-                // onChange={handleInputChange}
-                // value={employee.Fax}
+                value={organization.Fax}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -310,8 +462,8 @@ export default function ManageOrganization() {
                 variant="outlined"
                 fullWidth
                 name="Email"
-                // onChange={handleInputChange}
-                // value={employee.Email}
+                value={organization.Email}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -322,16 +474,16 @@ export default function ManageOrganization() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  name="Days"
-                  // onChange={handleInputChange}
-                  // value={employee.Days}
+                  name="TravelingTimeDays"
+                  value={organization.TravelingTimeDays}
+                  onChange={handleInputChange}
                 />
                 <p className="text-xs mx-2">Day(s)</p>
                 {/* Select Menu */}
                 <select
-                  name="Hours"
-                  //   value="0"
-                  //   onChange={handleInputChange}
+                  name="TravelingTimeHours"
+                  value={organization.TravelingTimeHours}
+                  onChange={handleInputChange}
                   required
                   //   className={`block w-full h-8 border ${
                   //     errors.Hours ? "border-red-500" : "border-gray-300"
@@ -361,8 +513,8 @@ export default function ManageOrganization() {
               {/* Select Menu */}
               <select
                 name="Country"
-                // value={sameAsCurrentAddress ? employee.currentCountry : employee.Country}
-                // onChange={handleInputChange}
+                value={organization.Country}
+                onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option value="">Select a country</option>
@@ -373,8 +525,8 @@ export default function ManageOrganization() {
               <p className="text-xs mb-2">Province:</p>
               <select
                 name="Province"
-                // value={sameAsCurrentAddress ? employee.currentProvince : employee.Province}
-                // onChange={handleInputChange}
+                value={organization.Province}
+                onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option value="">Select a Province</option>
@@ -385,8 +537,8 @@ export default function ManageOrganization() {
               <p className="text-xs mb-2">District:</p>
               <select
                 name="District"
-                // value={sameAsCurrentAddress ? employee.currentDistrict : employee.District}
-                // onChange={handleInputChange}
+                value={organization.District}
+                onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option value="">Select a District</option>
@@ -397,8 +549,8 @@ export default function ManageOrganization() {
               <p className="text-xs mb-2">City:</p>
               <select
                 name="City"
-                // value={sameAsCurrentAddress ? employee.currentCity : employee.City}
-                // onChange={handleInputChange}
+                value={organization.City}
+                onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
                 <option value="">Select a City</option>
@@ -423,6 +575,7 @@ export default function ManageOrganization() {
               backgroundColor: "#1694c4",
               color: "White",
             }}
+            onClick={handleSubmit}
           >
             <button type="submit" className="text-xs">
               SAVE
