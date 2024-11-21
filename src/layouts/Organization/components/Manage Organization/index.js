@@ -14,6 +14,10 @@ import { getOrganizationNatures } from "services/Organizations/Manage Organizati
 import { getOrganizationRegions } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
 import { getOrganizationSpeciality } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
 import { getOrganizationCategory } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+import { insertOrganization } from "services/Organizations/Manage Organization/manageOrganizationServices.js";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ManageOrganization() {
   const { StandardOrganizations } = useContext(StandardOrganizationsContext);
@@ -25,26 +29,27 @@ export default function ManageOrganization() {
   // const [Category, setCategory] = useState([]);
 
   const [organization, setOrganization] = useState({
-    OrganizationUnitID: "",
+    organizationUnitID: "",
     organizationTypeID: "",
-    OrganizationNatureID: "",
-    RegionID: "",
-    // CategoryID: "",
-    SpecialtyID: "",
-    // ParentOrganizationID: "",
-    // DiscountPercentage: 0,
-    DisplayName: "",
-    Phone1: "",
-    Phone2: "",
-    Fax: "",
-    Email: "",
-    TravelingTimeDays: 0,
-    TravelingTimeHours: 0,
-    Country: "",
-    Province: "",
-    District: "",
-    City: "",
-    // Address: "",
+    organizationNatureID: "",
+    regionID: "",
+    // categoryID: "",
+    specialtyID: "",
+    // parentOrganizationID: "",
+    // discountPercentage: 0,
+    displayName: "",
+    phone1: "",
+    phone2: "",
+    fax: "",
+    email: "",
+    travelingTimeDays: 0,
+    travelingTimeHours: 0,
+    country: "",
+    province: "",
+    district: "",
+    city: "",
+    // address: "",
+    createdBy: 1,
   });
 
   const handleInputChange = (e) => {
@@ -55,10 +60,41 @@ export default function ManageOrganization() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Organization Data Submitted:", organization);
-    // Add API call or further logic here
+    try {
+      // Call the insertOrganization API
+      await insertOrganization(organization);
+
+      // Handle the success response, e.g., show a success message
+      console.log("Organization successfully added:", organization);
+
+      // Optionally, reset the form after successful submission
+      setOrganization({
+        organizationUnitID: "",
+        organizationTypeID: "",
+        organizationNatureID: "",
+        regionID: "",
+        specialtyID: "",
+        displayName: "",
+        phone1: "",
+        phone2: "",
+        fax: "",
+        email: "",
+        travelingTimeDays: 0,
+        travelingTimeHours: 0,
+        country: "",
+        province: "",
+        district: "",
+        city: "",
+        createdBy: 1,
+      });
+
+      toast.success("Organization added successfully");
+    } catch (error) {
+      console.error("Error inserting organization:", error);
+      toast.error("Failed to add organization.");
+    }
   };
 
   useEffect(() => {
@@ -121,6 +157,7 @@ export default function ManageOrganization() {
 
   return (
     <div>
+      <ToastContainer />
       <Box className="flex flex-row items-center gap-4 mb-4">
         <label htmlFor="units" className="text-xs block">
           Select Units: <span className="text-red-600">*</span>
@@ -159,8 +196,8 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationUnitID"
-              value={organization.OrganizationUnitID}
+              name="organizationUnitID"
+              value={organization.organizationUnitID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
@@ -229,8 +266,8 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationNature"
-              value={organization.OrganizationNatureID}
+              name="organizationNatureID"
+              value={organization.organizationNatureID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
@@ -238,7 +275,7 @@ export default function ManageOrganization() {
               {OrganizationNatures.map((OrganizationNature) => (
                 <option
                   key={OrganizationNature["SetupLookupParentID"]}
-                  value={OrganizationNature["SetupLookupParentID"]}
+                  value={OrganizationNature["SetupLookupChildID"]}
                 >
                   {OrganizationNature["LookupValue"]}
                 </option>
@@ -264,8 +301,8 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="Specialities"
-              value={organization.SpecialtyID}
+              name="specialtyID"
+              value={organization.specialtyID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
@@ -273,7 +310,7 @@ export default function ManageOrganization() {
               {Speciality.map((Specialities) => (
                 <option
                   key={Specialities["SetupLookupParentID"]}
-                  value={Specialities["SetupLookupParentID"]}
+                  value={Specialities["SetupLookupChildID"]}
                 >
                   {Specialities["LookupValue"]}
                 </option>
@@ -297,14 +334,14 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="Region"
-              value={organization.RegionID}
+              name="regionID"
+              value={organization.regionID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
               <option value="">Select Region</option>
               {Regions.map((Region) => (
-                <option key={Region["SetupLookupParentID"]} value={Region["SetupLookupParentID"]}>
+                <option key={Region["SetupLookupParentID"]} value={Region["SetupLookupChildID"]}>
                   {Region["LookupValue"]}
                 </option>
               ))}
@@ -422,8 +459,8 @@ export default function ManageOrganization() {
               <TextField
                 variant="outlined"
                 fullWidth
-                name="DisplayName"
-                value={organization.DisplayName}
+                name="displayName"
+                value={organization.displayName}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -432,8 +469,8 @@ export default function ManageOrganization() {
               <TextField
                 variant="outlined"
                 fullWidth
-                name="Phone1"
-                value={organization.Phone1}
+                name="phone1"
+                value={organization.phone1}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -442,8 +479,8 @@ export default function ManageOrganization() {
               <TextField
                 variant="outlined"
                 fullWidth
-                name="Phone2"
-                value={organization.Phone2}
+                name="phone2"
+                value={organization.phone2}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -452,8 +489,8 @@ export default function ManageOrganization() {
               <TextField
                 variant="outlined"
                 fullWidth
-                name="Fax"
-                value={organization.Fax}
+                name="fax"
+                value={organization.fax}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -462,8 +499,8 @@ export default function ManageOrganization() {
               <TextField
                 variant="outlined"
                 fullWidth
-                name="Email"
-                value={organization.Email}
+                name="email"
+                value={organization.email}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -475,15 +512,15 @@ export default function ManageOrganization() {
                 <TextField
                   variant="outlined"
                   fullWidth
-                  name="TravelingTimeDays"
-                  value={organization.TravelingTimeDays}
+                  name="travelingTimeDays"
+                  value={organization.travelingTimeDays}
                   onChange={handleInputChange}
                 />
                 <p className="text-xs mx-2">Day(s)</p>
                 {/* Select Menu */}
                 <select
-                  name="TravelingTimeHours"
-                  value={organization.TravelingTimeHours}
+                  name="travelingTimeHours"
+                  value={organization.travelingTimeHours}
                   onChange={handleInputChange}
                   required
                   //   className={`block w-full h-8 border ${
@@ -513,8 +550,8 @@ export default function ManageOrganization() {
               </p>
               {/* Select Menu */}
               <select
-                name="Country"
-                value={organization.Country}
+                name="country"
+                value={organization.country}
                 onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
@@ -525,8 +562,8 @@ export default function ManageOrganization() {
             <Grid item xs={6}>
               <p className="text-xs mb-2">Province:</p>
               <select
-                name="Province"
-                value={organization.Province}
+                name="province"
+                value={organization.province}
                 onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
@@ -537,8 +574,8 @@ export default function ManageOrganization() {
             <Grid item xs={6}>
               <p className="text-xs mb-2">District:</p>
               <select
-                name="District"
-                value={organization.District}
+                name="district"
+                value={organization.district}
                 onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
@@ -549,8 +586,8 @@ export default function ManageOrganization() {
             <Grid item xs={6}>
               <p className="text-xs mb-2">City:</p>
               <select
-                name="City"
-                value={organization.City}
+                name="city"
+                value={organization.city}
                 onChange={handleInputChange}
                 className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
@@ -576,6 +613,7 @@ export default function ManageOrganization() {
               backgroundColor: "#1694c4",
               color: "White",
             }}
+            onClick={handleSubmit}
           >
             <button type="submit" className="text-xs">
               SAVE
