@@ -18,7 +18,7 @@ import { getOrganizationCategory } from "services/Organizations/Manage Organizat
 export default function ManageOrganization() {
   const { StandardOrganizations } = useContext(StandardOrganizationsContext);
 
-  const [OrganizationTypes, setOrganizationTypes] = useState([]);
+  const [organizationTypes, setOrganizationTypes] = useState([]);
   const [OrganizationNatures, setOrganizationNatures] = useState([]);
   const [Speciality, setSpeciality] = useState([]);
   const [Regions, setRegions] = useState([]);
@@ -26,7 +26,7 @@ export default function ManageOrganization() {
 
   const [organization, setOrganization] = useState({
     OrganizationUnitID: "",
-    OrganizationTypeID: "",
+    organizationTypeID: "",
     OrganizationNatureID: "",
     RegionID: "",
     // CategoryID: "",
@@ -62,6 +62,7 @@ export default function ManageOrganization() {
   };
 
   useEffect(() => {
+    console.log("Organization Units:", StandardOrganizations);
     const fetchOrganizationTypes = async () => {
       try {
         const data = await getOrganizationTypes();
@@ -193,18 +194,18 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationTypeID"
-              value={organization.OrganizationTypeID}
+              name="organizationTypeID"
+              value={organization.organizationTypeID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             >
               <option value="">Select Organization Type</option>
-              {OrganizationTypes.map((OrganizationType) => (
+              {organizationTypes.map((organizationType) => (
                 <option
-                  key={OrganizationType["SetupLookupParentID"]}
-                  value={OrganizationType["SetupLookupParentID"]}
+                  key={organizationType["SetupLookupParentID"]}
+                  value={organizationType["SetupLookupChildID"]}
                 >
-                  {OrganizationType["LookupValue"]}
+                  {organizationType["LookupValue"]}
                 </option>
               ))}
             </select>
@@ -228,7 +229,7 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="OrganizationNatureID"
+              name="OrganizationNature"
               value={organization.OrganizationNatureID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -263,7 +264,7 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="SpecialtyID"
+              name="Specialities"
               value={organization.SpecialtyID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -296,7 +297,7 @@ export default function ManageOrganization() {
 
             {/* Select Menu */}
             <select
-              name="RegionID"
+              name="Region"
               value={organization.RegionID}
               onChange={handleInputChange}
               className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
@@ -575,7 +576,6 @@ export default function ManageOrganization() {
               backgroundColor: "#1694c4",
               color: "White",
             }}
-            onClick={handleSubmit}
           >
             <button type="submit" className="text-xs">
               SAVE

@@ -56,3 +56,17 @@ export const getOrganizationCategory = async () => {
     throw error;
   }
 };
+
+// Add a new organizations
+export const insertOrganization = async (OrganizationData) => {
+  try {
+    const response = await axios.post(
+      `${BASE_API_URL}/organization/ManageOrganization`,
+      OrganizationData
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error adding Orrganizations:", error);
+    throw error;
+  }
+};
