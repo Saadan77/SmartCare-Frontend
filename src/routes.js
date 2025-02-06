@@ -40,6 +40,7 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: <Dashboard />,
+    protected: true,
     roles: ["admin", "doctor", "patient"],
   },
   {
@@ -269,7 +270,7 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
-    proteced: true,
+    protected: true,
     roles: ["admin", "doctor", "patient"],
   },
   {
@@ -279,8 +280,6 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
-    proteced: true,
-    roles: ["admin", "doctor", "patient"],
   },
 ];
 
