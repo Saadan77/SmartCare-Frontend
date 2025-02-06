@@ -1,55 +1,29 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState, useEffect } from "react";
-
-// react-router components
 import { useLocation } from "react-router-dom";
-import routes from "../../../routes";
-
-// prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-// @material-ui core components
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
-// Custom styles for DashboardNavbar
 import { navbar } from "examples/Navbars/DashboardNavbar/styles";
-
-// Material Dashboard 2 React context
 import { useMaterialUIController, setTransparentNavbar } from "context";
-import { Typography } from "@mui/material";
+import routes from "../../../routes";
+import { jwtDecode } from "jwt-decode";
 
 function DashboardNavbar({ absolute, light }) {
   const [navbarType, setNavbarType] = useState();
+  const [userRole, setUserRole] = useState(null);
   const [controller, dispatch] = useMaterialUIController();
   const { transparentNavbar, fixedNavbar, darkMode } = controller;
 
+  // Function to find the current route based on pathname
   const findCurrentRoute = (allRoutes, pathname) => {
     for (let r of allRoutes) {
-      // Check if the current top-level route matches
-      if (r.route === pathname) {
-        return r;
-      }
-      // If the route has a collapse (sub-routes), check those too
+      if (r.route === pathname) return r;
       if (r.collapse) {
         const found = findCurrentRoute(r.collapse, pathname);
-        if (found) {
-          return found;
-        }
+        if (found) return found;
       }
     }
     return null;
@@ -60,29 +34,32 @@ function DashboardNavbar({ absolute, light }) {
 
   useEffect(() => {
     // Setting the navbar type
-    if (fixedNavbar) {
-      setNavbarType("sticky");
-    } else {
-      setNavbarType("static");
-    }
+    setNavbarType(fixedNavbar ? "sticky" : "static");
 
-    // A function that sets the transparent state of the navbar.
-    function handleTransparentNavbar() {
+    // Handle transparent navbar on scroll
+    const handleTransparentNavbar = () => {
       setTransparentNavbar(dispatch, (fixedNavbar && window.scrollY === 0) || !fixedNavbar);
-    }
+    };
 
-    /** 
-     The event listener that's calling the handleTransparentNavbar function when 
-     scrolling the window.
-    */
     window.addEventListener("scroll", handleTransparentNavbar);
-
-    // Call the handleTransparentNavbar function to set the state with the initial value.
     handleTransparentNavbar();
 
-    // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
+
+  useEffect(() => {
+    // Retrieve user role from token
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setUserRole(decoded.role);
+      } catch (error) {
+        console.error("Invalid token", error);
+        setUserRole(null);
+      }
+    }
+  }, []);
 
   return (
     <AppBar
@@ -103,21 +80,19 @@ function DashboardNavbar({ absolute, light }) {
         }}
       >
         <Typography variant="h5" component="div">
-          {currentRoute ? currentRoute.name : "Default Heading"}
+          {currentRoute ? currentRoute.name : "Dashboard"} {userRole ? `- ${userRole}` : ""}
         </Typography>
       </Toolbar>
     </AppBar>
   );
 }
 
-// Setting default values for the props of DashboardNavbar
 DashboardNavbar.defaultProps = {
   absolute: false,
   light: false,
   isMini: false,
 };
 
-// Typechecking props for the DashboardNavbar
 DashboardNavbar.propTypes = {
   absolute: PropTypes.bool,
   light: PropTypes.bool,

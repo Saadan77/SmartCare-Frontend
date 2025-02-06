@@ -40,9 +40,8 @@ function Basic() {
 
       // Redirect user based on role
       if (res.data.role === "admin") navigate("/dashboard");
-      else if (res.data.role === "doctor") navigate("/doctorPortal");
-      else if (res.data.role === "nurse") navigate("/nurseDashboard");
-      else navigate("/patientDashboard");
+      else if (res.data.role === "doctor") navigate("/dashboard");
+      else navigate("/dashboard");
     } catch (err) {
       setError("Invalid credentials or incorrect role selection");
     }
@@ -99,7 +98,6 @@ function Basic() {
                 >
                   <option value="admin">Admin</option>
                   <option value="doctor">Doctor</option>
-                  <option value="nurse">Nurse</option>
                   <option value="patient">Patient</option>
                 </select>
               </FormControl>
