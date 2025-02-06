@@ -270,8 +270,6 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
-    protected: true,
-    roles: ["admin", "doctor", "patient"],
   },
   {
     type: "collapse",

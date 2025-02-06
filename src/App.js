@@ -77,9 +77,9 @@ export default function App() {
       return false; // User doesn't have the required role, hide the route
     }
 
-    if (!route.roles) {
-      return false; // Route has no roles, so we hide it
-    }
+    // if (!route.roles) {
+    //   return false; // Route has no roles, so we hide it
+    // }
 
     return true;
   });
