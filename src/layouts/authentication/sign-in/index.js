@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
@@ -11,14 +12,14 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 function Basic() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("admin");
   const [rememberMe, setRememberMe] = useState(false);
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleEmailChange = (e) => setEmail(e.target.value);
+  const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleRoleChange = (e) => setRole(e.target.value);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -27,9 +28,23 @@ function Basic() {
     e.preventDefault();
 
     try {
-      navigate("/dashboard");
+      const res = await axios.post("http://localhost:3000/api/auth/login", {
+        username,
+        password,
+        role,
+      });
+
+      // Store token & role in localStorage
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
+
+      // Redirect user based on role
+      if (res.data.role === "admin") navigate("/dashboard");
+      else if (res.data.role === "doctor") navigate("/doctorPortal");
+      else if (res.data.role === "nurse") navigate("/nurseDashboard");
+      else navigate("/patientDashboard");
     } catch (err) {
-      setError("Credentials do not match");
+      setError("Invalid credentials or incorrect role selection");
     }
   };
 
@@ -56,10 +71,10 @@ function Basic() {
             <MDBox mb={2}>
               <MDInput
                 type="text"
-                label="email"
+                label="Username"
                 fullWidth
-                value={email}
-                onChange={handleEmailChange}
+                value={username}
+                onChange={handleUsernameChange}
               />
             </MDBox>
             <MDBox mb={2}>
@@ -83,8 +98,9 @@ function Basic() {
                   className="block w-full h-8 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
                   <option value="admin">Admin</option>
-                  <option value="nurse">Nurse</option>
                   <option value="doctor">Doctor</option>
+                  <option value="nurse">Nurse</option>
+                  <option value="patient">Patient</option>
                 </select>
               </FormControl>
             </MDBox>

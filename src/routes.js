@@ -35,11 +35,22 @@ import ServiceSetup from "layouts/Service Setup";
 const routes = [
   {
     type: "collapse",
+    name: "Dashboard",
+    key: "dashboard",
+    icon: <Icon fontSize="small">dashboard</Icon>,
+    route: "/dashboard",
+    component: <Dashboard />,
+    roles: ["admin", "doctor", "patient"],
+  },
+  {
+    type: "collapse",
     name: "Add Client",
     key: "addClient",
     icon: <Icon fontSize="small">group_add</Icon>,
     route: "/addClient",
     component: <AddClient />,
+    protected: true,
+    roles: ["admin"],
   },
   {
     type: "collapse",
@@ -64,14 +75,8 @@ const routes = [
     icon: <Icon fontSize="small">single_bed</Icon>,
     route: "/addAppointment",
     component: <AddAppointment />,
-  },
-  {
-    type: "collapse",
-    name: "Dashboard",
-    key: "dashboard",
-    icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/dashboard",
-    component: <Dashboard />,
+    protected: true,
+    roles: ["doctor", "patient"],
   },
   {
     type: "collapse",
@@ -264,6 +269,8 @@ const routes = [
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
+    proteced: true,
+    roles: ["admin", "doctor", "patient"],
   },
   {
     type: "collapse",
@@ -272,6 +279,8 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
+    proteced: true,
+    roles: ["admin", "doctor", "patient"],
   },
 ];
 
