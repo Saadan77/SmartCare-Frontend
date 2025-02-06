@@ -11,7 +11,10 @@ import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
+import useAuth from "useAuth";
+
 function Basic() {
+  const { updateUser } = useAuth(); // Use the custom hook
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("admin");
@@ -37,6 +40,9 @@ function Basic() {
       // Store token & role in localStorage
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+
+      // Update user state in App.js
+      updateUser(res.data);
 
       // Redirect user based on role
       if (res.data.role === "admin") navigate("/dashboard");

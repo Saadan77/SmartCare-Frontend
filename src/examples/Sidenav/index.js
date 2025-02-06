@@ -33,11 +33,15 @@ import {
   setWhiteSidenav,
 } from "context";
 
+import useAuth from "useAuth";
+
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+
+  const { user } = useAuth();
 
   let textColor = "white";
 
@@ -64,8 +68,15 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(
-    ({ type, name, icon, title, noCollapse, key, href, route, collapse }) => {
+  const renderRoutes = routes
+    .filter((route) => {
+      // Filter routes based on the user's role
+      if (route.roles && !route.roles.includes(user?.role)) {
+        return false;
+      }
+      return true;
+    })
+    .map(({ type, name, icon, title, noCollapse, key, href, route, collapse }) => {
       let returnValue;
 
       if (type === "collapse") {
@@ -141,8 +152,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
       }
 
       return returnValue;
-    }
-  );
+    });
 
   return (
     <SidenavRoot

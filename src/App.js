@@ -1,13 +1,10 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
-
-import { jwtDecode } from "jwt-decode";
 
 import theme from "assets/theme";
 import themeDark from "assets/theme-dark";
@@ -15,6 +12,7 @@ import themeDark from "assets/theme-dark";
 import routes from "routes";
 
 import { useMaterialUIController, setMiniSidenav } from "context";
+import useAuth from "useAuth";
 
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
@@ -22,28 +20,12 @@ import brandDark from "assets/images/logo-ct-dark.png";
 import "./index.css";
 
 export default function App() {
-  const [user, setUser] = useState(null);
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, layout, sidenavColor, transparentSidenav, whiteSidenav, darkMode } =
     controller;
+  const { user, updateUser } = useAuth(); // Use the custom hook
   const [onMouseEnter, setOnMouseEnter] = useState(false);
-  const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-
-  // Load user data from token
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
-      } catch (error) {
-        console.error("Invalid token", error);
-        localStorage.removeItem("token");
-        setUser(null);
-      }
-    }
-  }, []);
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -76,10 +58,6 @@ export default function App() {
     if (route.roles && !route.roles.includes(user?.role)) {
       return false; // User doesn't have the required role, hide the route
     }
-
-    // if (!route.roles) {
-    //   return false; // Route has no roles, so we hide it
-    // }
 
     return true;
   });
