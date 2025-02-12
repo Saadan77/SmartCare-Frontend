@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -21,6 +21,14 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token") || localStorage.getItem("role")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.reload();
+    }
+  }, []);
 
   const handleUsernameChange = (e) => setUsername(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -45,9 +53,20 @@ function Basic() {
       updateUser(res.data);
 
       // Redirect user based on role
-      if (res.data.role === "admin") navigate("/dashboard");
-      else if (res.data.role === "doctor") navigate("/dashboard");
-      else navigate("/dashboard");
+      // if (res.data.role === "admin") navigate("/dashboard");
+      // else if (res.data.role === "doctor") navigate("/dashboard");
+      // else if (res.data.role === "patient") navigate("/dashboard");
+
+      if (res.data.role === "admin") {
+        navigate("/dashboard");
+        window.location.reload();
+      } else if (res.data.role === "doctor") {
+        navigate("/dashboard");
+        window.location.reload();
+      } else if (res.data.role === "patient") {
+        navigate("/dashboard");
+        window.location.reload();
+      }
     } catch (err) {
       setError("Invalid credentials or incorrect role selection");
     }
