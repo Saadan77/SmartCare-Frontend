@@ -27,7 +27,7 @@ export const getAllClients = async () => {
 // Add a new client
 export const addClient = async (clientData) => {
   try {
-    const token = localStorage.getItem("token"); // Retrieve the stored token
+    const token = localStorage.getItem("token");
 
     if (!token) {
       throw new Error("No token found. Please log in.");
@@ -35,8 +35,8 @@ export const addClient = async (clientData) => {
 
     const response = await axios.post(API_URL, clientData, {
       headers: {
-        Authorization: `Bearer ${token}`, // Attach token
-        "Content-Type": "application/json", // Ensure correct content type
+        Authorization: `Bearer ${token}`, 
+        "Content-Type": "application/json",
       },
     });
 
