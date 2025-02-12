@@ -1,14 +1,25 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/addClient";
+const API_URL = "http://localhost:3000/api/addClient";
 
-// Fetch all groups
+// Fetch all clients with authentication
 export const getAllClients = async () => {
   try {
-    const response = await axios.get(API_URL);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+
+    const response = await axios.get(API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
-    console.error("Error fetching clients:", error);
+    console.error("Error fetching clients:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -16,10 +27,22 @@ export const getAllClients = async () => {
 // Add a new client
 export const addClient = async (clientData) => {
   try {
-    const response = await axios.post(API_URL, clientData);
+    const token = localStorage.getItem("token"); // Retrieve the stored token
+
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+
+    const response = await axios.post(API_URL, clientData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Attach token
+        "Content-Type": "application/json", // Ensure correct content type
+      },
+    });
+
     return response.data;
   } catch (error) {
-    console.error("Error adding client:", error);
+    console.error("Error adding client:", error.response?.data || error.message);
     throw error;
   }
 };
