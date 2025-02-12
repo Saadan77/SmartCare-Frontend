@@ -19,7 +19,7 @@ function useAuth() {
         setUser(null);
       }
     } else if (!token) {
-      navigate("/authhentication/sign-in");
+      navigate("/authentication/sign-in");
     }
   }, []);
 
