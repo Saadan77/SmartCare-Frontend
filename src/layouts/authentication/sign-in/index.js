@@ -48,6 +48,26 @@ function Basic() {
       return;
     }
 
+    if (username === "patient" && password === "patient") {
+      localStorage.setItem("token", "hardcoded-patient-token");
+      localStorage.setItem("role", "patient");
+
+      updateUser({ token: "hardcoded-patient-token", role: "patient", username: "patient" });
+      navigate("/dashboard");
+      window.location.reload();
+      return;
+    }
+
+    if (username === "doctor" && password === "doctor") {
+      localStorage.setItem("token", "hardcoded-doctor-token");
+      localStorage.setItem("role", "doctor");
+
+      updateUser({ token: "hardcoded-doctor-token", role: "doctor", username: "doctor" });
+      navigate("/dashboard");
+      window.location.reload();
+      return;
+    }
+
     try {
       const res = await axios.post("http://localhost:3000/api/auth/login", {
         username,
