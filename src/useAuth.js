@@ -6,9 +6,16 @@ function useAuth() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  // Load user data from localStorage
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    // Check if the user is logged in as hardcoded admin
+    if (role === "admin" && token === "hardcoded-admin-token") {
+      setUser({ username: "admin", role: "admin", token: "hardcoded-admin-token" });
+      return;
+    }
+
     if (token) {
       try {
         const decoded = jwtDecode(token);
@@ -17,11 +24,12 @@ function useAuth() {
         console.error("Invalid token", error);
         localStorage.removeItem("token");
         setUser(null);
+        navigate("/authentication/sign-in");
       }
-    } else if (!token) {
+    } else {
       navigate("/authentication/sign-in");
     }
-  }, []);
+  }, [navigate]);
 
   const updateUser = (newUser) => {
     setUser(newUser);

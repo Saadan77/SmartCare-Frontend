@@ -35,7 +35,7 @@ export const addClient = async (clientData) => {
 
     const response = await axios.post(API_URL, clientData, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });

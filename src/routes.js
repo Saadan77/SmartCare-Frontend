@@ -10,27 +10,27 @@ import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import DoctorPortal from "layouts/Doctor Portal";
 import PatientEncounterFrom from "layouts/Patient Encounter Form";
-import MedicineChargeFile from "layouts/Medicine Charge File";
 import ReceivePatient from "layouts/Receive Patients";
 import IssueMedicine from "layouts/Issue Medicine - IPD";
 import DutyRoster from "layouts/Duty Roster";
 import Report from "layouts/Report";
-import PharmacySetup from "layouts/Pharmacy Setup";
 import SearchPatients from "layouts/Search Patients";
 import VisitConfirmation from "layouts/Visit Confirmation";
 import PatientAppointment from "layouts/Patient Appointment";
 import AddPatient from "layouts/Add Patients";
-import AddClient from "layouts/Add Client";
 import AppointmentCategory from "layouts/Appointment Category";
 import AddAppointment from "layouts/Add Appointment";
-import FeeStructure from "layouts/Fee Structure";
 import DischargeSummary from "layouts/Discharge Summary";
-import ManageFavourites from "layouts/Manage Favourites";
-import AddFavourite from "layouts/Add Favorite";
-import EditFavourites from "layouts/Edit Favourites";
-import Organization from "layouts/Organization";
-import Employee from "layouts/Employee";
-import ServiceSetup from "layouts/Service Setup";
+import AddClient from "layouts/Add Client";
+// import MedicineChargeFile from "layouts/Medicine Charge File";
+// import FeeStructure from "layouts/Fee Structure";
+// import PharmacySetup from "layouts/Pharmacy Setup";
+// import ManageFavourites from "layouts/Manage Favourites";
+// import AddFavourite from "layouts/Add Favorite";
+// import EditFavourites from "layouts/Edit Favourites";
+// import Organization from "layouts/Organization";
+// import Employee from "layouts/Employee";
+// import ServiceSetup from "layouts/Service Setup";
 
 const routes = [
   {
@@ -181,16 +181,16 @@ const routes = [
     protected: true,
     roles: ["admin", "doctor"],
   },
-  {
-    type: "collapse",
-    name: "Medicine Charge File",
-    key: "medicineChargeFile",
-    icon: <Icon fontSize="small">bloodtype</Icon>,
-    route: "/medicineChargeFile",
-    component: <MedicineChargeFile />,
-    protected: true,
-    roles: ["doctor"],
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Medicine Charge File",
+  //   key: "medicineChargeFile",
+  //   icon: <Icon fontSize="small">bloodtype</Icon>,
+  //   route: "/medicineChargeFile",
+  //   component: <MedicineChargeFile />,
+  //   protected: true,
+  //   roles: ["doctor"],
+  // },
   {
     type: "collapse",
     name: "Receive Patient",
@@ -241,36 +241,36 @@ const routes = [
     protected: true,
     roles: ["admin", "doctor", "patient"],
   },
-  {
-    type: "collapse",
-    name: "Pharmacy Setup",
-    key: "pharmacySetup",
-    icon: <Icon fontSize="small">medication_liquid</Icon>,
-    route: "/pharmacySetup",
-    component: <PharmacySetup />,
-    protected: true,
-    roles: ["admin"],
-  },
-  {
-    type: "collapse",
-    name: "Employee",
-    key: "employee",
-    icon: <Icon fontSize="small">medication_liquid</Icon>,
-    route: "/employee",
-    component: <Employee />,
-    protected: true,
-    roles: ["admin"],
-  },
-  {
-    type: "collapse",
-    name: "Service Setup",
-    key: "serviceSetup",
-    icon: <Icon fontSize="small">medication_liquid</Icon>,
-    route: "/serviceSetup",
-    component: <ServiceSetup />,
-    protected: true,
-    roles: ["admin"],
-  },
+  // {
+  //   type: "collapse",
+  //   name: "Pharmacy Setup",
+  //   key: "pharmacySetup",
+  //   icon: <Icon fontSize="small">medication_liquid</Icon>,
+  //   route: "/pharmacySetup",
+  //   component: <PharmacySetup />,
+  //   protected: true,
+  //   roles: ["admin"],
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Employee",
+  //   key: "employee",
+  //   icon: <Icon fontSize="small">medication_liquid</Icon>,
+  //   route: "/employee",
+  //   component: <Employee />,
+  //   protected: true,
+  //   roles: ["admin"],
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Service Setup",
+  //   key: "serviceSetup",
+  //   icon: <Icon fontSize="small">medication_liquid</Icon>,
+  //   route: "/serviceSetup",
+  //   component: <ServiceSetup />,
+  //   protected: true,
+  //   roles: ["admin"],
+  // },
   // {
   //   type: "collapse",
   //   name: "Manage Favourites",
