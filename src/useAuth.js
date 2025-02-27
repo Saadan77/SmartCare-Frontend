@@ -10,9 +10,18 @@ function useAuth() {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    // Check if the user is logged in as hardcoded admin
     if (role === "admin" && token === "hardcoded-admin-token") {
       setUser({ username: "admin", role: "admin", token: "hardcoded-admin-token" });
+      return;
+    }
+
+    if (role === "patient" && token === "hardcoded-patient-token") {
+      setUser({ username: "patient", role: "patient", token: "hardcoded-patient-token" });
+      return;
+    }
+
+    if (role === "doctor" && token === "hardcoded-doctor-token") {
+      setUser({ username: "doctor", role: "doctor", token: "hardcoded-doctor-token" });
       return;
     }
 
