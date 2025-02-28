@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
-import { getPatients } from "services/patientsService";
 import PropTypes from "prop-types";
+import { getPatients } from "services/patientsService";
 
 export const PatientContext = createContext();
 
@@ -15,9 +15,9 @@ export const PatientProvider = ({ children }) => {
         setLoading(true);
         const data = await getPatients();
         setPatients(data);
-        setLoading(false);
       } catch (err) {
         setError(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -25,8 +25,12 @@ export const PatientProvider = ({ children }) => {
     fetchPatients();
   }, []);
 
+  const addNewPatient = (newPatient) => {
+    setPatients((prevPatients) => [...prevPatients, newPatient]);
+  };
+
   return (
-    <PatientContext.Provider value={{ patients, loading, error }}>
+    <PatientContext.Provider value={{ patients, setPatients, loading, error, addNewPatient }}>
       {children}
     </PatientContext.Provider>
   );

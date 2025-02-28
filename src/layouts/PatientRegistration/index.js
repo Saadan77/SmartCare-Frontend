@@ -29,11 +29,11 @@ import { MdEmergency, MdHealthAndSafety } from "react-icons/md";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
-import Webcam from "react-webcam";
-
 import { useNavigate } from "react-router-dom";
-import MDBox from "components/MDBox";
+
 import PatientTable from "layouts/dashboard/patientTable";
+
+import { addPatient } from "services/patientsService";
 
 function PatientRegistration() {
   // const { newPatientId } = usePatientContext();
@@ -41,34 +41,89 @@ function PatientRegistration() {
   const navigate = useNavigate();
 
   const [patient, setPatient] = useState({
-    patientId: "",
     fullName: "",
     gender: "",
     maritalStatus: "",
-    dob: "",
-    age: "",
+    dateOfBirth: "",
     nationality: "",
     address: "",
     city: "",
     area: "",
-    phoneNo: "",
+    phoneNumber: "",
     alternatePhoneNumber: "",
-    email: "",
+    emailAddress: "",
+    nationalIdSsn: "",
+    passportNumber: "",
+    driversLicenseNumber: "",
+    photoId: "",
     emergencyContactName: "",
     relationship: "",
-    emergencyContactNo: "",
-    alternateEmergencyContactNo: "",
+    emergencyContactNumber: "",
+    alternateEmergencyContactNumber: "",
     insurance: "",
-    insuranceProvider: "",
-    insurancePolicyNumber: "",
-    insuranceGroupNo: "",
-    policyHolderName: "",
-    policyHolderRelationship: "",
-    nationalIdNo: "",
-    passportNo: "",
-    driverLicenseNo: "",
-    photoId: "",
   });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setPatient({ ...patient, [name]: value });
+
+    if (value) {
+      setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+    }
+
+    if (name === "fullName") {
+      const regex = /^[a-zA-Z\s]*$/;
+      setErrors({
+        ...errors,
+        fullName: regex.test(value) ? "" : "Only alphabets are allowed",
+      });
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        toast.error("Please log in to register a patient.");
+        return;
+      }
+
+      await addPatient(patient);
+
+      toast.success("Patient registered successfully!");
+      navigate("/dashboard");
+
+      setPatient({
+        fullName: "",
+        gender: "",
+        maritalStatus: "",
+        dateOfBirth: "",
+        nationality: "",
+        address: "",
+        city: "",
+        area: "",
+        phoneNumber: "",
+        alternatePhoneNumber: "",
+        emailAddress: "",
+        nationalIdSsn: "",
+        passportNumber: "",
+        driversLicenseNumber: "",
+        photoId: "",
+        emergencyContactName: "",
+        relationship: "",
+        emergencyContactNumber: "",
+        alternateEmergencyContactNumber: "",
+        insurance: "",
+      });
+    } catch (error) {
+      console.error("Error creating patient:", error.message);
+      toast.error("Failed to register patient.");
+    }
+  };
 
   // const formatDate = (date) => {
   //   const day = date.getDate().toString().padStart(2, "0");
@@ -109,111 +164,6 @@ function PatientRegistration() {
   //   };
   //   fetchData();
   // }, [token]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setPatient({
-      ...patient,
-      [name]: value,
-    });
-
-    if (value) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        [name]: "",
-      }));
-    }
-
-    if (name === "fullName") {
-      const regex = /^[a-zA-Z\s]*$/;
-      if (!regex.test(value)) {
-        setErrors({ ...errors, fullName: "Only alphabets are allowed" });
-      } else {
-        setErrors({ ...errors, fullName: "" });
-      }
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const currentDate = new Date();
-
-    try {
-      const savePatient = {
-        patientId: patient.patientId,
-        fullName: patient.fullName,
-        gender: patient.gender,
-        maritalStatus: patient.maritalStatus,
-        dob: patient.dob,
-        age: patient.age,
-        nationality: patient.nationality,
-        address: patient.address,
-        city: patient.city,
-        area: patient.area,
-        phoneNo: patient.phoneNo,
-        alternatePhoneNumber: patient.alternatePhoneNumber,
-        email: patient.email,
-        emergencyContactName: patient.emergencyContactName,
-        relationship: patient.relationship,
-        emergencyContactNo: patient.emergencyContactNo,
-        insurance: patient.insurance,
-        insuranceProvider: patient.insuranceProvider,
-        insurancePolicyNumber: patient.insurancePolicyNumber,
-        insuranceGroupNo: patient.insuranceGroupNo,
-        insuranceProvider: patient.insuranceProvider,
-        policyHolderName: patient.policyHolderName,
-        policyHolderRelationship: patient.policyHolderRelationship,
-        nationalIdNo: patient.nationalIdNo,
-        passportNo: patient.passportNo,
-        driverLicenseNo: patient.driverLicenseNo,
-        photoId: patient.photoId,
-        registrationDate: currentDate,
-        isActive: true,
-        createdBy: null,
-        createdDate: currentDate,
-        updateBy: patient.updateBy,
-        updatedDate: currentDate,
-      };
-
-      await createPatient(savePatient, token);
-      toast.success("Patient registered successfully.");
-      navigate("/dashboard/patients");
-
-      setPatient({
-        patientId: "",
-        fullName: "",
-        gender: "",
-        maritalStatus: "",
-        dob: "",
-        age: "",
-        nationality: "",
-        address: "",
-        city: "",
-        area: "",
-        phoneNo: "",
-        alternatePhoneNumber: "",
-        email: "",
-        emergencyContactName: "",
-        relationship: "",
-        emergencyContactNo: "",
-        alternateEmergencyContactNo: "",
-        insurance: "",
-        insuranceProvider: "",
-        insurancePolicyNumber: "",
-        insuranceGroupNo: "",
-        policyHolderName: "",
-        policyHolderRelationship: "",
-        nationalIdNo: "",
-        passportNo: "",
-        driverLicenseNo: "",
-        photoId: "",
-      });
-    } catch (error) {
-      console.error("Error creating patient:", error.message);
-      toast.error("Failed to register patient.");
-    }
-  };
 
   const [showInsuranceForm, setShowInsuranceForm] = useState(false);
 
@@ -259,7 +209,6 @@ function PatientRegistration() {
   );
 
   const [activeSection, setActiveSection] = useState("patientDetails");
-  const [errors, setErrors] = useState({});
 
   const handleSectionClick = (section) => {
     setActiveSection(section);
@@ -308,16 +257,29 @@ function PatientRegistration() {
 
   const [countryCode, setCountryCode] = useState("");
 
-  const handlePhoneChange = (value, country) => {
+  const handlePhoneChange = (value, country, fieldName) => {
     const numericValue = value.replace(/\D/g, "");
     const isNumeric = /^\d+$/.test(numericValue);
 
     if (isNumeric) {
-      setPatient({ ...patient, phoneNo: value });
-      setCountryCode(country.dialCode);
-      setErrors({ ...errors, phoneNo: "" });
+      setPatient((prevPatient) => ({
+        ...prevPatient,
+        [fieldName]: value, // Dynamically update the correct field
+      }));
+
+      if (fieldName === "phoneNo") {
+        setCountryCode(country.dialCode);
+      }
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: "",
+      }));
     } else {
-      setErrors({ ...errors, phoneNo: "Only numbers are allowed" });
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [fieldName]: "Only numbers are allowed",
+      }));
     }
   };
 
@@ -351,26 +313,11 @@ function PatientRegistration() {
     setActiveView(section);
   };
 
-  // const videoConstraints = {
-  //   width: 1280,
-  //   height: 720,
-  //   facingMode: "user",
-  // };
-
-  // const [capturedImage, setCapturedImage] = useState(null);
-  // const webcamRef = React.useRef(null);
-
-  // const capture = useCallback(() => {
-  //   const imageSrc = webcamRef.current.getScreenshot();
-  //   setCapturedImage(imageSrc);
-  //   setPatient((prev) => ({ ...prev, photoId: imageSrc }));
-  // }, [webcamRef, setPatient]);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <ToastContainer />
-
+      {/* 
       <MDBox
         display="flex"
         justifyContent="flex-end"
@@ -396,7 +343,7 @@ function PatientRegistration() {
         >
           <span>Create</span>
         </MDButton>
-      </MDBox>
+      </MDBox> */}
 
       <Container
         sx={{
@@ -719,45 +666,6 @@ function PatientRegistration() {
                           />
                         </Box>
                       </Grid>
-                      {/* Webcam Capture */}
-                      {/* <Grid
-                    item
-                    xs={6}
-                    sm={3}
-                    sx={{
-                      paddingTop: "5px !important",
-                    }}
-                  >
-                    <Box>
-                      <p className="text-xs mb-2">Capture Patient Photo:</p>
-                      <Webcam
-                        audio={false}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        width="100%"
-                        videoConstraints={videoConstraints}
-                      />
-                      <MDButton
-                        variant="contained"
-                        color="primary"
-                        onClick={capture}
-                        style={{ marginTop: "10px" }}
-                      >
-                        Capture
-                      </MDButton>
-                    </Box> */}
-
-                      {/* Display captured image */}
-                      {/* {capturedImage && (
-                      <Box mt={2}>
-                        <img
-                          src={capturedImage}
-                          alt="Patient"
-                          style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                        />
-                      </Box>
-                    )}
-                  </Grid> */}
                     </Grid>
 
                     <Box
@@ -848,7 +756,9 @@ function PatientRegistration() {
                           <PhoneInput
                             country={"pk"}
                             value={patient.phoneNo}
-                            onChange={handlePhoneChange}
+                            onChange={(value, country) =>
+                              handlePhoneChange(value, country, "phoneNo")
+                            }
                             inputProps={{
                               name: "phoneNo",
                               required: true,
@@ -884,7 +794,9 @@ function PatientRegistration() {
                           <PhoneInput
                             country={"pk"}
                             value={patient.alternatePhoneNumber}
-                            onChange={handlePhoneChange}
+                            onChange={(value, country) =>
+                              handlePhoneChange(value, country, "alternatePhoneNumber")
+                            }
                             inputProps={{
                               name: "alternatePhoneNumber",
                               autoFocus: true,
@@ -950,7 +862,13 @@ function PatientRegistration() {
                       >
                         <Box>
                           <p className="text-xs mb-2">National ID Number/SSN:</p>
-                          <TextField variant="outlined" fullWidth />
+                          <TextField
+                            name="nationalIdSsn"
+                            value={patient.nationalIdSsn}
+                            variant="outlined"
+                            fullWidth
+                            onChange={handleInputChange}
+                          />
                         </Box>
                       </Grid>
 
@@ -965,7 +883,13 @@ function PatientRegistration() {
                       >
                         <Box>
                           <p className="text-xs mb-2">Passport Number:</p>
-                          <TextField variant="outlined" fullWidth />
+                          <TextField
+                            name="passportNumber"
+                            value={patient.passportNumber}
+                            variant="outlined"
+                            fullWidth
+                            onChange={handleInputChange}
+                          />
                         </Box>
                       </Grid>
 
@@ -980,7 +904,13 @@ function PatientRegistration() {
                       >
                         <Box>
                           <p className="text-xs mb-2">Driver’s License Number:</p>
-                          <TextField variant="outlined" fullWidth />
+                          <TextField
+                            name="driversLicenseNumber"
+                            value={patient.driversLicenseNumber}
+                            variant="outlined"
+                            fullWidth
+                            onChange={handleInputChange}
+                          />
                         </Box>
                       </Grid>
 
@@ -995,7 +925,13 @@ function PatientRegistration() {
                       >
                         <Box>
                           <p className="text-xs mb-2">Photo ID:</p>
-                          <TextField variant="outlined" fullWidth />
+                          <TextField
+                            name="photoId"
+                            value={patient.photoId}
+                            variant="outlined"
+                            fullWidth
+                            onChange={handleInputChange}
+                          />
                         </Box>
                       </Grid>
                     </Grid>
@@ -1116,10 +1052,12 @@ function PatientRegistration() {
                           <p className="text-xs mb-2">Emergency Contact Number:</p>
                           <PhoneInput
                             country={"pk"}
-                            value={patient.emergencyContactNo}
-                            onChange={handlePhoneChange}
+                            value={patient.emergencyContactNumber}
+                            onChange={(value, country) =>
+                              handlePhoneChange(value, country, "emergencyContactNumber")
+                            }
                             inputProps={{
-                              name: "emergencyContactNo",
+                              name: "emergencyContactNumber",
                               autoFocus: true,
                             }}
                             containerStyle={{
@@ -1148,10 +1086,12 @@ function PatientRegistration() {
                           <p className="text-xs mb-2">Alternate Emergency Contact Number:</p>
                           <PhoneInput
                             country={"pk"}
-                            value={patient.alternateEmergencyContactNo}
-                            onChange={handlePhoneChange}
+                            value={patient.alternateEmergencyContactNumber}
+                            onChange={(value, country) =>
+                              handlePhoneChange(value, country, "alternateEmergencyContactNumber")
+                            }
                             inputProps={{
-                              name: "alternateEmergencyContactNo",
+                              name: "alternateEmergencyContactNumber",
                               autoFocus: true,
                             }}
                             containerStyle={{

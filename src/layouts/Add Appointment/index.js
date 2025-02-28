@@ -49,6 +49,23 @@ function AddAppointment() {
             >
               <Box>
                 <p className="flex flex-row text-xs items-center">
+                  Patient Name:<span className="text-red-600 text-base mx-2">*</span>
+                </p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="flex flex-row text-xs items-center">
                   Appointment:<span className="text-red-600 text-base mx-2">*</span>
                 </p>
                 <TextField variant="outlined" fullWidth />

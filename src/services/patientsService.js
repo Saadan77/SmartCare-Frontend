@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/patients";
+const API_URL = "http://localhost:3000/api/patients";
 
-// Fetch all patients
 export const getPatients = async () => {
   try {
     const response = await axios.get(API_URL);
@@ -13,13 +12,24 @@ export const getPatients = async () => {
   }
 };
 
-// Add a new patient
-// export const addPatient = async (patientData) => {
-//   try {
-//     const response = await axios.post(API_URL, patientData);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error adding patient:', error);
-//     throw error;
-//   }
-// };
+export const addPatient = async (patientData) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+
+    const response = await axios.post(API_URL, patientData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error adding patient:", error.response?.data || error.message);
+    throw error;
+  }
+};
