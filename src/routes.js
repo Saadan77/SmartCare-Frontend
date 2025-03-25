@@ -23,6 +23,7 @@ import AddAppointment from "layouts/Add Appointment";
 import DischargeSummary from "layouts/Discharge Summary";
 // import MedicineChargeFile from "layouts/Medicine Charge File";
 import AddClient from "layouts/Add Client";
+import Chatbot from "layouts/SmartCare ChatBot";
 // import FeeStructure from "layouts/Fee Structure";
 // import PharmacySetup from "layouts/Pharmacy Setup";
 // import ManageFavourites from "layouts/Manage Favourites";
@@ -305,6 +306,14 @@ const routes = [
   //   protected: true,
   //   roles: [],
   // },
+  {
+    type: "collapse",
+    name: "ChatBot",
+    key: "chatbot",
+    icon: <Icon fontSize="small">smart_toy</Icon>,
+    route: "/chatbot",
+    component: <Chatbot />,
+  },
   {
     type: "collapse",
     name: "Sign In",
