@@ -3,13 +3,13 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/api/patients";
 
 export const getPatients = async () => {
-  try {
-    const response = await axios.get(API_URL);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching patients:", error);
-    throw error;
-  }
+  // try {
+  //   const response = await axios.get(API_URL);
+  //   return response.data;
+  // } catch (error) {
+  //   console.error("Error fetching patients:", error);
+  //   throw error;
+  // }
 };
 
 export const addPatient = async (patientData) => {
@@ -29,7 +29,10 @@ export const addPatient = async (patientData) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error adding patient:", error.response?.data || error.message);
+    // console.error(
+    //   "Error adding patient:",
+    //   error.response?.data || error.message
+    // );
     throw error;
   }
 };

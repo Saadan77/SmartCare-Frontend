@@ -4,13 +4,13 @@ const API_URL = "http://localhost:3001/api/organization/ManageStandardOrganizati
 
 // Fetch all standard organizations
 export const getAllStandardOrganizations = async () => {
-  try {
-    const response = await axios.get(API_URL);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching standard organizations:", error);
-    throw error;
-  }
+  // try {
+  //   const response = await axios.get(API_URL);
+  //   return response.data;
+  // } catch (error) {
+  //   console.error("Error fetching standard organizations:", error);
+  //   throw error;
+  // }
 };
 
 // Add a new standard organizations
