@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 
+const API_URL = "https://a87f-34-141-221-219.ngrok-free.app/qa";
+
 const ChatMessage = ({ text, isUser }) => (
   <Box
     sx={{
@@ -88,8 +90,19 @@ function Chatbot() {
 
       if (!response.ok) throw new Error("Server Error");
 
-      const data = await response.json();
-      setMessages([...newMessages, { text: data.answer, isUser: false }]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      let botMessage = { text: "", isUser: false };
+      setMessages([...newMessages, botMessage]);
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        botMessage.text += decoder.decode(value, { stream: true });
+        setMessages([...newMessages, botMessage]); // Update messages dynamically
+      }
     } catch (error) {
       setMessages([
         ...newMessages,
