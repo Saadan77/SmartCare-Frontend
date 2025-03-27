@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 
+const API_URL = "https://294e-35-243-195-64.ngrok-free.app/qa";
+
 const ChatMessage = ({ text, isUser }) => (
   <Box
     sx={{
