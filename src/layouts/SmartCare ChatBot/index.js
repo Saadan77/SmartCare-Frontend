@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import ReactMarkdown from "react-markdown";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 
-const API_URL = "https://a87f-34-141-221-219.ngrok-free.app/qa";
+const API_URL = "https://5f28-34-142-224-22.ngrok-free.app";
 
 const ChatMessage = ({ text, isUser }) => (
   <Box
@@ -82,7 +82,7 @@ function Chatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(API_URL + "/qa", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input }),
@@ -91,17 +91,19 @@ function Chatbot() {
       if (!response.ok) throw new Error("Server Error");
 
       const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
+      let decodedText = "";
+      const decoder = new TextDecoder();
 
-      let botMessage = { text: "", isUser: false };
+      const botMessage = { text: "", isUser: false };
       setMessages([...newMessages, botMessage]);
 
       while (true) {
-        const { value, done } = await reader.read();
+        const { done, value } = await reader.read();
         if (done) break;
 
-        botMessage.text += decoder.decode(value, { stream: true });
-        setMessages([...newMessages, botMessage]); // Update messages dynamically
+        decodedText += decoder.decode(value, { stream: true });
+        botMessage.text = decodedText.trim(); // Update the text incrementally
+        setMessages([...newMessages, botMessage]);
       }
     } catch (error) {
       setMessages([
