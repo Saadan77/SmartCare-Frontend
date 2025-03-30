@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
 import axios from "axios";
 
 export default function diseasesData() {

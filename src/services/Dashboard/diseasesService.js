@@ -11,3 +11,23 @@ export const fetchDiseaseStats = async () => {
     return [];
   }
 };
+
+export const fetchComparisonStats = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/data/comparison`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching comparison stats:", error);
+    return [];
+  }
+};
+
+export const fetchAllWeeksData = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/data/all-weeks`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all weeks data:", error);
+    return [];
+  }
+};

@@ -1,4 +1,4 @@
-export default (labels = [], data = []) => ({
+export default (labels = [], datasets = []) => ({
   labels: labels.length > 0 ? labels : ["No Data"],
-  datasets: { label: "Total Cases", data: data.length > 0 ? data : [0] },
+  datasets: datasets.length > 0 ? datasets : [{ label: "Total Cases", data: [-1] }],
 });

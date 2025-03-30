@@ -1,41 +1,36 @@
-/**
-=========================================================
-* Material Dashboard 2  React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 function configs(labels, datasets) {
   return {
     data: {
       labels,
-      datasets: [
-        {
-          label: datasets.label,
-          tension: 0.4,
-          borderWidth: 0,
-          borderRadius: 4,
-          borderSkipped: false,
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          data: datasets.data,
-          maxBarThickness: 6,
-        },
-      ],
+      datasets: datasets.map((dataset, index) => ({
+        label: dataset.label,
+        tension: 0.4,
+        borderWidth: 0,
+        borderRadius: 4,
+        borderSkipped: false,
+        backgroundColor: index === 0 ? "rgba(255, 99, 132, 0.8)" : "rgba(54, 162, 235, 0.8)", // Different colors for each bar
+        data: dataset.data,
+        maxBarThickness: 6,
+      })),
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: false,
+          display: true, // Show legend to differentiate the two datasets
+          labels: {
+            color: "#f8f9fa",
+            font: {
+              size: 14,
+              family: "Roboto",
+              weight: 300,
+            },
+          },
+        },
+        tooltip: {
+          mode: "index",
+          intersect: false,
         },
       },
       interaction: {
@@ -54,7 +49,7 @@ function configs(labels, datasets) {
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: 500,
+            suggestedMax: Math.max(...datasets.flatMap((ds) => ds.data)) * 1.1, // Dynamically adjust max
             beginAtZero: true,
             padding: 10,
             font: {
