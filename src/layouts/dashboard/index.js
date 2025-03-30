@@ -21,6 +21,7 @@ import {
   fetchComparisonStats,
   fetchAllWeeksData,
 } from "services/Dashboard/diseasesService";
+import { Box, Typography } from "@mui/material";
 
 function Dashboard() {
   const [data, setData] = useState([]);
@@ -94,6 +95,7 @@ function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+
       <MDBox py={3} px={1}>
         <Grid container spacing={3}>
           {/* Dynamic statistics with percentage comparison */}
@@ -115,6 +117,16 @@ function Dashboard() {
             </Grid>
           ))}
         </Grid>
+
+        <Box>
+          <Typography
+            sx={{ marginTop: 1, marginLeft: 1 }}
+            style={{ fontWeight: "bold" }}
+            gutterBottom
+          >
+            <p className="text-base text-[#42424a] font-semibold mr-2">Graph</p>
+          </Typography>
+        </Box>
 
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
@@ -146,6 +158,16 @@ function Dashboard() {
           </Grid>
         </MDBox>
 
+        <Box>
+          <Typography
+            sx={{ marginTop: 1, marginLeft: 1 }}
+            style={{ fontWeight: "bold" }}
+            gutterBottom
+          >
+            <p className="text-base text-[#42424a] font-semibold mr-2">Trend over the month</p>
+          </Typography>
+        </Box>
+
         {/* Individual Disease Line Charts */}
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
@@ -165,8 +187,18 @@ function Dashboard() {
           </Grid>
         </MDBox>
 
+        <Box>
+          <Typography
+            sx={{ marginTop: 1, marginLeft: 1 }}
+            style={{ fontWeight: "bold" }}
+            gutterBottom
+          >
+            <p className="text-base text-[#42424a] font-semibold mr-2">Most cases of the month</p>
+          </Typography>
+        </Box>
+
         {/* Disease Table */}
-        <MDBox mt={4.5}>
+        <MDBox>
           <DataTable
             table={{ columns, rows }}
             showTotalEntries={true}
