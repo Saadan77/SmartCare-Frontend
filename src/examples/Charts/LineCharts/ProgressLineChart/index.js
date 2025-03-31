@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2  React - v2.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useMemo } from "react";
 
 // porp-types is a library for typechecking of props
@@ -55,7 +40,7 @@ ChartJS.register(
   Filler
 );
 
-function ProgressLineChart({ color, icon, title, count, progress, height, chart }) {
+function ProgressLineChart({ color, icon, title, count, height, chart }) {
   const { data, options } = configs(color, chart.labels || [], title, chart.data || []);
 
   return (
@@ -90,14 +75,6 @@ function ProgressLineChart({ color, icon, title, count, progress, height, chart 
             </MDTypography>
           ) : null}
         </MDBox>
-        <MDBox width="25%" ml="auto">
-          <MDTypography display="block" variant="caption" fontWeight="medium" color="text">
-            {progress}%
-          </MDTypography>
-          <MDBox mt={0.25}>
-            <MDProgress variant="gradient" color={color} value={progress} />
-          </MDBox>
-        </MDBox>
       </MDBox>
       {useMemo(
         () => (
@@ -124,7 +101,6 @@ ProgressLineChart.propTypes = {
   icon: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
   count: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  progress: PropTypes.number.isRequired,
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   chart: PropTypes.objectOf(PropTypes.array).isRequired,
 };

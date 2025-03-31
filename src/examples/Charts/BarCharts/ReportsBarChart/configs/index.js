@@ -8,7 +8,7 @@ function configs(labels, datasets) {
         borderWidth: 0,
         borderRadius: 4,
         borderSkipped: false,
-        backgroundColor: index === 0 ? "rgba(255, 99, 132, 0.8)" : "rgba(54, 162, 235, 0.8)", // Different colors for each bar
+        backgroundColor: index === 0 ? "rgba(255, 99, 132, 0.8)" : "rgba(54, 162, 235, 0.8)",
         data: dataset.data,
         maxBarThickness: 6,
       })),
@@ -18,7 +18,7 @@ function configs(labels, datasets) {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: true, // Show legend to differentiate the two datasets
+          display: true,
           labels: {
             color: "#f8f9fa",
             font: {
@@ -49,7 +49,7 @@ function configs(labels, datasets) {
           },
           ticks: {
             suggestedMin: 0,
-            suggestedMax: Math.max(...datasets.flatMap((ds) => ds.data)) * 1.1, // Dynamically adjust max
+            suggestedMax: Math.max(...datasets.flatMap((ds) => ds.data)) * 1.1,
             beginAtZero: true,
             padding: 10,
             font: {
@@ -83,6 +83,28 @@ function configs(labels, datasets) {
               lineHeight: 2,
             },
           },
+        },
+      },
+      animation: {
+        duration: 2000,
+        easing: "easeInOutQuad",
+        onProgress: (animation) => {
+          const chart = animation.chart;
+          chart.data.datasets.forEach((dataset, i) => {
+            const meta = chart.getDatasetMeta(i);
+            meta.data.forEach((bar, index) => {
+              const progress = animation.currentStep / animation.numSteps;
+              const targetValue = dataset.data[index];
+              bar._model = bar._model || {};
+              bar._model.y = chart.scales.y.getPixelForValue(targetValue * (1 - progress));
+            });
+          });
+        },
+        onComplete: (animation) => {
+          const chart = animation.chart;
+          chart.data.datasets.forEach((dataset) => {
+            dataset.animationCompleted = true;
+          });
         },
       },
     },

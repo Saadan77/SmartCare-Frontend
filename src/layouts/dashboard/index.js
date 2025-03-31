@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -10,7 +10,7 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
+import ProgressLineChart from "examples/Charts/LineCharts/ProgressLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 // Diseases Data
@@ -31,7 +31,18 @@ function Dashboard() {
   const [diseaseBarChartData, setDiseaseBarChartData] = useState({ labels: [], datasets: [] });
   const [diseaseLineCharts, setDiseaseLineCharts] = useState([]);
 
+  const lineChartRef = useRef(null); // Ref for the line chart section
+
   const { columns, rows } = diseasesData();
+
+  // Define colors for each disease
+  const diseaseColors = {
+    Malaria: "error", // Red
+    "B. Diarrhea": "info", // Blue
+    Typhoid: "warning", // Yellow
+    Dengue: "success", // Teal
+    "HIV/AIDS": "dark", // Purple
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,7 +60,7 @@ function Dashboard() {
           const diseases = result.map((item) => item.Diseases);
           const latestTwoWeeks = weeksData.slice(-2); // Only the latest two for bar chart
           const datasets = latestTwoWeeks.map((weekData, index) => ({
-            label: weekData.date, // e.g., "Feb 19"
+            label: weekData.date,
             data: weekData.data.map((item) => item.Total),
             backgroundColor: index === 0 ? "rgba(54, 162, 235, 0.5)" : "rgba(255, 99, 132, 0.5)", // Current (blue), Previous (red)
           }));
@@ -64,19 +75,8 @@ function Dashboard() {
             return {
               disease,
               chart: {
-                labels: weeksData.map((w) => w.date), // e.g., ["Jan 29", "Feb 05", "Feb 12", "Feb 19"]
-                datasets: {
-                  label: `${disease} Cases`,
-                  data: trendData,
-                  borderColor: [
-                    "rgba(255, 99, 132, 1)",
-                    "rgba(54, 162, 235, 1)",
-                    "rgba(255, 206, 86, 1)",
-                    "rgba(75, 192, 192, 1)",
-                    "rgba(153, 102, 255, 1)",
-                  ][diseases.indexOf(disease) % 5],
-                  fill: false,
-                },
+                labels: weeksData.map((w) => w.date),
+                data: trendData,
               },
             };
           });
@@ -89,8 +89,6 @@ function Dashboard() {
     };
     loadData();
   }, []);
-
-  if (loading) return <MDBox>Loading...</MDBox>;
 
   return (
     <DashboardLayout>
@@ -168,22 +166,25 @@ function Dashboard() {
           </Typography>
         </Box>
 
-        {/* Individual Disease Line Charts */}
-        <MDBox mt={4.5}>
+        {/* Individual Disease Line Charts using ProgressLineChart */}
+        <MDBox mt={4.5} ref={lineChartRef}>
           <Grid container spacing={3}>
-            {diseaseLineCharts.map((chartItem, index) => (
-              <Grid item xs={12} md={6} lg={4} key={index}>
-                <MDBox mb={3}>
-                  <ReportsLineChart
-                    color={["info", "success", "warning", "error", "dark"][index % 5]}
-                    title={`${chartItem.disease} Trend`}
-                    description="Cases Across Weeks"
-                    date="updated now"
-                    chart={chartItem.chart}
-                  />
-                </MDBox>
-              </Grid>
-            ))}
+            {diseaseLineCharts.map((chartItem, index) => {
+              return (
+                <Grid item xs={12} md={6} lg={4} key={index}>
+                  <MDBox mb={3}>
+                    <ProgressLineChart
+                      color={diseaseColors[chartItem.disease] || "info"} // Pass the color for the disease
+                      icon="date_range"
+                      title={`${chartItem.disease} Trend`}
+                      count={chartItem.chart.data[chartItem.chart.data.length - 1]} // Latest week's cases
+                      height="10rem"
+                      chart={chartItem.chart}
+                    />
+                  </MDBox>
+                </Grid>
+              );
+            })}
           </Grid>
         </MDBox>
 
