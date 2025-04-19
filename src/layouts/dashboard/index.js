@@ -167,7 +167,7 @@ function Dashboard() {
         </Box>
 
         {/* Individual Disease Line Charts using ProgressLineChart */}
-        <MDBox mt={4.5} ref={lineChartRef}>
+        <MDBox mt={1} ref={lineChartRef}>
           <Grid container spacing={3}>
             {diseaseLineCharts.map((chartItem, index) => {
               return (
