@@ -74,7 +74,7 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Add Appointment",
+    name: "Appointments",
     key: "addAppointment",
     icon: <Icon fontSize="small">single_bed</Icon>,
     route: "/addAppointment",
