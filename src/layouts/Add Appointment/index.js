@@ -40,6 +40,10 @@ function AddAppointment() {
   const { columns, rows } = data();
   const [errors, setErrors] = useState({});
 
+  const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [selectedTime, setSelectedTime] = useState("");
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -64,6 +68,11 @@ function AddAppointment() {
     "Kelly Snyder",
   ];
 
+  const doctorSchedule = {
+    "Dr. Ahmed Khan": { start: "09:00", end: "12:00" },
+    "Dr. Ayesha Ali": { start: "10:30", end: "13:30" },
+  };
+
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
 
@@ -72,6 +81,29 @@ function AddAppointment() {
       target: { value },
     } = event;
     setPersonName(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const generateTimeSlotRanges = (start, end) => {
+    const slots = [];
+    const [startHour, startMinute] = start.split(":").map(Number);
+    const [endHour, endMinute] = end.split(":").map(Number);
+
+    let current = new Date();
+    current.setHours(startHour, startMinute, 0, 0);
+
+    const endTime = new Date();
+    endTime.setHours(endHour, endMinute, 0, 0);
+
+    while (current < endTime) {
+      const startTime = current.toTimeString().slice(0, 5);
+      current.setMinutes(current.getMinutes() + 15);
+      const endTimeSlot = current.toTimeString().slice(0, 5);
+      if (current <= endTime) {
+        slots.push(`${startTime} - ${endTimeSlot}`);
+      }
+    }
+
+    return slots;
   };
 
   return (
@@ -112,7 +144,68 @@ function AddAppointment() {
                   Patient Name:
                   <span className="text-red-600 text-base mx-2">*</span>
                 </p>
-                <TextField variant="outlined" fullWidth />
+                <FormControl fullWidth>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="flex flex-row text-xs items-center">
+                  Doctor:
+                  <span className="text-red-600 text-base mx-2">*</span>
+                </p>
+                <FormControl fullWidth>
+                  <Select
+                    value={selectedDoctor}
+                    onChange={(e) => {
+                      const doc = e.target.value;
+                      setSelectedDoctor(doc);
+                      const schedule = doctorSchedule[doc];
+                      if (schedule) {
+                        const slots = generateTimeSlotRanges(schedule.start, schedule.end);
+                        setTimeSlots(slots);
+                        setSelectedTime("");
+                      }
+                    }}
+                  >
+                    {Object.keys(doctorSchedule).map((doc) => (
+                      <MenuItem key={doc} value={doc}>
+                        {doc}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Box>
             </Grid>
 
@@ -133,13 +226,13 @@ function AddAppointment() {
                     <span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <DatePicker
-                    onChange={(newDate) => handleDateChange(newDate)}
+                    onChange={(newDate) => handleChange(newDate)}
                     renderInput={(params) => (
                       <TextField
                         name="dob"
                         required
                         value={patient.dob}
-                        onChange={handleInputChange}
+                        onChange={handleChange}
                         {...params}
                         fullWidth
                         variant="outlined"
@@ -163,27 +256,19 @@ function AddAppointment() {
               }}
             >
               <Box>
-                <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-multiple-chip-label">Doctor</InputLabel>
+                <p className="flex flex-row text-xs items-center">
+                  Appointment Time:
+                  <span className="text-red-600 text-base mx-2">*</span>
+                </p>
+                <FormControl fullWidth>
                   <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
+                    labelId="time-slot-label"
+                    value={selectedTime}
+                    onChange={(e) => setSelectedTime(e.target.value)}
                   >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-                        {name}
+                    {timeSlots.map((slot) => (
+                      <MenuItem key={slot} value={slot}>
+                        {slot}
                       </MenuItem>
                     ))}
                   </Select>
