@@ -9,7 +9,7 @@ export default function data() {
     { Header: "Appointment Time", accessor: "AppointmentTime", width: "15%", align: "center" },
     { Header: "Reason", accessor: "Reason", width: "15%", align: "center" },
     { Header: "Status", accessor: "Status", width: "15%", align: "center" },
-    { Header: "Created On", accessor: "CreatedOn", width: "10%", align: "center" },
+    { Header: "Updated On", accessor: "UpdatedOn", width: "10%", align: "center" },
   ];
 
   const rows = [
@@ -20,7 +20,7 @@ export default function data() {
       AppointmentTime: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
       Reason: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
       Status: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
-      CreatedOn: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      UpdatedOn: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
     },
   ];
 

@@ -1,18 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
-import { TextField, Container, Typography, Grid, Paper, Box } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+
+import {
+  TextField,
+  Container,
+  Typography,
+  Grid,
+  Paper,
+  Box,
+  OutlinedInput,
+  InputLabel,
+  MenuItem,
+  Select,
+  FormControl,
+  useTheme,
+  Chip,
+} from "@mui/material";
 
 import data from "./data";
 import DataTable from "examples/Tables/DataTable";
 
 import MDButton from "components/MDButton";
 
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight: personName.includes(name)
+      ? theme.typography.fontWeightMedium
+      : theme.typography.fontWeightRegular,
+  };
+}
+
 function AddAppointment() {
   const { columns, rows } = data();
+  const [errors, setErrors] = useState({});
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const names = [
+    "Oliver Hansen",
+    "Van Henry",
+    "April Tucker",
+    "Ralph Hubbard",
+    "Omar Alexander",
+    "Carlos Abbott",
+    "Miriam Wagner",
+    "Bradley Wilkerson",
+    "Virginia Andrews",
+    "Kelly Snyder",
+  ];
+
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
+
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(typeof value === "string" ? value.split(",") : value);
+  };
 
   return (
     <DashboardLayout>
@@ -49,8 +109,99 @@ function AddAppointment() {
             >
               <Box>
                 <p className="flex flex-row text-xs items-center">
-                  Patient Name:<span className="text-red-600 text-base mx-2">*</span>
+                  Patient Name:
+                  <span className="text-red-600 text-base mx-2">*</span>
                 </p>
+                <TextField variant="outlined" fullWidth />
+              </Box>
+            </Grid>
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* Appointment Date */}
+              <Grid
+                item
+                xs={6}
+                sm={3}
+                sx={{
+                  paddingTop: "5px !important",
+                  paddingBottom: "5px !important",
+                }}
+              >
+                <Box>
+                  <p className="flex flex-row text-xs items-center">
+                    Appointment Date:
+                    <span className="text-red-600 text-base mx-2">*</span>
+                  </p>
+                  <DatePicker
+                    onChange={(newDate) => handleDateChange(newDate)}
+                    renderInput={(params) => (
+                      <TextField
+                        name="dob"
+                        required
+                        value={patient.dob}
+                        onChange={handleInputChange}
+                        {...params}
+                        fullWidth
+                        variant="outlined"
+                        error={!!errors.dob}
+                        helperText={errors.dob}
+                      />
+                    )}
+                  />
+                  {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
+                </Box>
+              </Grid>
+            </LocalizationProvider>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <FormControl sx={{ m: 1, width: 300 }}>
+                  <InputLabel id="demo-multiple-chip-label">Doctor</InputLabel>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={3}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="text-xs mb-2">Reason:</p>
                 <TextField variant="outlined" fullWidth />
               </Box>
             </Grid>
@@ -65,24 +216,7 @@ function AddAppointment() {
               }}
             >
               <Box>
-                <p className="flex flex-row text-xs items-center">
-                  Appointment:<span className="text-red-600 text-base mx-2">*</span>
-                </p>
-                <TextField variant="outlined" fullWidth />
-              </Box>
-            </Grid>
-
-            <Grid
-              item
-              xs={6}
-              sm={3}
-              sx={{
-                paddingTop: "5px !important",
-                paddingBottom: "5px !important",
-              }}
-            >
-              <Box>
-                <p className="text-xs mb-2">Description:</p>
+                <p className="text-xs mb-2">Status:</p>
                 <TextField variant="outlined" fullWidth />
               </Box>
             </Grid>

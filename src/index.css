@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.css-13x1bqx-MuiFormControl-root-MuiTextField-root {
+  width: 325px !important;
+}
+
 .css-mvs481 {
   padding: 0.25rem !important;
 }
