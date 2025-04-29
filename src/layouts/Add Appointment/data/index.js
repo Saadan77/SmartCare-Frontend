@@ -3,20 +3,23 @@ import React, { useContext } from "react";
 
 export default function data() {
   const columns = [
-    {
-      Header: "Appointment",
-      accessor: "Appointment",
-      width: "33%",
-      align: "left",
-    },
-    { Header: "Description", accessor: "Description", width: "34%", align: "center" },
-    { Header: "Created On", accessor: "CreatedOn", width: "33%", align: "center" },
+    { Header: "Name", accessor: "Name", width: "15%", align: "left" },
+    { Header: "Appoinment Date", accessor: "AppoinmentDate", width: "15%", align: "center" },
+    { Header: "Doctor", accessor: "Doctor", width: "15%", align: "center" },
+    { Header: "Appointment Time", accessor: "AppointmentTime", width: "15%", align: "center" },
+    { Header: "Reason", accessor: "Reason", width: "15%", align: "center" },
+    { Header: "Status", accessor: "Status", width: "15%", align: "center" },
+    { Header: "Created On", accessor: "CreatedOn", width: "10%", align: "center" },
   ];
 
   const rows = [
     {
-      Appointment: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
-      Description: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      Name: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      AppoinmentDate: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      Doctor: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      AppointmentTime: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      Reason: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
+      Status: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
       CreatedOn: <MDTypography variant="caption" fontWeight="medium"></MDTypography>,
     },
   ];
