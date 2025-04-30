@@ -192,9 +192,9 @@ function AddAppointment() {
                       <TextField
                         name="dob"
                         required
-                        value={patient.dob}
-                        onChange={handleChange}
-                        {...params}
+                        // value={patient.dob}
+                        // onChange={handleChange}
+                        // {...params}
                         fullWidth
                         variant="outlined"
                         error={!!errors.dob}

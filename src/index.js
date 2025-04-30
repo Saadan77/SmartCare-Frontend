@@ -6,7 +6,6 @@ import "./index.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-// Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
 import { PatientProvider } from "context/Patient Context";
 import { GroupProvider } from "context/Group Context/Add Group";
@@ -15,6 +14,7 @@ import { ServiceProvider } from "context/Group Context/Add Service";
 import { ClientProvider } from "context/Add Client/addClientContext";
 import { EmployeeProvider } from "context/Employee/Add Employee/addEmployeeContext";
 import { StandardOrganizationsProvider } from "context/Organizations/Manage Standard Organization/manageStandardOrganizationContext";
+import { AppointmentsProvider } from "context/Appointment/appointmentContext";
 
 const container = document.getElementById("app");
 const root = createRoot(container);
@@ -31,7 +31,9 @@ root.render(
                   <ClientProvider>
                     <EmployeeProvider>
                       <StandardOrganizationsProvider>
-                        <App />
+                        <AppointmentsProvider>
+                          <App />
+                        </AppointmentsProvider>
                       </StandardOrganizationsProvider>
                     </EmployeeProvider>
                   </ClientProvider>
