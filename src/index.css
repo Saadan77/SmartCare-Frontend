@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.css-1cohrqd-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  padding: 0.75rem !important;
+}
 
 .css-13x1bqx-MuiFormControl-root-MuiTextField-root {
-  width: 234.83px !important;
+  width: 100%;
 }
 
 .css-mvs481 {
@@ -27,8 +30,12 @@
   border-radius: 4px !important;
 }
 
-.MuiOutlinedInput-input {
+.css-5mmmz-MuiInputBase-input-MuiOutlinedInput-input {
   height: 0.5rem !important;
+}
+
+#reasonStatus.css-5mmmz-MuiInputBase-input-MuiOutlinedInput-input {
+  height: 20px !important;
 }
 
 .css-19o5iax-MuiGrid-root {

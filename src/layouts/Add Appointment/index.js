@@ -133,48 +133,7 @@ function AddAppointment() {
             <Grid
               item
               xs={6}
-              sm={3}
-              sx={{
-                paddingTop: "5px !important",
-                paddingBottom: "5px !important",
-              }}
-            >
-              <Box>
-                <p className="flex flex-row text-xs items-center">
-                  Patient Name:
-                  <span className="text-red-600 text-base mx-2">*</span>
-                </p>
-                <FormControl fullWidth>
-                  <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                        {selected.map((value) => (
-                          <Chip key={value} label={value} />
-                        ))}
-                      </Box>
-                    )}
-                    MenuProps={MenuProps}
-                  >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-                        {name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-            </Grid>
-
-            <Grid
-              item
-              xs={6}
-              sm={3}
+              sm={4}
               sx={{
                 paddingTop: "5px !important",
                 paddingBottom: "5px !important",
@@ -188,6 +147,7 @@ function AddAppointment() {
                 <FormControl fullWidth>
                   <Select
                     value={selectedDoctor}
+                    sx={{ padding: "0.35rem !important" }}
                     onChange={(e) => {
                       const doc = e.target.value;
                       setSelectedDoctor(doc);
@@ -214,7 +174,7 @@ function AddAppointment() {
               <Grid
                 item
                 xs={6}
-                sm={3}
+                sm={4}
                 sx={{
                   paddingTop: "5px !important",
                   paddingBottom: "5px !important",
@@ -226,6 +186,7 @@ function AddAppointment() {
                     <span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <DatePicker
+                    class="w-64"
                     onChange={(newDate) => handleChange(newDate)}
                     renderInput={(params) => (
                       <TextField
@@ -249,7 +210,7 @@ function AddAppointment() {
             <Grid
               item
               xs={6}
-              sm={3}
+              sm={4}
               sx={{
                 paddingTop: "5px !important",
                 paddingBottom: "5px !important",
@@ -263,6 +224,7 @@ function AddAppointment() {
                 <FormControl fullWidth>
                   <Select
                     labelId="time-slot-label"
+                    sx={{ padding: "0.35rem !important" }}
                     value={selectedTime}
                     onChange={(e) => setSelectedTime(e.target.value)}
                   >
@@ -279,7 +241,49 @@ function AddAppointment() {
             <Grid
               item
               xs={6}
-              sm={3}
+              sm={4}
+              sx={{
+                paddingTop: "5px !important",
+                paddingBottom: "5px !important",
+              }}
+            >
+              <Box>
+                <p className="flex flex-row text-xs items-center">
+                  Patient Name:
+                  <span className="text-red-600 text-base mx-2">*</span>
+                </p>
+                <FormControl fullWidth>
+                  <Select
+                    labelId="demo-multiple-chip-label"
+                    id="demo-multiple-chip"
+                    sx={{ padding: "0.75rem !important" }}
+                    multiple
+                    value={personName}
+                    onChange={handleChange}
+                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                  >
+                    {names.map((name) => (
+                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+                        {name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid
+              item
+              xs={6}
+              sm={4}
               sx={{
                 paddingTop: "5px !important",
                 paddingBottom: "5px !important",
@@ -287,14 +291,14 @@ function AddAppointment() {
             >
               <Box>
                 <p className="text-xs mb-2">Reason:</p>
-                <TextField variant="outlined" fullWidth />
+                <TextField id="reasonStatus" variant="outlined" fullWidth />
               </Box>
             </Grid>
 
             <Grid
               item
               xs={6}
-              sm={3}
+              sm={4}
               sx={{
                 paddingTop: "5px !important",
                 paddingBottom: "5px !important",
@@ -302,7 +306,7 @@ function AddAppointment() {
             >
               <Box>
                 <p className="text-xs mb-2">Status:</p>
-                <TextField variant="outlined" fullWidth />
+                <TextField id="reasonStatus" variant="outlined" fullWidth />
               </Box>
             </Grid>
           </Grid>
