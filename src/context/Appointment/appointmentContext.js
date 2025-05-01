@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { getAppointments } from "services/Appointment/appointmentService";
+import { getAppointmentByUserId } from "services/Appointment/appointmentService";
 
 export const AppointmentsContext = createContext();
 
@@ -13,7 +13,7 @@ export const AppointmentsProvider = ({ children }) => {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        const data = await getAppointments();
+        const data = await getAppointmentByUserId();
         setAppointments(data);
         setLoading(false);
       } catch (err) {

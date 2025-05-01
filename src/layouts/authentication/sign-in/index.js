@@ -77,6 +77,7 @@ function Basic() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
+      localStorage.setItem("id", res.data.id);
 
       updateUser(res.data);
 

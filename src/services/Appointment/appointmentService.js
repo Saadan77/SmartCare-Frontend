@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/appointments";
+const user_id = localStorage.getItem("id");
+
+const API_URL = `http://localhost:3000/api/appointments/user/${user_id}`;
 
 // Fetch all appointments
-export const getAppointments = async () => {
+export const getAppointmentByUserId = async () => {
   try {
     const token = localStorage.getItem("token");
     if (!token) {

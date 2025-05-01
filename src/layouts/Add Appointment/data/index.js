@@ -18,7 +18,7 @@ export default function data() {
   const rows = appointments.map((appointment) => ({
     Name: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["family_member_id"]}
+        {appointment["family_member_name"]}
       </MDTypography>
     ),
     AppoinmentDate: (
@@ -28,7 +28,7 @@ export default function data() {
     ),
     Doctor: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["doctor_id"]}
+        {appointment["doctor_name"]}
       </MDTypography>
     ),
     AppointmentTime: (
