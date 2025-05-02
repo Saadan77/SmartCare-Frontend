@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -27,6 +27,7 @@ import data from "./data";
 import DataTable from "examples/Tables/DataTable";
 
 import MDButton from "components/MDButton";
+import { AppointmentsContext } from "context/Appointment/appointmentContext";
 
 function getStyles(name, personName, theme) {
   return {
@@ -44,6 +45,8 @@ function AddAppointment() {
   const [timeSlots, setTimeSlots] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
 
+  const { familyNames } = useContext(AppointmentsContext);
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -54,19 +57,6 @@ function AddAppointment() {
       },
     },
   };
-
-  const names = [
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
-  ];
 
   const doctorSchedule = {
     "Dr. Ahmed Khan": { start: "09:00", end: "12:00" },
@@ -270,9 +260,13 @@ function AddAppointment() {
                     )}
                     MenuProps={MenuProps}
                   >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-                        {name}
+                    {familyNames.map((member) => (
+                      <MenuItem
+                        key={member.family_member_id}
+                        value={member.family_member_id}
+                        style={getStyles(member.full_name, personName, theme)}
+                      >
+                        {member.full_name}
                       </MenuItem>
                     ))}
                   </Select>

@@ -1,20 +1,27 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { getAppointmentByUserId } from "services/Appointment/appointmentService";
+import {
+  getAppointmentByUserId,
+  getUserfamilyNames,
+} from "services/Appointment/appointmentService";
 
 export const AppointmentsContext = createContext();
 
 export const AppointmentsProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
+  const [familyNames, setFamilyNames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const fetchAppointmentsAndFamilyNames = async () => {
       try {
         setLoading(true);
-        const data = await getAppointmentByUserId();
-        setAppointments(data);
+        const appointmentsData = await getAppointmentByUserId();
+        const familyNamesData = await getUserfamilyNames();
+        setAppointments(appointmentsData);
+        setFamilyNames(familyNamesData);
+        console.log("Family Names: ", familyNamesData);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -22,7 +29,7 @@ export const AppointmentsProvider = ({ children }) => {
       }
     };
 
-    fetchAppointments();
+    fetchAppointmentsAndFamilyNames();
   }, []);
 
   //   const addNewClient = (newClient) => {
@@ -30,8 +37,9 @@ export const AppointmentsProvider = ({ children }) => {
   //   };
 
   return (
-    <AppointmentsContext.Provider value={{ appointments, setAppointments, loading, error }}>
-      {/* <AppointmentsContext.Provider value={{ clients, setClients, loading, error, addNewClient }}> */}
+    <AppointmentsContext.Provider
+      value={{ appointments, setAppointments, familyNames, setFamilyNames, loading, error }}
+    >
       {children}
     </AppointmentsContext.Provider>
   );
