@@ -4,6 +4,7 @@ const user_id = localStorage.getItem("id");
 
 const API_URL = `http://localhost:3000/api/appointments/user/${user_id}`;
 const FAMILY_API_URL = `http://localhost:3000/api/appointments/familynames/${user_id}`;
+const DOCTOR_API_URL = `http://localhost:3000/api/appointments/doctornames`;
 
 // Fetch all appointments
 export const getAppointmentByUserId = async () => {
@@ -35,10 +36,29 @@ export const getUserfamilyNames = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("Fetched family names: ", response.data);
     return response.data;
   } catch (error) {
     console.error("Cannot get family names by user id:", error);
+    throw error;
+  }
+};
+
+export const getDoctorNames = async () => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Invalid ]oken. Pls Login!");
+  }
+
+  try {
+    const response = await axios.get(DOCTOR_API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Doctor Service: Error fetching doctor names:", error);
     throw error;
   }
 };

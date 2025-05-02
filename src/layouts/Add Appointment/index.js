@@ -45,7 +45,7 @@ function AddAppointment() {
   const [timeSlots, setTimeSlots] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
 
-  const { familyNames } = useContext(AppointmentsContext);
+  const { familyNames, doctorNames } = useContext(AppointmentsContext);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -58,9 +58,9 @@ function AddAppointment() {
     },
   };
 
-  const doctorSchedule = {
-    "Dr. Ahmed Khan": { start: "09:00", end: "12:00" },
-    "Dr. Ayesha Ali": { start: "10:30", end: "13:30" },
+  const formatTime = (isoString) => {
+    const date = new Date(isoString);
+    return date.toTimeString().slice(0, 5);
   };
 
   const theme = useTheme();
@@ -139,19 +139,24 @@ function AddAppointment() {
                     value={selectedDoctor}
                     sx={{ padding: "0.35rem !important" }}
                     onChange={(e) => {
-                      const doc = e.target.value;
-                      setSelectedDoctor(doc);
-                      const schedule = doctorSchedule[doc];
-                      if (schedule) {
-                        const slots = generateTimeSlotRanges(schedule.start, schedule.end);
+                      const selectedName = e.target.value;
+                      setSelectedDoctor(selectedName);
+
+                      const selectedDoctorData = doctorNames.find(
+                        (doc) => doc.doctor_name === selectedName
+                      );
+                      if (selectedDoctorData) {
+                        const start = formatTime(selectedDoctorData.start_time);
+                        const end = formatTime(selectedDoctorData.end_time);
+                        const slots = generateTimeSlotRanges(start, end);
                         setTimeSlots(slots);
                         setSelectedTime("");
                       }
                     }}
                   >
-                    {Object.keys(doctorSchedule).map((doc) => (
-                      <MenuItem key={doc} value={doc}>
-                        {doc}
+                    {doctorNames.map((doc) => (
+                      <MenuItem key={doc.doctor_name} value={doc.doctor_name}>
+                        {doc.doctor_name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -263,7 +268,7 @@ function AddAppointment() {
                     {familyNames.map((member) => (
                       <MenuItem
                         key={member.family_member_id}
-                        value={member.family_member_id}
+                        value={member.full_name}
                         style={getStyles(member.full_name, personName, theme)}
                       >
                         {member.full_name}

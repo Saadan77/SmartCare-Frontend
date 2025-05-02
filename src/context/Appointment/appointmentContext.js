@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {
   getAppointmentByUserId,
   getUserfamilyNames,
+  getDoctorNames,
 } from "services/Appointment/appointmentService";
 
 export const AppointmentsContext = createContext();
@@ -10,18 +11,21 @@ export const AppointmentsContext = createContext();
 export const AppointmentsProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
   const [familyNames, setFamilyNames] = useState([]);
+  const [doctorNames, setDoctorNames] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchAppointmentsAndFamilyNames = async () => {
+    const fetchAppointmentsAndFamilyAndDoctorNames = async () => {
       try {
         setLoading(true);
         const appointmentsData = await getAppointmentByUserId();
         const familyNamesData = await getUserfamilyNames();
+        const doctorNamesData = await getDoctorNames();
         setAppointments(appointmentsData);
         setFamilyNames(familyNamesData);
-        console.log("Family Names: ", familyNamesData);
+        setDoctorNames(doctorNamesData);
         setLoading(false);
       } catch (err) {
         setError(err);
@@ -29,7 +33,7 @@ export const AppointmentsProvider = ({ children }) => {
       }
     };
 
-    fetchAppointmentsAndFamilyNames();
+    fetchAppointmentsAndFamilyAndDoctorNames();
   }, []);
 
   //   const addNewClient = (newClient) => {
@@ -38,7 +42,7 @@ export const AppointmentsProvider = ({ children }) => {
 
   return (
     <AppointmentsContext.Provider
-      value={{ appointments, setAppointments, familyNames, setFamilyNames, loading, error }}
+      value={{ appointments, familyNames, doctorNames, loading, error }}
     >
       {children}
     </AppointmentsContext.Provider>
