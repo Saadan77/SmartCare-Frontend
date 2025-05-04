@@ -15,7 +15,6 @@ import {
   Paper,
   Box,
   OutlinedInput,
-  InputLabel,
   MenuItem,
   Select,
   FormControl,
@@ -27,7 +26,12 @@ import data from "./data";
 import DataTable from "examples/Tables/DataTable";
 
 import MDButton from "components/MDButton";
+
 import { AppointmentsContext } from "context/Appointment/appointmentContext";
+import { createAppointmentService } from "services/Appointment/appointmentService";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function getStyles(name, personName, theme) {
   return {
@@ -44,6 +48,66 @@ function AddAppointment() {
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [timeSlots, setTimeSlots] = useState([]);
   const [selectedTime, setSelectedTime] = useState("");
+
+  const [appointmentData, setAppointmentData] = useState({
+    id: "",
+    family_member_id: "",
+    doctor_id: "",
+    appointment_date: "",
+    reason: "",
+    status: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setAppointmentData({
+      ...appointmentData,
+      [name]: value,
+    });
+
+    console.log("Input Change: ", name, " ", value);
+
+    if (value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [name]: "",
+      }));
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      const enteredAppointmentData = {
+        id: localStorage.getItem("id"),
+        family_member_id: appointmentData.family_member_id,
+        doctor_id: appointmentData.doctor_id,
+        appointment_date: appointmentData.appointment_date,
+        appointment_time: selectedTime,
+        reason: appointmentData.reason,
+        status: appointmentData.status,
+      };
+
+      const saveAppointment = await createAppointmentService(enteredAppointmentData);
+      setAppointmentData((prevAppointmets) => [...prevAppointmets, saveAppointment]);
+      toast.success("New appointment added");
+
+      setAppointmentData({
+        id: "",
+        family_member_id: "",
+        doctor_id: "",
+        appointment_date: "",
+        appointment_time: "",
+        reason: "",
+        status: "",
+      });
+    } catch (error) {
+      console.error("Unable to create new appointment", error);
+      toast.error("Failed to create appointment");
+    }
+  };
 
   const { familyNames, doctorNames } = useContext(AppointmentsContext);
 
@@ -99,6 +163,7 @@ function AddAppointment() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <ToastContainer />
       <Container
         sx={{
           maxWidth: "100% !important",
@@ -182,18 +247,17 @@ function AddAppointment() {
                   </p>
                   <DatePicker
                     class="w-64"
-                    onChange={(newDate) => handleChange(newDate)}
                     renderInput={(params) => (
                       <TextField
-                        name="dob"
+                        name="appointment_date"
                         required
-                        // value={patient.dob}
-                        // onChange={handleChange}
-                        // {...params}
+                        value={appointmentData.appointment_date}
+                        onChange={handleInputChange}
+                        {...params}
                         fullWidth
                         variant="outlined"
-                        error={!!errors.dob}
-                        helperText={errors.dob}
+                        // error={!!errors.dob}
+                        // helperText={errors.dob}
                       />
                     )}
                   />
@@ -290,7 +354,14 @@ function AddAppointment() {
             >
               <Box>
                 <p className="text-xs mb-2">Reason:</p>
-                <TextField id="reasonStatus" variant="outlined" fullWidth />
+                <TextField
+                  id="reasonStatus"
+                  variant="outlined"
+                  fullWidth
+                  name="reason"
+                  value={appointmentData.reason}
+                  onChange={handleInputChange}
+                />
               </Box>
             </Grid>
 
@@ -305,7 +376,21 @@ function AddAppointment() {
             >
               <Box>
                 <p className="text-xs mb-2">Status:</p>
-                <TextField id="reasonStatus" variant="outlined" fullWidth />
+                <FormControl fullWidth>
+                  <Select
+                    sx={{ padding: "0.5rem !important" }}
+                    value={appointmentData.status}
+                    onChange={handleInputChange}
+                    displayEmpty
+                    name="status"
+                  >
+                    <MenuItem value="Scheduled">
+                      <em>Scheduled</em>
+                    </MenuItem>
+                    <MenuItem value="Completed">Completed</MenuItem>
+                    <MenuItem value="Cancelled">Cancelled</MenuItem>
+                  </Select>
+                </FormControl>
               </Box>
             </Grid>
           </Grid>

@@ -1,10 +1,12 @@
 import axios from "axios";
+import { json } from "react-router-dom";
 
 const user_id = localStorage.getItem("id");
 
 const API_URL = `http://localhost:3000/api/appointments/user/${user_id}`;
 const FAMILY_API_URL = `http://localhost:3000/api/appointments/familynames/${user_id}`;
 const DOCTOR_API_URL = `http://localhost:3000/api/appointments/doctornames`;
+const CREATE_API_URL = `http://localhost:3000/api/appointments/createAppointment/${user_id}`;
 
 // Fetch all appointments
 export const getAppointmentByUserId = async () => {
@@ -60,5 +62,26 @@ export const getDoctorNames = async () => {
   } catch (error) {
     console.log("Doctor Service: Error fetching doctor names:", error);
     throw error;
+  }
+};
+
+export const createAppointmentService = async (appointmentData) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    console.error("Invalid token. Please login!");
+  }
+
+  try {
+    const response = await axios.post(CREATE_API_URL, appointmentData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Unable to create appointment: ", error);
   }
 };

@@ -4,6 +4,7 @@ import {
   getAppointmentByUserId,
   getUserfamilyNames,
   getDoctorNames,
+  createAppointmentService,
 } from "services/Appointment/appointmentService";
 
 export const AppointmentsContext = createContext();
