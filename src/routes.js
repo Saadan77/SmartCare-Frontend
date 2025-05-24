@@ -24,6 +24,7 @@ import DischargeSummary from "layouts/Discharge Summary";
 // import MedicineChargeFile from "layouts/Medicine Charge File";
 import AddClient from "layouts/Add Client";
 import Chatbot from "layouts/SmartCare ChatBot";
+import WellBeing from "layouts/Well Being";
 // import FeeStructure from "layouts/Fee Structure";
 // import PharmacySetup from "layouts/Pharmacy Setup";
 // import ManageFavourites from "layouts/Manage Favourites";
@@ -313,6 +314,14 @@ const routes = [
     icon: <Icon fontSize="small">smart_toy</Icon>,
     route: "/chatbot",
     component: <Chatbot />,
+  },
+  {
+    type: "collapse",
+    name: "Well Being",
+    key: "wellBeing",
+    icon: <Icon fontSize="small">self_improvement</Icon>,
+    route: "/wellBeing",
+    component: <WellBeing />,
   },
   {
     type: "collapse",
