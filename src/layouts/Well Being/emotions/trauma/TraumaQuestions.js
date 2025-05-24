@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Paper, Button } from "@mui/material";
+import { Container } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 
@@ -14,6 +14,8 @@ import TraumaQuestion8 from "./TraumaQuestion8";
 import TraumaQuestion9 from "./TraumaQuestion9";
 import TraumaQuestion10 from "./TraumaQuestion10";
 import MDButton from "components/MDButton";
+
+import TraumaImg from "../../../../assets/images/Moods/Trauma.gif";
 
 const questionComponents = [
   TraumaQuestion1,
@@ -60,26 +62,36 @@ const TraumaQuestions = ({ setSelectedMood }) => {
         margin: "0 !important",
       }}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.5 }}
-        >
-          <CurrentQuestion onNext={handleNext} selectedAnswer={answers[currentIndex] || ""} />
-        </motion.div>
-      </AnimatePresence>
-      <div className="flex justify-between mt-4">
-        <MDButton
-          onClick={handleBack}
-          sx={{ borderRadius: 0, minHeight: 0 }}
-          variant="gradient"
-          color="light"
-        >
-          <span className="text-xs">Back</span>
-        </MDButton>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="col-span-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              <CurrentQuestion onNext={handleNext} selectedAnswer={answers[currentIndex] || ""} />
+            </motion.div>
+          </AnimatePresence>
+          <div className="flex justify-between mt-4">
+            <MDButton
+              onClick={handleBack}
+              sx={{ borderRadius: 0, minHeight: 0 }}
+              variant="gradient"
+              color="light"
+            >
+              <span className="text-xs">Back</span>
+            </MDButton>
+          </div>
+        </div>
+        <div className="col-span-1">
+          <iframe
+            style={{ width: "500px", height: "500px" }}
+            src="https://lottie.host/embed/d3cb0e80-6263-4f6a-82ac-23e25599b0c6/tK2LndGdUZ.lottie"
+          ></iframe>
+        </div>
       </div>
     </Container>
   );

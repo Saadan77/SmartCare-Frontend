@@ -5,16 +5,52 @@ import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnut
 import { Container, Paper, Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import TraumaQuestions from "./emotions/trauma/TraumaQuestions";
+import TraumaImg from "../../../src/assets/images/Moods/trauma.png";
+import StressImg from "../../../src/assets/images/Moods/stress.png";
+import AnxietyImg from "../../../src/assets/images/Moods/anxiety.png";
+import DepressedImg from "../../../src/assets/images/Moods/depressed.png";
+import DisorderImg from "../../../src/assets/images/Moods/disorder.png";
+import HappyImg from "../../../src/assets/images/Moods/trauma.png";
 
 const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const moods = [
-    { name: "Trauma", component: <TraumaQuestions setSelectedMood={setSelectedMood} /> },
-    { name: "Stress", component: null },
-    { name: "Anxiety", component: null },
-    { name: "Depression", component: null },
-    { name: "Psychology", component: null },
-    { name: "Happy", component: null },
+    {
+      name: "Trauma",
+      img: TraumaImg,
+      component: <TraumaQuestions setSelectedMood={setSelectedMood} />,
+      bgColor: "#F5E4EF", // Light Pink (similar to "Blank")
+    },
+    {
+      name: "Stress",
+      img: StressImg,
+      component: null,
+      bgColor: "#FCE6C9", // Light Orange (similar to "Frustrated")
+    },
+    {
+      name: "Anxiety",
+      img: AnxietyImg,
+      component: null,
+      bgColor: "#E7F5E4", // Light Green (similar to "Excited")
+    },
+    {
+      name: "Depression",
+      img: DepressedImg,
+      component: null,
+      bgColor: "#E4F0F5", // Light Blue (similar to "Demure")
+    },
+    {
+      name: "Psychology",
+      img: DisorderImg,
+      component: null,
+      bgColor: "#E4F5F5", // Light Teal (similar to "Nostalgic")
+    },
+    {
+      name: "Happy",
+      img: HappyImg,
+      component: null,
+      bgColor: "#F5F0E4", // Light Yellow (similar to "Lonely")
+    },
   ];
 
   const handleMoodClick = (mood) => {
@@ -47,15 +83,16 @@ const MoodTracker = () => {
                         key={index}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="cursor-pointer text-center"
+                        className="cursor-pointer text-center rounded-lg p-4"
+                        style={{ backgroundColor: mood.bgColor }}
                         onClick={() => handleMoodClick(mood.name)}
                       >
                         <img
-                          src={`https://via.placeholder.com/100?text=${mood.name}`}
+                          src={mood.img}
                           alt={mood.name}
-                          className="w-24 h-24 mx-auto rounded-lg"
+                          className="w-24 h-32 mx-auto rounded-lg"
                         />
-                        <p className="mt-2 text-sm font-medium">{mood.name}</p>
+                        <p className="mt-2 text-sm font-medium text-gray-700">{mood.name}</p>
                       </motion.div>
                     ))}
                   </div>
