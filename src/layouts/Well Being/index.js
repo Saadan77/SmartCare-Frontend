@@ -16,40 +16,40 @@ const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const moods = [
     {
-      name: "Trauma",
+      name: "Traumatized",
       img: TraumaImg,
       component: <TraumaQuestions setSelectedMood={setSelectedMood} />,
-      bgColor: "#F5E4EF", // Light Pink (similar to "Blank")
+      bgColor: "#F5E4EF",
     },
     {
-      name: "Stress",
+      name: "Stressed",
       img: StressImg,
       component: null,
-      bgColor: "#FCE6C9", // Light Orange (similar to "Frustrated")
+      bgColor: "#FCE6C9",
     },
     {
       name: "Anxiety",
       img: AnxietyImg,
       component: null,
-      bgColor: "#E7F5E4", // Light Green (similar to "Excited")
+      bgColor: "#E7F5E4",
     },
     {
-      name: "Depression",
+      name: "Depressed",
       img: DepressedImg,
       component: null,
-      bgColor: "#E4F0F5", // Light Blue (similar to "Demure")
+      bgColor: "#E4F0F5",
     },
     {
-      name: "Psychology",
+      name: "Psycho",
       img: DisorderImg,
       component: null,
-      bgColor: "#E4F5F5", // Light Teal (similar to "Nostalgic")
+      bgColor: "#E4F5F5",
     },
     {
       name: "Happy",
       img: HappyImg,
       component: null,
-      bgColor: "#F5F0E4", // Light Yellow (similar to "Lonely")
+      bgColor: "#F5F0E4",
     },
   ];
 
@@ -71,13 +71,17 @@ const MoodTracker = () => {
           {!selectedMood && (
             <>
               <Box>
-                <Typography variant="h6" className="text-[#42424a] font-semibold mb-4">
+                <Typography
+                  variant="h6"
+                  className="text-[#42424a] font-semibold"
+                  style={{ marginBottom: "1rem" }}
+                >
                   How do you feel today?
                 </Typography>
               </Box>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-4 items-center">
                 <div className="col-span-1">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-3 gap-4">
                     {moods.map((mood, index) => (
                       <motion.div
                         key={index}
@@ -90,7 +94,7 @@ const MoodTracker = () => {
                         <img
                           src={mood.img}
                           alt={mood.name}
-                          className="w-24 h-32 mx-auto rounded-lg"
+                          className="w-28 h-36 mx-auto rounded-lg"
                         />
                         <p className="mt-2 text-sm font-medium text-gray-700">{mood.name}</p>
                       </motion.div>
