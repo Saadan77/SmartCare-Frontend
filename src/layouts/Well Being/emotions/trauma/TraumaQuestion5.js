@@ -16,7 +16,11 @@ const TraumaQuestion5 = ({ onNext, selectedAnswer: initialAnswer }) => {
 
   return (
     <>
-      <Typography variant="h6" className="text-[#42424a] font-semibold mb-4">
+      <Typography
+        variant="h6"
+        className="text-[#42424a] font-semibold mb-4"
+        style={{ marginBottom: "1rem" }}
+      >
         Do you feel overly alert or on edge most of the time?
       </Typography>
       <fieldset className="space-y-3">

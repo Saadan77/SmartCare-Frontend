@@ -16,7 +16,11 @@ const TraumaQuestion3 = ({ onNext, selectedAnswer: initialAnswer }) => {
 
   return (
     <>
-      <Typography variant="h6" className="text-[#42424a] font-semibold mb-4">
+      <Typography
+        variant="h6"
+        className="text-[#42424a] font-semibold mb-4"
+        style={{ marginBottom: "1rem" }}
+      >
         Have you had recurring nightmares or flashbacks?
       </Typography>
       <fieldset className="space-y-3">

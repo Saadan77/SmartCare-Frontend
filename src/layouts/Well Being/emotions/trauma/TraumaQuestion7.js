@@ -16,7 +16,11 @@ const TraumaQuestion7 = ({ onNext, selectedAnswer: initialAnswer }) => {
 
   return (
     <>
-      <Typography variant="h6" className="text-[#42424a] font-semibold mb-4">
+      <Typography
+        variant="h6"
+        className="text-[#42424a] font-semibold mb-4"
+        style={{ marginBottom: "1rem" }}
+      >
         Do you feel guilt or shame related to a past event?
       </Typography>
       <fieldset className="space-y-3">
