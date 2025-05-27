@@ -5,6 +5,8 @@ import DefaultDoughnutChart from "examples/Charts/DoughnutCharts/DefaultDoughnut
 import { Container, Paper, Box, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import TraumaQuestions from "./emotions/trauma/TraumaQuestions";
+import ActivitySelection from "./emotions/trauma/ActivitySelection";
+import ActivityDetail from "./emotions/trauma/ActivityDetail";
 import TraumaImg from "../../../src/assets/images/Moods/trauma.png";
 import StressImg from "../../../src/assets/images/Moods/stress.png";
 import AnxietyImg from "../../../src/assets/images/Moods/anxiety.png";
@@ -51,10 +53,22 @@ const MoodTracker = () => {
       component: null,
       bgColor: "#F5F0E4",
     },
+    {
+      name: "ActivitySelection",
+      component: <ActivitySelection setSelectedMood={setSelectedMood} />,
+    },
   ];
 
   const handleMoodClick = (mood) => {
     setSelectedMood(mood);
+  };
+
+  const renderActivityDetail = () => {
+    if (selectedMood && selectedMood.startsWith("ActivityDetail-")) {
+      const activityName = selectedMood.replace("ActivityDetail-", "");
+      return <ActivityDetail selectedActivity={activityName} setSelectedMood={setSelectedMood} />;
+    }
+    return null;
   };
 
   return (
@@ -79,10 +93,10 @@ const MoodTracker = () => {
                   How do you feel today?
                 </Typography>
               </Box>
-              <div className="grid grid-cols-2 gap-4 items-center">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-1">
                   <div className="grid grid-cols-3 gap-4">
-                    {moods.map((mood, index) => (
+                    {moods.slice(0, 6).map((mood, index) => (
                       <motion.div
                         key={index}
                         whileHover={{ scale: 1.05 }}
@@ -94,7 +108,7 @@ const MoodTracker = () => {
                         <img
                           src={mood.img}
                           alt={mood.name}
-                          className="w-28 h-36 mx-auto rounded-lg"
+                          className="w-24 h-32 mx-auto rounded-lg"
                         />
                         <p className="mt-2 text-sm font-medium text-gray-700">{mood.name}</p>
                       </motion.div>
@@ -126,7 +140,10 @@ const MoodTracker = () => {
               </div>
             </>
           )}
-          {selectedMood && moods.find((m) => m.name === selectedMood)?.component}
+          {selectedMood &&
+            !selectedMood.startsWith("ActivityDetail-") &&
+            moods.find((m) => m.name === selectedMood)?.component}
+          {renderActivityDetail()}
         </Paper>
       </Container>
     </DashboardLayout>

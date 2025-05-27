@@ -40,7 +40,11 @@ const TraumaQuestions = ({ setSelectedMood }) => {
         ...prev,
         [currentIndex]: selectedAnswer,
       }));
-      if (currentIndex < questionComponents.length - 1) setCurrentIndex(currentIndex + 1);
+      if (currentIndex < questionComponents.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      } else {
+        setSelectedMood("ActivitySelection");
+      }
     }
   };
 
@@ -77,10 +81,10 @@ const TraumaQuestions = ({ setSelectedMood }) => {
           </AnimatePresence>
           <div className="flex justify-between mt-4">
             <MDButton
-              onClick={handleBack}
               sx={{ borderRadius: 0, minHeight: 0 }}
               variant="gradient"
               color="light"
+              onClick={handleBack}
             >
               <span className="text-xs">Back</span>
             </MDButton>
