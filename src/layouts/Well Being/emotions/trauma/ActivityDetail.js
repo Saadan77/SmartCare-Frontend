@@ -66,54 +66,62 @@ const ActivityDetail = ({ selectedActivity, setSelectedMood }) => {
         </Typography>
       </Box>
       <div className="grid grid-cols-2 gap-4">
-        <div className="col-span-1 p-4">
-          <div className="mb-6">
-            <div className="flex gap-2 items-center">
-              <TbCircleNumber1Filled />
-              <Typography variant="h6" className="text-gray-700 font-semibold mb-2">
+        <div className="col-span-1 p-1">
+          <div className="mb-6 bg-white rounded-lg shadow-md p-1">
+            <div className="flex gap-2 items-center mb-2">
+              <TbCircleNumber1Filled className="text-blue-500 text-xl" />
+              <Typography variant="h6" className="text-gray-700 font-semibold">
                 Purpose
               </Typography>
             </div>
             <div className="flex gap-2 items-center">
-              <TbArrowBigRightLines />
-              <Typography variant="body2">{activity.purpose}</Typography>
+              <TbArrowBigRightLines className="text-gray-500" />
+              <Typography variant="body2" className="text-gray-600">
+                {activity.purpose}
+              </Typography>
             </div>
           </div>
-          <div className="mb-6">
-            <div className="flex gap-2 items-center">
-              <TbCircleNumber2Filled />
-              <Typography variant="h6" className="text-gray-700 font-semibold mb-2">
+          <div className="mb-6 bg-white rounded-lg shadow-md p-1">
+            <div className="flex gap-2 items-center mb-2">
+              <TbCircleNumber2Filled className="text-blue-500 text-xl" />
+              <Typography variant="h6" className="text-gray-700 font-semibold">
                 How to Do It
               </Typography>
             </div>
             <div className="flex gap-2 items-center">
-              <TbArrowBigRightLines />
-              <Typography variant="body2">{activity.howTo}</Typography>
+              <TbArrowBigRightLines className="text-gray-500" />
+              <Typography variant="body2" className="text-gray-600 whitespace-pre-line">
+                {activity.howTo}
+              </Typography>
             </div>
           </div>
-          <div className="mb-6">
-            <div className="flex gap-2 items-center">
-              <TbCircleNumber3Filled />
-              <Typography variant="h6" className="text-gray-700 font-semibold mb-2">
+          <div className="mb-6 bg-white rounded-lg shadow-md p-1">
+            <div className="flex gap-2 items-center mb-2">
+              <TbCircleNumber3Filled className="text-blue-500 text-xl" />
+              <Typography variant="h6" className="text-gray-700 font-semibold">
                 Why It Works
               </Typography>
             </div>
             <div className="flex gap-2 items-center">
-              <TbArrowBigRightLines />
-              <Typography variant="body2">{activity.whyWorks}</Typography>
+              <TbArrowBigRightLines className="text-gray-500" />
+              <Typography variant="body2" className="text-gray-600">
+                {activity.whyWorks}
+              </Typography>
             </div>
           </div>
           {activity.bonus && (
-            <div className="mb-6">
-              <div className="flex gap-2 items-center">
-                <TbCircleNumber4Filled />
-                <Typography variant="h6" className="text-gray-700 font-semibold mb-2">
+            <div className="mb-6 bg-white rounded-lg shadow-md p-1">
+              <div className="flex gap-2 items-center mb-2">
+                <TbCircleNumber4Filled className="text-blue-500 text-xl" />
+                <Typography variant="h6" className="text-gray-700 font-semibold">
                   Bonus
                 </Typography>
               </div>
               <div className="flex gap-2 items-center">
-                <TbArrowBigRightLines />
-                <Typography variant="body2">{activity.bonus}</Typography>
+                <TbArrowBigRightLines className="text-gray-500" />
+                <Typography variant="body2" className="text-gray-600">
+                  {activity.bonus}
+                </Typography>
               </div>
             </div>
           )}
@@ -124,7 +132,6 @@ const ActivityDetail = ({ selectedActivity, setSelectedMood }) => {
               minHeight: 0,
               backgroundColor: "#1694c4",
               color: "White",
-              marginTop: "1rem",
             }}
             onClick={() => setSelectedMood(null)}
           >
@@ -142,8 +149,8 @@ const ActivityDetail = ({ selectedActivity, setSelectedMood }) => {
 };
 
 ActivityDetail.propTypes = {
-  selectedActivity: PropTypes.isRequired,
-  setSelectedMood: PropTypes.isRequired,
+  selectedActivity: PropTypes.string.isRequired,
+  setSelectedMood: PropTypes.func.isRequired,
 };
 
 export default ActivityDetail;
