@@ -12,7 +12,7 @@ import StressImg from "../../../src/assets/images/Moods/stress.png";
 import AnxietyImg from "../../../src/assets/images/Moods/anxiety.png";
 import DepressedImg from "../../../src/assets/images/Moods/depressed.png";
 import DisorderImg from "../../../src/assets/images/Moods/disorder.png";
-import HappyImg from "../../../src/assets/images/Moods/trauma.png";
+import HappyImg from "../../../src/assets/images/Moods/happy.png";
 
 const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
