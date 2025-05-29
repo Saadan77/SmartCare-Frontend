@@ -25,6 +25,7 @@
     "chart.js": "^4.3.0",
     "chroma-js": "2.4.2",
     "dayjs": "^1.11.13",
+    "dayjs-ext": "^2.2.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "framer-motion": "^12.12.2",

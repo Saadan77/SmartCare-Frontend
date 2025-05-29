@@ -17,32 +17,36 @@ export default function data() {
   const rows = appointments.map((appointment) => ({
     Name: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["family_member_name"]}
+        {appointment["family_member_name"] || "Unknown"}
       </MDTypography>
     ),
     AppoinmentDate: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["appointment_date"]}
+        {new Date(appointment["appointment_date"]).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })}
       </MDTypography>
     ),
     Doctor: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["doctor_name"]}
+        {appointment["doctor_name"] || "Unknown"}
       </MDTypography>
     ),
     AppointmentTime: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["appointment_time"]}
+        {appointment["appointment_time"] || "N/A"}
       </MDTypography>
     ),
     Reason: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["reason"]}
+        {appointment["reason"] || "N/A"}
       </MDTypography>
     ),
     Status: (
       <MDTypography variant="caption" fontWeight="medium">
-        {appointment["status"]}
+        {appointment["status"] || "N/A"}
       </MDTypography>
     ),
   }));
