@@ -12,6 +12,7 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 import useAuth from "useAuth";
+import { getPredictionNotificaion } from "services/Sign In/signInService";
 
 function Basic() {
   const { updateUser } = useAuth();
@@ -81,16 +82,11 @@ function Basic() {
 
       updateUser(res.data);
 
-      if (res.data.role === "admin") {
-        navigate("/dashboard");
-        window.location.reload();
-      } else if (res.data.role === "doctor") {
-        navigate("/dashboard");
-        window.location.reload();
-      } else if (res.data.role === "patient") {
-        navigate("/dashboard");
-        window.location.reload();
-      }
+      await axios.get("http://localhost:3000/prediction-notification");
+      await axios.get("http://localhost:3000/disease-notification");
+
+      navigate("/dashboard");
+      window.location.reload();
     } catch (err) {
       setError("Invalid credentials or incorrect role selection");
     }
@@ -151,7 +147,7 @@ function Basic() {
                 </select>
               </FormControl>
             </MDBox>
-
+            {/* 
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
@@ -163,7 +159,7 @@ function Basic() {
               >
                 &nbsp;&nbsp;Remember me
               </MDTypography>
-            </MDBox>
+            </MDBox> */}
 
             {error && (
               <MDTypography color="error" variant="caption" display="block" textAlign="center">
