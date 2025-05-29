@@ -123,16 +123,6 @@ const routes = [
     protected: true,
     roles: ["doctor"],
   },
-  {
-    type: "collapse",
-    name: "Patient Registeration",
-    key: "register",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/register",
-    component: <PatientRegistration />,
-    protected: true,
-    roles: ["doctor", "patient"],
-  },
   // {
   //   type: "collapse",
   //   name: "Emergency Case",
@@ -312,6 +302,16 @@ const routes = [
     icon: <Icon fontSize="small">self_improvement</Icon>,
     route: "/wellBeing",
     component: <WellBeing />,
+  },
+  {
+    type: "collapse",
+    name: "Patient Registeration",
+    key: "register",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/register",
+    component: <PatientRegistration />,
+    protected: true,
+    roles: ["doctor", "patient"],
   },
   {
     type: "collapse",
