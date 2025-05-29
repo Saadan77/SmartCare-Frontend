@@ -8,11 +8,10 @@ export default function data() {
   const columns = [
     { Header: "Name", accessor: "Name", width: "15%", align: "left" },
     { Header: "Appoinment Date", accessor: "AppoinmentDate", width: "15%", align: "center" },
-    { Header: "Doctor", accessor: "Doctor", width: "15%", align: "center" },
+    { Header: "Doctor", accessor: "Doctor", width: "15%", align: "left" },
     { Header: "Appointment Time", accessor: "AppointmentTime", width: "15%", align: "center" },
-    { Header: "Reason", accessor: "Reason", width: "15%", align: "center" },
+    { Header: "Reason", accessor: "Reason", width: "25%", align: "left" },
     { Header: "Status", accessor: "Status", width: "15%", align: "center" },
-    { Header: "Updated On", accessor: "UpdatedOn", width: "10%", align: "center" },
   ];
 
   const rows = appointments.map((appointment) => ({
@@ -44,11 +43,6 @@ export default function data() {
     Status: (
       <MDTypography variant="caption" fontWeight="medium">
         {appointment["status"]}
-      </MDTypography>
-    ),
-    UpdatedOn: (
-      <MDTypography variant="caption" fontWeight="medium">
-        {appointment["updated_at"]}
       </MDTypography>
     ),
   }));

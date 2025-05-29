@@ -3,12 +3,31 @@ import { json } from "react-router-dom";
 
 const user_id = localStorage.getItem("id");
 
+const ALL_APPOINTMENTS_API_URL = `http://localhost:3000/api/appointments`;
 const API_URL = `http://localhost:3000/api/appointments/user/${user_id}`;
 const FAMILY_API_URL = `http://localhost:3000/api/appointments/familynames/${user_id}`;
 const DOCTOR_API_URL = `http://localhost:3000/api/appointments/doctornames`;
 const CREATE_API_URL = `http://localhost:3000/api/appointments/createAppointment/${user_id}`;
 
 // Fetch all appointments
+export const getAllAppointments = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+    const response = await axios.get(ALL_APPOINTMENTS_API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching appointments:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 export const getAppointmentByUserId = async () => {
   try {
     const token = localStorage.getItem("token");
@@ -22,7 +41,7 @@ export const getAppointmentByUserId = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching appointments:", error.response?.data || error.message);
+    console.error("Error fetching user appointments:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -69,7 +88,7 @@ export const createAppointmentService = async (appointmentData) => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    console.error("Invalid token. Please login!");
+    throw new Error("Invalid token. Please login!");
   }
 
   try {
@@ -83,5 +102,6 @@ export const createAppointmentService = async (appointmentData) => {
     return response.data;
   } catch (error) {
     console.error("Unable to create appointment: ", error);
+    throw error;
   }
 };

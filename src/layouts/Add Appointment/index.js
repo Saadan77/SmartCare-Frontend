@@ -32,6 +32,7 @@ import { createAppointmentService } from "services/Appointment/appointmentServic
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import dayjs from "dayjs";
 
 function getStyles(name, personName, theme) {
   return {
@@ -50,7 +51,7 @@ function AddAppointment() {
   const [selectedTime, setSelectedTime] = useState("");
 
   const [appointmentData, setAppointmentData] = useState({
-    id: "",
+    id: localStorage.getItem("id") || "",
     family_member_id: "",
     doctor_id: "",
     appointment_date: "",
@@ -66,8 +67,6 @@ function AddAppointment() {
       [name]: value,
     });
 
-    console.log("Input Change: ", name, " ", value);
-
     if (value) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -76,40 +75,77 @@ function AddAppointment() {
     }
   };
 
+  const { addNewAppointment, allAppointments, familyNames, doctorNames } =
+    useContext(AppointmentsContext);
+
   const handleSave = async (e) => {
     e.preventDefault();
 
     try {
+      const newErrors = {};
+      if (!appointmentData.family_member_id)
+        newErrors.family_member_id = "Patient name is required";
+      if (!selectedDoctor) newErrors.doctor_id = "Doctor is required";
+      if (!appointmentData.appointment_date)
+        newErrors.appointment_date = "Appointment date is required";
+      if (!selectedTime) newErrors.appointment_time = "Appointment time is required";
+      if (!appointmentData.status) newErrors.status = "Status is required";
+
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        toast.error("Please fill all required fields");
+        return;
+      }
+
+      const selectedDoctorData = doctorNames.find((doc) => doc.doctor_name === selectedDoctor);
+      if (!selectedDoctorData || !selectedDoctorData.doctor_id) {
+        throw new Error("Invalid doctor selection: Doctor ID not found");
+      }
+      const doctorId = selectedDoctorData.doctor_id;
+
+      const selectedFamilyMember = familyNames.find((member) => member.full_name === personName[0]);
+      if (!selectedFamilyMember || !selectedFamilyMember.family_member_id) {
+        throw new Error("Invalid family member selection: Family Member ID not found");
+      }
+      const familyMemberId = selectedFamilyMember.family_member_id;
+
+      const [startTime] = selectedTime.split(" - ");
+      const formattedTime = `${startTime}:00.0000000`;
+
       const enteredAppointmentData = {
         id: localStorage.getItem("id"),
-        family_member_id: appointmentData.family_member_id,
-        doctor_id: appointmentData.doctor_id,
-        appointment_date: appointmentData.appointment_date,
-        appointment_time: selectedTime,
-        reason: appointmentData.reason,
+        family_member_id: familyMemberId,
+        doctor_id: doctorId,
+        appointment_date: dayjs(appointmentData.appointment_date).format("YYYY-MM-DD"),
+        appointment_time: formattedTime,
+        reason: appointmentData.reason || "Not specified",
         status: appointmentData.status,
       };
 
       const saveAppointment = await createAppointmentService(enteredAppointmentData);
-      setAppointmentData((prevAppointmets) => [...prevAppointmets, saveAppointment]);
-      toast.success("New appointment added");
+      if (saveAppointment) {
+        addNewAppointment(saveAppointment);
+        toast.success("New appointment added");
 
-      setAppointmentData({
-        id: "",
-        family_member_id: "",
-        doctor_id: "",
-        appointment_date: "",
-        appointment_time: "",
-        reason: "",
-        status: "",
-      });
+        setAppointmentData({
+          id: localStorage.getItem("id") || "",
+          family_member_id: "",
+          doctor_id: "",
+          appointment_date: "",
+          reason: "",
+          status: "",
+        });
+        setSelectedDoctor("");
+        setSelectedTime("");
+        setTimeSlots([]);
+        setPersonName([]);
+      } else {
+        throw new Error("No data returned from API");
+      }
     } catch (error) {
-      console.error("Unable to create new appointment", error);
-      toast.error("Failed to create appointment");
+      toast.error("Failed to create appointment: " + (error.response?.data || error.message));
     }
   };
-
-  const { familyNames, doctorNames } = useContext(AppointmentsContext);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -122,19 +158,19 @@ function AddAppointment() {
     },
   };
 
-  const formatTime = (isoString) => {
-    const date = new Date(isoString);
-    return date.toTimeString().slice(0, 5);
-  };
-
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [personName, setPersonName] = useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
+    const selected = typeof value === "string" ? value.split(",") : value;
+    setPersonName(selected.length > 1 ? [selected[selected.length - 1]] : selected);
+    setAppointmentData({
+      ...appointmentData,
+      family_member_id: selected.length > 0 ? selected[selected.length - 1] : "",
+    });
   };
 
   const generateTimeSlotRanges = (start, end) => {
@@ -159,6 +195,32 @@ function AddAppointment() {
 
     return slots;
   };
+
+  const getBookedTimeSlots = () => {
+    if (!appointmentData.appointment_date || !selectedDoctor) return [];
+
+    const selectedDate = dayjs(appointmentData.appointment_date).format("YYYY-MM-DD");
+    const selectedDoctorData = doctorNames.find((doc) => doc.doctor_name === selectedDoctor);
+    if (!selectedDoctorData) return [];
+
+    return allAppointments
+      .filter((appointment) => {
+        const appointmentDate = dayjs(appointment.appointment_date).format("YYYY-MM-DD");
+        return (
+          appointmentDate === selectedDate &&
+          appointment.doctor_id === selectedDoctorData.doctor_id &&
+          appointment.status !== "Cancelled"
+        );
+      })
+      .map((appointment) => {
+        const startTime = new Date(appointment.appointment_time).toTimeString().slice(0, 5);
+        const endTime = new Date(appointment.appointment_time);
+        endTime.setMinutes(endTime.getMinutes() + 15);
+        return `${startTime} - ${endTime.toTimeString().slice(0, 5)}`;
+      });
+  };
+
+  const bookedTimeSlots = getBookedTimeSlots();
 
   return (
     <DashboardLayout>
@@ -199,7 +261,7 @@ function AddAppointment() {
                   Doctor:
                   <span className="text-red-600 text-base mx-2">*</span>
                 </p>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={!!errors.doctor_id}>
                   <Select
                     value={selectedDoctor}
                     sx={{ padding: "0.35rem !important" }}
@@ -211,26 +273,51 @@ function AddAppointment() {
                         (doc) => doc.doctor_name === selectedName
                       );
                       if (selectedDoctorData) {
-                        const start = formatTime(selectedDoctorData.start_time);
-                        const end = formatTime(selectedDoctorData.end_time);
+                        const start = selectedDoctorData.start_time;
+                        const end = selectedDoctorData.end_time;
                         const slots = generateTimeSlotRanges(start, end);
                         setTimeSlots(slots);
                         setSelectedTime("");
+                        setAppointmentData((prev) => ({
+                          ...prev,
+                          doctor_id: selectedDoctorData.doctor_id,
+                        }));
+                        setErrors((prevErrors) => ({
+                          ...prevErrors,
+                          doctor_id: "",
+                        }));
+                      } else {
+                        setErrors((prevErrors) => ({
+                          ...prevErrors,
+                          doctor_id: "Doctor not found in list",
+                        }));
                       }
                     }}
+                    displayEmpty
                   >
-                    {doctorNames.map((doc) => (
-                      <MenuItem key={doc.doctor_name} value={doc.doctor_name}>
-                        {doc.doctor_name}
+                    <MenuItem value="" disabled>
+                      Select a doctor
+                    </MenuItem>
+                    {doctorNames.length > 0 ? (
+                      doctorNames.map((doc) => (
+                        <MenuItem key={doc.doctor_id || doc.doctor_name} value={doc.doctor_name}>
+                          {doc.doctor_name}
+                        </MenuItem>
+                      ))
+                    ) : (
+                      <MenuItem value="" disabled>
+                        No doctors available
                       </MenuItem>
-                    ))}
+                    )}
                   </Select>
+                  {errors.doctor_id && (
+                    <p className="text-red-500 text-xs mt-1">{errors.doctor_id}</p>
+                  )}
                 </FormControl>
               </Box>
             </Grid>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {/* Appointment Date */}
               <Grid
                 item
                 xs={6}
@@ -246,22 +333,38 @@ function AddAppointment() {
                     <span className="text-red-600 text-base mx-2">*</span>
                   </p>
                   <DatePicker
-                    class="w-64"
+                    className="w-64"
+                    minDate={dayjs()}
+                    value={
+                      appointmentData.appointment_date
+                        ? dayjs(appointmentData.appointment_date)
+                        : null
+                    }
+                    onChange={(newValue) => {
+                      const formattedDate = newValue ? newValue.toISOString() : "";
+                      setAppointmentData({
+                        ...appointmentData,
+                        appointment_date: formattedDate,
+                      });
+                      setSelectedTime("");
+                      if (formattedDate) {
+                        setErrors((prevErrors) => ({
+                          ...prevErrors,
+                          appointment_date: "",
+                        }));
+                      }
+                    }}
                     renderInput={(params) => (
                       <TextField
-                        name="appointment_date"
                         required
-                        value={appointmentData.appointment_date}
-                        onChange={handleInputChange}
                         {...params}
                         fullWidth
                         variant="outlined"
-                        // error={!!errors.dob}
-                        // helperText={errors.dob}
+                        error={!!errors.appointment_date}
+                        helperText={errors.appointment_date}
                       />
                     )}
                   />
-                  {errors.dob && <p className="text-red-500 text-xs mt-1">{errors.dob}</p>}
                 </Box>
               </Grid>
             </LocalizationProvider>
@@ -280,19 +383,41 @@ function AddAppointment() {
                   Appointment Time:
                   <span className="text-red-600 text-base mx-2">*</span>
                 </p>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={!!errors.appointment_time}>
                   <Select
                     labelId="time-slot-label"
                     sx={{ padding: "0.35rem !important" }}
                     value={selectedTime}
-                    onChange={(e) => setSelectedTime(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedTime(e.target.value);
+                      setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        appointment_time: "",
+                      }));
+                    }}
+                    disabled={!appointmentData.appointment_date || !selectedDoctor}
+                    displayEmpty
                   >
+                    <MenuItem value="" disabled>
+                      Select a time slot
+                    </MenuItem>
                     {timeSlots.map((slot) => (
-                      <MenuItem key={slot} value={slot}>
+                      <MenuItem
+                        key={slot}
+                        value={slot}
+                        disabled={bookedTimeSlots.includes(slot)}
+                        sx={{
+                          color: bookedTimeSlots.includes(slot) ? "gray" : "inherit",
+                          backgroundColor: bookedTimeSlots.includes(slot) ? "#f0f0f0" : "inherit",
+                        }}
+                      >
                         {slot}
                       </MenuItem>
                     ))}
                   </Select>
+                  {errors.appointment_time && (
+                    <p className="text-red-500 text-xs mt-1">{errors.appointment_time}</p>
+                  )}
                 </FormControl>
               </Box>
             </Grid>
@@ -311,12 +436,11 @@ function AddAppointment() {
                   Patient Name:
                   <span className="text-red-600 text-base mx-2">*</span>
                 </p>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={!!errors.family_member_id}>
                   <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     sx={{ padding: "0.75rem !important" }}
-                    multiple
                     value={personName}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
@@ -328,7 +452,11 @@ function AddAppointment() {
                       </Box>
                     )}
                     MenuProps={MenuProps}
+                    displayEmpty
                   >
+                    <MenuItem value="" disabled>
+                      Select a patient
+                    </MenuItem>
                     {familyNames.map((member) => (
                       <MenuItem
                         key={member.family_member_id}
@@ -339,6 +467,9 @@ function AddAppointment() {
                       </MenuItem>
                     ))}
                   </Select>
+                  {errors.family_member_id && (
+                    <p className="text-red-500 text-xs mt-1">{errors.family_member_id}</p>
+                  )}
                 </FormControl>
               </Box>
             </Grid>
@@ -376,20 +507,28 @@ function AddAppointment() {
             >
               <Box>
                 <p className="text-xs mb-2">Status:</p>
-                <FormControl fullWidth>
+                <FormControl fullWidth error={!!errors.status}>
                   <Select
                     sx={{ padding: "0.5rem !important" }}
                     value={appointmentData.status}
-                    onChange={handleInputChange}
+                    onChange={(e) => {
+                      handleInputChange(e);
+                      setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        status: "",
+                      }));
+                    }}
                     displayEmpty
                     name="status"
                   >
-                    <MenuItem value="Scheduled">
-                      <em>Scheduled</em>
+                    <MenuItem value="" disabled>
+                      Select a status
                     </MenuItem>
+                    <MenuItem value="Scheduled">Scheduled</MenuItem>
                     <MenuItem value="Completed">Completed</MenuItem>
                     <MenuItem value="Cancelled">Cancelled</MenuItem>
                   </Select>
+                  {errors.status && <p className="text-red-500 text-xs mt-1">{errors.status}</p>}
                 </FormControl>
               </Box>
             </Grid>
@@ -424,7 +563,7 @@ function AddAppointment() {
                   color: "White",
                 }}
               >
-                <button type="submit" className="text-xs">
+                <button onClick={handleSave} type="submit" className="text-xs">
                   SAVE
                 </button>
               </MDButton>
