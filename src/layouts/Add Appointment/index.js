@@ -33,6 +33,11 @@ import { createAppointmentService } from "services/Appointment/appointmentServic
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 function getStyles(name, personName, theme) {
   return {
@@ -61,12 +66,10 @@ function AddAppointment() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    setAppointmentData({
-      ...appointmentData,
-      [name]: value,
-    });
-
+    setAppointmentData((prev) => ({
+      ...prev,
+      [name]: name === "appointment_date" ? (value ? value.toISOString() : "") : value,
+    }));
     if (value) {
       setErrors((prevErrors) => ({
         ...prevErrors,
@@ -74,6 +77,10 @@ function AddAppointment() {
       }));
     }
   };
+
+  const formattedAppointmentDate = appointmentData.appointment_date
+    ? dayjs(appointmentData.appointment_date).format("YYYY-MM-DD")
+    : "";
 
   const { addNewAppointment, allAppointments, familyNames, doctorNames } =
     useContext(AppointmentsContext);
@@ -110,7 +117,7 @@ function AddAppointment() {
       const familyMemberId = selectedFamilyMember.family_member_id;
 
       const [startTime] = selectedTime.split(" - ");
-      const formattedTime = `${startTime}:00.0000000`;
+      const formattedTime = `${startTime}:00`;
 
       const enteredAppointmentData = {
         id: localStorage.getItem("id"),
@@ -123,6 +130,7 @@ function AddAppointment() {
       };
 
       const saveAppointment = await createAppointmentService(enteredAppointmentData);
+      console.log("New Appointment Data:", saveAppointment);
       if (saveAppointment) {
         addNewAppointment(saveAppointment);
         toast.success("New appointment added");
@@ -175,49 +183,67 @@ function AddAppointment() {
 
   const generateTimeSlotRanges = (start, end) => {
     const slots = [];
-    const [startHour, startMinute] = start.split(":").map(Number);
-    const [endHour, endMinute] = end.split(":").map(Number);
+    const startTime = dayjs(start, "HH:mm").tz("Asia/Karachi");
+    const endTime = dayjs(end, "HH:mm").tz("Asia/Karachi");
 
-    let current = new Date();
-    current.setHours(startHour, startMinute, 0, 0);
-
-    const endTime = new Date();
-    endTime.setHours(endHour, endMinute, 0, 0);
-
+    let current = startTime;
     while (current < endTime) {
-      const startTime = current.toTimeString().slice(0, 5);
-      current.setMinutes(current.getMinutes() + 15);
-      const endTimeSlot = current.toTimeString().slice(0, 5);
-      if (current <= endTime) {
-        slots.push(`${startTime} - ${endTimeSlot}`);
-      }
+      const slotStart = current.format("HH:mm");
+      const slotEnd = current.add(15, "minute").format("HH:mm");
+      slots.push(`${slotStart} - ${slotEnd}`);
+      current = current.add(15, "minute");
     }
 
+    console.log("Generated Time Slots:", slots);
     return slots;
   };
 
   const getBookedTimeSlots = () => {
-    if (!appointmentData.appointment_date || !selectedDoctor) return [];
+    if (!appointmentData.appointment_date || !selectedDoctor) {
+      console.log("Missing appointment date or doctor selection");
+      return [];
+    }
 
     const selectedDate = dayjs(appointmentData.appointment_date).format("YYYY-MM-DD");
     const selectedDoctorData = doctorNames.find((doc) => doc.doctor_name === selectedDoctor);
-    if (!selectedDoctorData) return [];
+    if (!selectedDoctorData) {
+      console.log("No doctor data found for:", selectedDoctor);
+      return [];
+    }
 
-    return allAppointments
+    console.log("Selected Date:", selectedDate);
+    console.log("Selected Doctor ID:", selectedDoctorData.doctor_id);
+    console.log("All Appointments:", allAppointments);
+
+    const bookedSlots = allAppointments
       .filter((appointment) => {
         const appointmentDate = dayjs(appointment.appointment_date).format("YYYY-MM-DD");
-        return (
+        const isMatch =
           appointmentDate === selectedDate &&
-          appointment.doctor_id === selectedDoctorData.doctor_id &&
-          appointment.status !== "Cancelled"
+          appointment.doctor_id.toString() === selectedDoctorData.doctor_id.toString() &&
+          appointment.status !== "Cancelled";
+        console.log(
+          `Appointment: ${appointment.appointment_date}, Doctor ID: ${appointment.doctor_id}, Time: ${appointment.appointment_time}, Status: ${appointment.status}, Match: ${isMatch}`
         );
+        return isMatch;
       })
       .map((appointment) => {
-        const startTime = new Date(appointment.appointment_time).toTimeString().slice(0, 5);
-        const endTime = new Date(appointment.appointment_time);
-        endTime.setMinutes(endTime.getMinutes() + 15);
-        return `${startTime} - ${endTime.toTimeString().slice(0, 5)}`;
+        let timeString = appointment.appointment_time;
+        if (!timeString || typeof timeString !== "string") {
+          console.warn("Invalid appointment_time, using fallback: 00:00", appointment);
+          timeString = "00:00:00";
+        } else if (timeString.length === 5) {
+          timeString = `${timeString}:00`;
+        }
+        const startTime = dayjs(timeString, "HH:mm:ss").format("HH:mm");
+        const endTime = dayjs(timeString, "HH:mm:ss").add(15, "minute").format("HH:mm");
+        const slot = `${startTime} - ${endTime}`;
+        console.log("Generated Booked Slot:", slot);
+        return slot;
       });
+
+    console.log("Booked Time Slots:", bookedSlots);
+    return bookedSlots;
   };
 
   const bookedTimeSlots = getBookedTimeSlots();
@@ -360,6 +386,7 @@ function AddAppointment() {
                         {...params}
                         fullWidth
                         variant="outlined"
+                        value={formattedAppointmentDate}
                         error={!!errors.appointment_date}
                         helperText={errors.appointment_date}
                       />
@@ -540,7 +567,7 @@ function AddAppointment() {
             </Typography>
           </Box>
 
-          <Grid container spacing={2} sx={{ marginTop: 1 }}>
+          <Grid container spacing={2}>
             <Grid item sm={12}>
               <DataTable
                 table={{ columns, rows }}
