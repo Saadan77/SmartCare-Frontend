@@ -3,32 +3,32 @@ import { Container } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
 
-import TraumaQuestion1 from "./TraumaQuestion1";
-import TraumaQuestion2 from "./TraumaQuestion2";
-import TraumaQuestion3 from "./TraumaQuestion3";
-import TraumaQuestion4 from "./TraumaQuestion4";
-import TraumaQuestion5 from "./TraumaQuestion5";
-import TraumaQuestion6 from "./TraumaQuestion6";
-import TraumaQuestion7 from "./TraumaQuestion7";
-import TraumaQuestion8 from "./TraumaQuestion8";
-import TraumaQuestion9 from "./TraumaQuestion9";
-import TraumaQuestion10 from "./TraumaQuestion10";
+import AnxiousQuestion1 from "./AnxiousQuestion1";
+import AnxiousQuestion2 from "./AnxiousQuestion2";
+import AnxiousQuestion3 from "./AnxiousQuestion3";
+import AnxiousQuestion4 from "./AnxiousQuestion4";
+import AnxiousQuestion5 from "./AnxiousQuestion5";
+import AnxiousQuestion6 from "./AnxiousQuestion6";
+import AnxiousQuestion7 from "./AnxiousQuestion7";
+import AnxiousQuestion8 from "./AnxiousQuestion8";
+import AnxiousQuestion9 from "./AnxiousQuestion9";
+import AnxiousQuestion10 from "./AnxiousQuestion10";
 import MDButton from "components/MDButton";
 
 const questionComponents = [
-  TraumaQuestion1,
-  TraumaQuestion2,
-  TraumaQuestion3,
-  TraumaQuestion4,
-  TraumaQuestion5,
-  TraumaQuestion6,
-  TraumaQuestion7,
-  TraumaQuestion8,
-  TraumaQuestion9,
-  TraumaQuestion10,
+  AnxiousQuestion1,
+  AnxiousQuestion2,
+  AnxiousQuestion3,
+  AnxiousQuestion4,
+  AnxiousQuestion5,
+  AnxiousQuestion6,
+  AnxiousQuestion7,
+  AnxiousQuestion8,
+  AnxiousQuestion9,
+  AnxiousQuestion10,
 ];
 
-const TraumaQuestions = ({ setSelectedMood }) => {
+const AnxiousQuestions = ({ setSelectedMood }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
 
@@ -91,7 +91,7 @@ const TraumaQuestions = ({ setSelectedMood }) => {
         <div className="col-span-1">
           <iframe
             style={{ width: "500px", height: "500px" }}
-            src="https://lottie.host/embed/d3cb0e80-6263-4f6a-82ac-23e25599b0c6/tK2LndGdUZ.lottie"
+            src="https://lottie.host/embed/030d3366-15d2-4f14-8214-c4d7137c1e7b/zW46EpoZWm.lottie"
           ></iframe>
         </div>
       </div>
@@ -99,8 +99,8 @@ const TraumaQuestions = ({ setSelectedMood }) => {
   );
 };
 
-TraumaQuestions.propTypes = {
+AnxiousQuestions.propTypes = {
   setSelectedMood: PropTypes.isRequired,
 };
 
-export default TraumaQuestions;
+export default AnxiousQuestions;

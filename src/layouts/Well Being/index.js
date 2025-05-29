@@ -13,6 +13,7 @@ import AnxietyImg from "../../../src/assets/images/Moods/anxiety.png";
 import DepressedImg from "../../../src/assets/images/Moods/depressed.png";
 import DisorderImg from "../../../src/assets/images/Moods/disorder.png";
 import HappyImg from "../../../src/assets/images/Moods/happy.png";
+import StressedQuestions from "./emotions/stressed/StressedQuestions";
 
 const MoodTracker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -26,33 +27,33 @@ const MoodTracker = () => {
     {
       name: "Stressed",
       img: StressImg,
-      component: null,
+      component: <StressedQuestions setSelectedMood={setSelectedMood} />,
       bgColor: "#FCE6C9",
     },
     {
-      name: "Anxiety",
+      name: "Anxious",
       img: AnxietyImg,
       component: null,
       bgColor: "#E7F5E4",
     },
-    {
-      name: "Depressed",
-      img: DepressedImg,
-      component: null,
-      bgColor: "#E4F0F5",
-    },
-    {
-      name: "Psycho",
-      img: DisorderImg,
-      component: null,
-      bgColor: "#E4F5F5",
-    },
-    {
-      name: "Happy",
-      img: HappyImg,
-      component: null,
-      bgColor: "#F5F0E4",
-    },
+    // {
+    //   name: "Depressed",
+    //   img: DepressedImg,
+    //   component: null,
+    //   bgColor: "#E4F0F5",
+    // },
+    // {
+    //   name: "Psycho",
+    //   img: DisorderImg,
+    //   component: null,
+    //   bgColor: "#E4F5F5",
+    // },
+    // {
+    //   name: "Happy",
+    //   img: HappyImg,
+    //   component: null,
+    //   bgColor: "#F5F0E4",
+    // },
     {
       name: "ActivitySelection",
       component: <ActivitySelection setSelectedMood={setSelectedMood} />,
