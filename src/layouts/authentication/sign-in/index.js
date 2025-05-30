@@ -76,14 +76,16 @@ function Basic() {
         role,
       });
 
+      console.log("RES:", res);
+
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("id", res.data.id);
 
       updateUser(res.data);
 
-      await axios.get("http://localhost:3000/prediction-notification");
-      await axios.get("http://localhost:3000/disease-notification");
+      // await axios.get("http://localhost:3000/disease-notification");
+      // await axios.get("http://localhost:3000/prediction-notification");
 
       navigate("/dashboard");
       window.location.reload();
